@@ -6,7 +6,7 @@ authors = ["Manuel Raimann <raimannma@outlook.de>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.13"
+python = "^3.12"
 protobuf = "^5.28.3"
 
 [tool.poetry.group.dev.dependencies]
