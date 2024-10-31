@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "valveprotos-py"
+version = "0.1.0"
+description = ""
+authors = ["Manuel Raimann <raimannma@outlook.de>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+protobuf = "^5.28.3"
+
+[tool.poetry.group.dev.dependencies]
+requests = "^2.32.3"
+PyGithub = "^2.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
