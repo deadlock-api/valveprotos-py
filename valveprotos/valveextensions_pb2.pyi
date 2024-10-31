@@ -1,0 +1,36 @@
+from google.protobuf import descriptor_pb2 as _descriptor_pb2
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+from google.protobuf import descriptor as _descriptor
+from typing import ClassVar as _ClassVar
+
+DEBUGPRINT_VISIBILITY_FIELD_NUMBER: _ClassVar[int]
+DELTA_IGNORE_FIELD_NUMBER: _ClassVar[int]
+DESCRIPTOR: _descriptor.FileDescriptor
+DIFF_ENCODE_FIELD_FIELD_NUMBER: _ClassVar[int]
+SCHEMA_DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
+SCHEMA_FRIENDLY_NAME_FIELD_NUMBER: _ClassVar[int]
+SCHEMA_SUPPRESS_ENUMERATOR_FIELD_NUMBER: _ClassVar[int]
+STEAMLEARN_COUNT_FIELD_NUMBER: _ClassVar[int]
+STEAMML_IS_TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+STEAMML_MAX_ENTRIES_FIELD_NUMBER: _ClassVar[int]
+VALVE_MAP_FIELD_FIELD_NUMBER: _ClassVar[int]
+VALVE_MAP_KEY_FIELD_NUMBER: _ClassVar[int]
+debugprint_visibility: _descriptor.FieldDescriptor
+delta_ignore: _descriptor.FieldDescriptor
+diff_encode_field: _descriptor.FieldDescriptor
+k_EProtoDebugVisibility_Always: EProtoDebugVisiblity
+k_EProtoDebugVisibility_GC: EProtoDebugVisiblity
+k_EProtoDebugVisibility_Never: EProtoDebugVisiblity
+k_EProtoDebugVisibility_Server: EProtoDebugVisiblity
+k_EProtoDebugVisibility_ValveServer: EProtoDebugVisiblity
+schema_description: _descriptor.FieldDescriptor
+schema_friendly_name: _descriptor.FieldDescriptor
+schema_suppress_enumerator: _descriptor.FieldDescriptor
+steamlearn_count: _descriptor.FieldDescriptor
+steamml_is_timestamp: _descriptor.FieldDescriptor
+steamml_max_entries: _descriptor.FieldDescriptor
+valve_map_field: _descriptor.FieldDescriptor
+valve_map_key: _descriptor.FieldDescriptor
+
+class EProtoDebugVisiblity(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = []
