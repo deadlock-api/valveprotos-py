@@ -645,7 +645,7 @@ class CSVCMsg_Menu(_message.Message):
     def __init__(self, dialog_type: _Optional[int] = ..., menu_key_values: _Optional[bytes] = ...) -> None: ...
 
 class CSVCMsg_PacketEntities(_message.Message):
-    __slots__ = ["active_spawngroup_handle", "alternate_baselines", "baseline", "cmd_recv_status", "cq_discarded_command_ticks", "cq_starved_command_ticks", "delta_from", "dev_padding", "entity_data", "last_cmd_number_executed", "last_cmd_number_recv_delta", "legacy_is_delta", "max_entries", "max_spawngroup_creationsequence", "non_transmitted_entities", "pending_full_frame", "serialized_entities", "server_tick", "update_baseline", "updated_entries"]
+    __slots__ = ["active_spawngroup_handle", "alternate_baselines", "baseline", "cmd_recv_status", "cq_discarded_command_ticks", "cq_starved_command_ticks", "delta_from", "dev_padding", "entity_data", "has_pvs_vis_bits_deprecated", "last_cmd_number_executed", "last_cmd_number_recv_delta", "legacy_is_delta", "max_entries", "max_spawngroup_creationsequence", "non_transmitted_entities", "pending_full_frame", "serialized_entities", "server_tick", "update_baseline", "updated_entries"]
     class alternate_baseline_t(_message.Message):
         __slots__ = ["baseline_index", "entity_index"]
         BASELINE_INDEX_FIELD_NUMBER: _ClassVar[int]
@@ -669,6 +669,7 @@ class CSVCMsg_PacketEntities(_message.Message):
     DELTA_FROM_FIELD_NUMBER: _ClassVar[int]
     DEV_PADDING_FIELD_NUMBER: _ClassVar[int]
     ENTITY_DATA_FIELD_NUMBER: _ClassVar[int]
+    HAS_PVS_VIS_BITS_DEPRECATED_FIELD_NUMBER: _ClassVar[int]
     LAST_CMD_NUMBER_EXECUTED_FIELD_NUMBER: _ClassVar[int]
     LAST_CMD_NUMBER_RECV_DELTA_FIELD_NUMBER: _ClassVar[int]
     LEGACY_IS_DELTA_FIELD_NUMBER: _ClassVar[int]
@@ -689,6 +690,7 @@ class CSVCMsg_PacketEntities(_message.Message):
     delta_from: int
     dev_padding: bytes
     entity_data: bytes
+    has_pvs_vis_bits_deprecated: int
     last_cmd_number_executed: int
     last_cmd_number_recv_delta: int
     legacy_is_delta: bool
@@ -700,7 +702,7 @@ class CSVCMsg_PacketEntities(_message.Message):
     server_tick: int
     update_baseline: bool
     updated_entries: int
-    def __init__(self, max_entries: _Optional[int] = ..., updated_entries: _Optional[int] = ..., legacy_is_delta: bool = ..., update_baseline: bool = ..., baseline: _Optional[int] = ..., delta_from: _Optional[int] = ..., entity_data: _Optional[bytes] = ..., pending_full_frame: bool = ..., active_spawngroup_handle: _Optional[int] = ..., max_spawngroup_creationsequence: _Optional[int] = ..., last_cmd_number_executed: _Optional[int] = ..., last_cmd_number_recv_delta: _Optional[int] = ..., server_tick: _Optional[int] = ..., serialized_entities: _Optional[bytes] = ..., alternate_baselines: _Optional[_Iterable[_Union[CSVCMsg_PacketEntities.alternate_baseline_t, _Mapping]]] = ..., cmd_recv_status: _Optional[_Iterable[int]] = ..., non_transmitted_entities: _Optional[_Union[CSVCMsg_PacketEntities.non_transmitted_entities_t, _Mapping]] = ..., cq_starved_command_ticks: _Optional[int] = ..., cq_discarded_command_ticks: _Optional[int] = ..., dev_padding: _Optional[bytes] = ...) -> None: ...
+    def __init__(self, max_entries: _Optional[int] = ..., updated_entries: _Optional[int] = ..., legacy_is_delta: bool = ..., update_baseline: bool = ..., baseline: _Optional[int] = ..., delta_from: _Optional[int] = ..., entity_data: _Optional[bytes] = ..., pending_full_frame: bool = ..., active_spawngroup_handle: _Optional[int] = ..., max_spawngroup_creationsequence: _Optional[int] = ..., last_cmd_number_executed: _Optional[int] = ..., last_cmd_number_recv_delta: _Optional[int] = ..., server_tick: _Optional[int] = ..., serialized_entities: _Optional[bytes] = ..., alternate_baselines: _Optional[_Iterable[_Union[CSVCMsg_PacketEntities.alternate_baseline_t, _Mapping]]] = ..., has_pvs_vis_bits_deprecated: _Optional[int] = ..., cmd_recv_status: _Optional[_Iterable[int]] = ..., non_transmitted_entities: _Optional[_Union[CSVCMsg_PacketEntities.non_transmitted_entities_t, _Mapping]] = ..., cq_starved_command_ticks: _Optional[int] = ..., cq_discarded_command_ticks: _Optional[int] = ..., dev_padding: _Optional[bytes] = ...) -> None: ...
 
 class CSVCMsg_PacketReliable(_message.Message):
     __slots__ = ["messagessize", "state", "tick"]

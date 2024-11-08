@@ -759,10 +759,11 @@ class CSOCitadelParty(_message.Message):
         team: int
         def __init__(self, account_id: _Optional[int] = ..., persona_name: _Optional[str] = ..., rights_flags: _Optional[int] = ..., is_ready: bool = ..., player_type: _Optional[_Union[CSOCitadelParty.EPlayerType, str]] = ..., compatibility_version: _Optional[int] = ..., platform: _Optional[_Union[_steammessages_pb2.EGCPlatform, str]] = ..., team: _Optional[int] = ..., hero_roster: _Optional[_Union[CMsgHeroSelectionMatchInfo, _Mapping]] = ..., permissions: _Optional[int] = ..., new_player_progress: _Optional[int] = ..., owned_heroes: _Optional[_Iterable[int]] = ...) -> None: ...
     class PrivateLobbySettings(_message.Message):
-        __slots__ = ["available_regions", "cheats_enabled", "duplicate_heroes_enabled", "is_publicly_visible", "match_slots", "min_roster_size", "randomize_lanes", "server_region"]
+        __slots__ = ["available_regions", "cheats_enabled", "duplicate_heroes_enabled", "experimental_heroes_enabled", "is_publicly_visible", "match_slots", "min_roster_size", "randomize_lanes", "server_region"]
         AVAILABLE_REGIONS_FIELD_NUMBER: _ClassVar[int]
         CHEATS_ENABLED_FIELD_NUMBER: _ClassVar[int]
         DUPLICATE_HEROES_ENABLED_FIELD_NUMBER: _ClassVar[int]
+        EXPERIMENTAL_HEROES_ENABLED_FIELD_NUMBER: _ClassVar[int]
         IS_PUBLICLY_VISIBLE_FIELD_NUMBER: _ClassVar[int]
         MATCH_SLOTS_FIELD_NUMBER: _ClassVar[int]
         MIN_ROSTER_SIZE_FIELD_NUMBER: _ClassVar[int]
@@ -771,12 +772,13 @@ class CSOCitadelParty(_message.Message):
         available_regions: _containers.RepeatedCompositeFieldContainer[CSOCitadelParty.ServerRegion]
         cheats_enabled: bool
         duplicate_heroes_enabled: bool
+        experimental_heroes_enabled: bool
         is_publicly_visible: bool
         match_slots: _containers.RepeatedCompositeFieldContainer[CSOCitadelParty.PrivateLobbySlot]
         min_roster_size: int
         randomize_lanes: bool
         server_region: int
-        def __init__(self, min_roster_size: _Optional[int] = ..., match_slots: _Optional[_Iterable[_Union[CSOCitadelParty.PrivateLobbySlot, _Mapping]]] = ..., randomize_lanes: bool = ..., server_region: _Optional[int] = ..., is_publicly_visible: bool = ..., cheats_enabled: bool = ..., available_regions: _Optional[_Iterable[_Union[CSOCitadelParty.ServerRegion, _Mapping]]] = ..., duplicate_heroes_enabled: bool = ...) -> None: ...
+        def __init__(self, min_roster_size: _Optional[int] = ..., match_slots: _Optional[_Iterable[_Union[CSOCitadelParty.PrivateLobbySlot, _Mapping]]] = ..., randomize_lanes: bool = ..., server_region: _Optional[int] = ..., is_publicly_visible: bool = ..., cheats_enabled: bool = ..., available_regions: _Optional[_Iterable[_Union[CSOCitadelParty.ServerRegion, _Mapping]]] = ..., duplicate_heroes_enabled: bool = ..., experimental_heroes_enabled: bool = ...) -> None: ...
     class PrivateLobbySlot(_message.Message):
         __slots__ = ["player_account_id", "slot_id"]
         PLAYER_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]

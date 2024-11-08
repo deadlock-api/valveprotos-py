@@ -136,23 +136,26 @@ class CCitadelUserMessage_AuraModifierApplied(_message.Message):
     def __init__(self, entindex_caster: _Optional[int] = ..., entindex_target: _Optional[int] = ..., modifier_type_id: _Optional[int] = ..., modifier_serial_number: _Optional[int] = ..., aura_start_time: _Optional[float] = ..., aura_end_time: _Optional[float] = ...) -> None: ...
 
 class CCitadelUserMessage_BulletHit(_message.Message):
-    __slots__ = ["hit_entindex", "pellet", "shotid"]
+    __slots__ = ["hit_entindex", "pellet", "shotid", "weapon_entindex"]
     HIT_ENTINDEX_FIELD_NUMBER: _ClassVar[int]
     PELLET_FIELD_NUMBER: _ClassVar[int]
     SHOTID_FIELD_NUMBER: _ClassVar[int]
+    WEAPON_ENTINDEX_FIELD_NUMBER: _ClassVar[int]
     hit_entindex: int
     pellet: int
     shotid: int
-    def __init__(self, shotid: _Optional[int] = ..., pellet: _Optional[int] = ..., hit_entindex: _Optional[int] = ...) -> None: ...
+    weapon_entindex: int
+    def __init__(self, shotid: _Optional[int] = ..., pellet: _Optional[int] = ..., hit_entindex: _Optional[int] = ..., weapon_entindex: _Optional[int] = ...) -> None: ...
 
 class CCitadelUserMessage_CurrencyChanged(_message.Message):
-    __slots__ = ["ability_id", "currency_source", "currency_type", "delta", "entindex_hero_pawn", "entindex_victim", "notification", "playsound", "victim_pos"]
+    __slots__ = ["ability_id", "currency_source", "currency_type", "delta", "entindex_hero_pawn", "entindex_victim", "new_value", "notification", "playsound", "victim_pos"]
     ABILITY_ID_FIELD_NUMBER: _ClassVar[int]
     CURRENCY_SOURCE_FIELD_NUMBER: _ClassVar[int]
     CURRENCY_TYPE_FIELD_NUMBER: _ClassVar[int]
     DELTA_FIELD_NUMBER: _ClassVar[int]
     ENTINDEX_HERO_PAWN_FIELD_NUMBER: _ClassVar[int]
     ENTINDEX_VICTIM_FIELD_NUMBER: _ClassVar[int]
+    NEW_VALUE_FIELD_NUMBER: _ClassVar[int]
     NOTIFICATION_FIELD_NUMBER: _ClassVar[int]
     PLAYSOUND_FIELD_NUMBER: _ClassVar[int]
     VICTIM_POS_FIELD_NUMBER: _ClassVar[int]
@@ -162,10 +165,11 @@ class CCitadelUserMessage_CurrencyChanged(_message.Message):
     delta: int
     entindex_hero_pawn: int
     entindex_victim: int
+    new_value: int
     notification: bool
     playsound: int
     victim_pos: _networkbasetypes_pb2.CMsgVector
-    def __init__(self, entindex_hero_pawn: _Optional[int] = ..., currency_type: _Optional[int] = ..., currency_source: _Optional[int] = ..., delta: _Optional[int] = ..., notification: bool = ..., entindex_victim: _Optional[int] = ..., victim_pos: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., playsound: _Optional[int] = ..., ability_id: _Optional[int] = ...) -> None: ...
+    def __init__(self, entindex_hero_pawn: _Optional[int] = ..., currency_type: _Optional[int] = ..., currency_source: _Optional[int] = ..., delta: _Optional[int] = ..., notification: bool = ..., entindex_victim: _Optional[int] = ..., victim_pos: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., playsound: _Optional[int] = ..., ability_id: _Optional[int] = ..., new_value: _Optional[int] = ...) -> None: ...
 
 class CCitadelUserMessage_Damage(_message.Message):
     __slots__ = ["ability_id", "attacker_class", "citadel_type", "damage", "damage_absorbed", "entindex_ability", "entindex_attacker", "entindex_inflictor", "entindex_victim", "flags", "health_lost", "hits", "origin", "pre_damage", "type", "victim_class", "victim_health_max", "victim_health_new", "victim_shield_max", "victim_shield_new"]
@@ -246,23 +250,21 @@ class CCitadelUserMessage_ObjectiveMask(_message.Message):
     def __init__(self, objective_mask_team0: _Optional[int] = ..., objective_mask_team1: _Optional[int] = ...) -> None: ...
 
 class CCitadelUserMsg_AbilitiesChanged(_message.Message):
-    __slots__ = ["ability_id", "change", "entindex_ability", "entindex_purchaser"]
+    __slots__ = ["ability_id", "change", "purchaser_player_slot"]
     class Change(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     ABILITY_ID_FIELD_NUMBER: _ClassVar[int]
     CHANGE_FIELD_NUMBER: _ClassVar[int]
     EInvalid: CCitadelUserMsg_AbilitiesChanged.Change
-    ENTINDEX_ABILITY_FIELD_NUMBER: _ClassVar[int]
-    ENTINDEX_PURCHASER_FIELD_NUMBER: _ClassVar[int]
     EPurchased: CCitadelUserMsg_AbilitiesChanged.Change
     ESold: CCitadelUserMsg_AbilitiesChanged.Change
     ESwappedActivatedAbility: CCitadelUserMsg_AbilitiesChanged.Change
     EUpgraded: CCitadelUserMsg_AbilitiesChanged.Change
+    PURCHASER_PLAYER_SLOT_FIELD_NUMBER: _ClassVar[int]
     ability_id: int
     change: CCitadelUserMsg_AbilitiesChanged.Change
-    entindex_ability: int
-    entindex_purchaser: int
-    def __init__(self, entindex_purchaser: _Optional[int] = ..., entindex_ability: _Optional[int] = ..., ability_id: _Optional[int] = ..., change: _Optional[_Union[CCitadelUserMsg_AbilitiesChanged.Change, str]] = ...) -> None: ...
+    purchaser_player_slot: int
+    def __init__(self, purchaser_player_slot: _Optional[int] = ..., ability_id: _Optional[int] = ..., change: _Optional[_Union[CCitadelUserMsg_AbilitiesChanged.Change, str]] = ...) -> None: ...
 
 class CCitadelUserMsg_AbilityInterrupted(_message.Message):
     __slots__ = ["ability_id_interrupted", "ability_id_interrupter", "entindex_interrupter", "entindex_victim", "hero_id_interrupter"]

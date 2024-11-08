@@ -16,6 +16,10 @@ k_EMsgClientToGCDeleteHeroBuild: EGCCitadelClientMessages
 k_EMsgClientToGCDeleteHeroBuildResponse: EGCCitadelClientMessages
 k_EMsgClientToGCDevAction: EGCCitadelClientMessages
 k_EMsgClientToGCDevActionResponse: EGCCitadelClientMessages
+k_EMsgClientToGCDevBan: EGCCitadelClientMessages
+k_EMsgClientToGCDevBanResponse: EGCCitadelClientMessages
+k_EMsgClientToGCDevRequestCheatReports: EGCCitadelClientMessages
+k_EMsgClientToGCDevRequestCheatReportsResponse: EGCCitadelClientMessages
 k_EMsgClientToGCDevSetMMBias: EGCCitadelClientMessages
 k_EMsgClientToGCFindHeroBuilds: EGCCitadelClientMessages
 k_EMsgClientToGCFindHeroBuildsResponse: EGCCitadelClientMessages
@@ -128,6 +132,10 @@ k_eConnectReacquireTicket: ECitadelClientAccountEvent
 k_eCreatedParty: ECitadelClientAccountEvent
 k_eCreatedPartyWithInvite: ECitadelClientAccountEvent
 k_eDeleteReplay: ECitadelClientAccountEvent
+k_eDevBanReason_AimAssist: EDevBanReason
+k_eDevBanReason_MovementAssist: EDevBanReason
+k_eDevBanReason_Unspecified: EDevBanReason
+k_eDevBanReason_VisionAssist: EDevBanReason
 k_eDisconnectConfirmed: ECitadelClientAccountEvent
 k_eDisconnectPresentedPrompt: ECitadelClientAccountEvent
 k_eDownloadedReplay: ECitadelClientAccountEvent
@@ -178,6 +186,8 @@ k_eViewedSettings_Audio: ECitadelClientAccountEvent
 k_eViewedSettings_ChatWheel: ECitadelClientAccountEvent
 k_eViewedSettings_HotKey: ECitadelClientAccountEvent
 k_eViewedSettings_Options: ECitadelClientAccountEvent
+k_eViewedSettings_Social: ECitadelClientAccountEvent
+k_eViewedSettings_SteamInput: ECitadelClientAccountEvent
 k_eViewedSettings_Video: ECitadelClientAccountEvent
 k_eViewedSocial: ECitadelClientAccountEvent
 k_eViewedWatch: ECitadelClientAccountEvent
@@ -203,10 +213,8 @@ class CMsgAccountBook(_message.Message):
     def __init__(self, book_id: _Optional[int] = ..., book_xp: _Optional[int] = ..., spent_xp: _Optional[int] = ..., unlocks: _Optional[_Iterable[_Union[CMsgAccountBook.Unlock, _Mapping]]] = ...) -> None: ...
 
 class CMsgCitadelClientHello(_message.Message):
-    __slots__ = ["region_mode"]
-    REGION_MODE_FIELD_NUMBER: _ClassVar[int]
-    region_mode: _citadel_gcmessages_common_pb2.ECitadelRegionMode
-    def __init__(self, region_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelRegionMode, str]] = ...) -> None: ...
+    __slots__ = []
+    def __init__(self) -> None: ...
 
 class CMsgCitadelProfileCard(_message.Message):
     __slots__ = ["account_id", "ranked_badge_level", "slots"]
@@ -324,13 +332,14 @@ class CMsgClientToGCDeleteHeroBuildResponse(_message.Message):
     def __init__(self, response: _Optional[_Union[CMsgClientToGCDeleteHeroBuildResponse.EResponse, str]] = ..., builds_deleted: _Optional[int] = ...) -> None: ...
 
 class CMsgClientToGCDevAction(_message.Message):
-    __slots__ = ["account_id", "action", "bool_value", "int_value", "str_value", "uint_value"]
+    __slots__ = ["account_id", "action", "bool_value", "int_value", "match_id", "str_value", "uint_value"]
     class EAction(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     ACTION_FIELD_NUMBER: _ClassVar[int]
     BOOL_VALUE_FIELD_NUMBER: _ClassVar[int]
     INT_VALUE_FIELD_NUMBER: _ClassVar[int]
+    MATCH_ID_FIELD_NUMBER: _ClassVar[int]
     STR_VALUE_FIELD_NUMBER: _ClassVar[int]
     UINT_VALUE_FIELD_NUMBER: _ClassVar[int]
     account_id: int
@@ -340,6 +349,7 @@ class CMsgClientToGCDevAction(_message.Message):
     k_eBanAccount: CMsgClientToGCDevAction.EAction
     k_eBookReset: CMsgClientToGCDevAction.EAction
     k_eBookXPGrant: CMsgClientToGCDevAction.EAction
+    k_eExonerateAccount: CMsgClientToGCDevAction.EAction
     k_eForceAccountStorage: CMsgClientToGCDevAction.EAction
     k_eSetDeveloper: CMsgClientToGCDevAction.EAction
     k_eSetHeroStatus: CMsgClientToGCDevAction.EAction
@@ -347,9 +357,10 @@ class CMsgClientToGCDevAction(_message.Message):
     k_eSetMMRUncertainty: CMsgClientToGCDevAction.EAction
     k_eSetNewPlayerProgress: CMsgClientToGCDevAction.EAction
     k_eSetPermission: CMsgClientToGCDevAction.EAction
+    match_id: int
     str_value: str
     uint_value: int
-    def __init__(self, action: _Optional[_Union[CMsgClientToGCDevAction.EAction, str]] = ..., account_id: _Optional[int] = ..., uint_value: _Optional[int] = ..., int_value: _Optional[int] = ..., bool_value: bool = ..., str_value: _Optional[str] = ...) -> None: ...
+    def __init__(self, action: _Optional[_Union[CMsgClientToGCDevAction.EAction, str]] = ..., account_id: _Optional[int] = ..., uint_value: _Optional[int] = ..., int_value: _Optional[int] = ..., bool_value: bool = ..., str_value: _Optional[str] = ..., match_id: _Optional[int] = ...) -> None: ...
 
 class CMsgClientToGCDevActionResponse(_message.Message):
     __slots__ = ["result"]
@@ -883,6 +894,7 @@ class CMsgClientToGCPartyAction(_message.Message):
     k_eSetChatMode: CMsgClientToGCPartyAction.EAction
     k_eSetCheatsEnabled: CMsgClientToGCPartyAction.EAction
     k_eSetDuplicateHeroesEnabled: CMsgClientToGCPartyAction.EAction
+    k_eSetExperimentalHeroesEnabled: CMsgClientToGCPartyAction.EAction
     k_eSetMemberTeam: CMsgClientToGCPartyAction.EAction
     k_eSetPlayerSlot: CMsgClientToGCPartyAction.EAction
     k_eSetPlayerType: CMsgClientToGCPartyAction.EAction
@@ -1279,6 +1291,32 @@ class CMsgClientToGCReportPlayerFromMatchResponse(_message.Message):
     k_eTooBusy: CMsgClientToGCReportPlayerFromMatchResponse.EResponse
     response: CMsgClientToGCReportPlayerFromMatchResponse.EResponse
     def __init__(self, response: _Optional[_Union[CMsgClientToGCReportPlayerFromMatchResponse.EResponse, str]] = ...) -> None: ...
+
+class CMsgClientToGCRequestCheatReports(_message.Message):
+    __slots__ = []
+    def __init__(self) -> None: ...
+
+class CMsgClientToGCRequestCheatReportsResponse(_message.Message):
+    __slots__ = ["cheat_reports", "result"]
+    class EResult(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+    class RecentCheatReport(_message.Message):
+        __slots__ = ["account_id", "hero_id", "match_id"]
+        ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+        HERO_ID_FIELD_NUMBER: _ClassVar[int]
+        MATCH_ID_FIELD_NUMBER: _ClassVar[int]
+        account_id: int
+        hero_id: int
+        match_id: int
+        def __init__(self, account_id: _Optional[int] = ..., match_id: _Optional[int] = ..., hero_id: _Optional[int] = ...) -> None: ...
+    CHEAT_REPORTS_FIELD_NUMBER: _ClassVar[int]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    cheat_reports: _containers.RepeatedCompositeFieldContainer[CMsgClientToGCRequestCheatReportsResponse.RecentCheatReport]
+    k_eInternalError: CMsgClientToGCRequestCheatReportsResponse.EResult
+    k_eInvalidPermission: CMsgClientToGCRequestCheatReportsResponse.EResult
+    k_eSuccess: CMsgClientToGCRequestCheatReportsResponse.EResult
+    result: CMsgClientToGCRequestCheatReportsResponse.EResult
+    def __init__(self, result: _Optional[_Union[CMsgClientToGCRequestCheatReportsResponse.EResult, str]] = ..., cheat_reports: _Optional[_Iterable[_Union[CMsgClientToGCRequestCheatReportsResponse.RecentCheatReport, _Mapping]]] = ...) -> None: ...
 
 class CMsgClientToGCSetNewPlayerProgress(_message.Message):
     __slots__ = ["flag"]
@@ -1684,7 +1722,14 @@ class CMsgGCToClientDevAnnouncements(_message.Message):
     def __init__(self, announcements: _Optional[_Iterable[_Union[CMsgGCToClientDevAnnouncements.Announcement, _Mapping]]] = ...) -> None: ...
 
 class CMsgGCToClientDevPlaytestStatus(_message.Message):
-    __slots__ = ["active_match_count", "hero_whitelists", "is_mm_enabled", "locked_heroes", "mm_pause_time", "party_shared_heroes", "regions", "valid_client_versions"]
+    __slots__ = ["active_match_count", "dev_available_servers", "dev_queue_size", "hero_whitelists", "is_mm_enabled", "locked_heroes", "mm_pause_time", "party_shared_heroes", "valid_client_versions"]
+    class DevQueueSize(_message.Message):
+        __slots__ = ["match_mode", "queue_size"]
+        MATCH_MODE_FIELD_NUMBER: _ClassVar[int]
+        QUEUE_SIZE_FIELD_NUMBER: _ClassVar[int]
+        match_mode: _citadel_gcmessages_common_pb2.ECitadelMatchMode
+        queue_size: int
+        def __init__(self, match_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMatchMode, str]] = ..., queue_size: _Optional[int] = ...) -> None: ...
     class HeroWhitelist(_message.Message):
         __slots__ = ["account_ids", "hero_id"]
         ACCOUNT_IDS_FIELD_NUMBER: _ClassVar[int]
@@ -1692,36 +1737,25 @@ class CMsgGCToClientDevPlaytestStatus(_message.Message):
         account_ids: _containers.RepeatedScalarFieldContainer[int]
         hero_id: int
         def __init__(self, hero_id: _Optional[int] = ..., account_ids: _Optional[_Iterable[int]] = ...) -> None: ...
-    class RegionInfo(_message.Message):
-        __slots__ = ["available_servers", "coop_mm_formation_time", "coop_queue_size", "region", "unranked_queue_size"]
-        AVAILABLE_SERVERS_FIELD_NUMBER: _ClassVar[int]
-        COOP_MM_FORMATION_TIME_FIELD_NUMBER: _ClassVar[int]
-        COOP_QUEUE_SIZE_FIELD_NUMBER: _ClassVar[int]
-        REGION_FIELD_NUMBER: _ClassVar[int]
-        UNRANKED_QUEUE_SIZE_FIELD_NUMBER: _ClassVar[int]
-        available_servers: int
-        coop_mm_formation_time: int
-        coop_queue_size: int
-        region: _citadel_gcmessages_common_pb2.ECitadelRegionMode
-        unranked_queue_size: int
-        def __init__(self, region: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelRegionMode, str]] = ..., unranked_queue_size: _Optional[int] = ..., coop_queue_size: _Optional[int] = ..., coop_mm_formation_time: _Optional[int] = ..., available_servers: _Optional[int] = ...) -> None: ...
     ACTIVE_MATCH_COUNT_FIELD_NUMBER: _ClassVar[int]
+    DEV_AVAILABLE_SERVERS_FIELD_NUMBER: _ClassVar[int]
+    DEV_QUEUE_SIZE_FIELD_NUMBER: _ClassVar[int]
     HERO_WHITELISTS_FIELD_NUMBER: _ClassVar[int]
     IS_MM_ENABLED_FIELD_NUMBER: _ClassVar[int]
     LOCKED_HEROES_FIELD_NUMBER: _ClassVar[int]
     MM_PAUSE_TIME_FIELD_NUMBER: _ClassVar[int]
     PARTY_SHARED_HEROES_FIELD_NUMBER: _ClassVar[int]
-    REGIONS_FIELD_NUMBER: _ClassVar[int]
     VALID_CLIENT_VERSIONS_FIELD_NUMBER: _ClassVar[int]
     active_match_count: int
+    dev_available_servers: int
+    dev_queue_size: _containers.RepeatedCompositeFieldContainer[CMsgGCToClientDevPlaytestStatus.DevQueueSize]
     hero_whitelists: _containers.RepeatedCompositeFieldContainer[CMsgGCToClientDevPlaytestStatus.HeroWhitelist]
     is_mm_enabled: bool
     locked_heroes: bool
     mm_pause_time: int
     party_shared_heroes: bool
-    regions: _containers.RepeatedCompositeFieldContainer[CMsgGCToClientDevPlaytestStatus.RegionInfo]
     valid_client_versions: _containers.RepeatedScalarFieldContainer[int]
-    def __init__(self, is_mm_enabled: bool = ..., locked_heroes: bool = ..., party_shared_heroes: bool = ..., hero_whitelists: _Optional[_Iterable[_Union[CMsgGCToClientDevPlaytestStatus.HeroWhitelist, _Mapping]]] = ..., mm_pause_time: _Optional[int] = ..., valid_client_versions: _Optional[_Iterable[int]] = ..., active_match_count: _Optional[int] = ..., regions: _Optional[_Iterable[_Union[CMsgGCToClientDevPlaytestStatus.RegionInfo, _Mapping]]] = ...) -> None: ...
+    def __init__(self, dev_queue_size: _Optional[_Iterable[_Union[CMsgGCToClientDevPlaytestStatus.DevQueueSize, _Mapping]]] = ..., dev_available_servers: _Optional[int] = ..., is_mm_enabled: bool = ..., locked_heroes: bool = ..., party_shared_heroes: bool = ..., hero_whitelists: _Optional[_Iterable[_Union[CMsgGCToClientDevPlaytestStatus.HeroWhitelist, _Mapping]]] = ..., mm_pause_time: _Optional[int] = ..., valid_client_versions: _Optional[_Iterable[int]] = ..., active_match_count: _Optional[int] = ...) -> None: ...
 
 class CMsgGCToClientHeroLabsSchedule(_message.Message):
     __slots__ = ["schedules"]
@@ -1754,7 +1788,8 @@ class CMsgGCToClientMatchmakingStopped(_message.Message):
     class EReason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     REASON_FIELD_NUMBER: _ClassVar[int]
-    k_EResult_FailedReadyUp: CMsgGCToClientMatchmakingStopped.EReason
+    k_EResult_HeroLabsClosed: CMsgGCToClientMatchmakingStopped.EReason
+    k_EResult_RankedClosed: CMsgGCToClientMatchmakingStopped.EReason
     k_EResult_Unspecified: CMsgGCToClientMatchmakingStopped.EReason
     k_EResult_VersionUpdated: CMsgGCToClientMatchmakingStopped.EReason
     reason: CMsgGCToClientMatchmakingStopped.EReason
@@ -2003,6 +2038,9 @@ class ECitadelNewPlayerProgressFlag(int, metaclass=_enum_type_wrapper.EnumTypeWr
     __slots__ = []
 
 class EProfileCardSlotType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = []
+
+class EDevBanReason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []
 
 class ECitadelClientAccountEvent(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
