@@ -66,6 +66,7 @@ k_EUserMsg_ChatWheel: CitadelUserMessageIds
 k_EUserMsg_CurrencyChanged: CitadelUserMessageIds
 k_EUserMsg_Damage: CitadelUserMessageIds
 k_EUserMsg_DeathReplayData: CitadelUserMessageIds
+k_EUserMsg_FlexSlotUnlocked: CitadelUserMessageIds
 k_EUserMsg_ForceShopClosed: CitadelUserMessageIds
 k_EUserMsg_GameOver: CitadelUserMessageIds
 k_EUserMsg_GetDamageStatsResponse: CitadelUserMessageIds
@@ -172,18 +173,21 @@ class CCitadelUserMessage_CurrencyChanged(_message.Message):
     def __init__(self, entindex_hero_pawn: _Optional[int] = ..., currency_type: _Optional[int] = ..., currency_source: _Optional[int] = ..., delta: _Optional[int] = ..., notification: bool = ..., entindex_victim: _Optional[int] = ..., victim_pos: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., playsound: _Optional[int] = ..., ability_id: _Optional[int] = ..., new_value: _Optional[int] = ...) -> None: ...
 
 class CCitadelUserMessage_Damage(_message.Message):
-    __slots__ = ["ability_id", "attacker_class", "citadel_type", "damage", "damage_absorbed", "entindex_ability", "entindex_attacker", "entindex_inflictor", "entindex_victim", "flags", "health_lost", "hits", "origin", "pre_damage", "type", "victim_class", "victim_health_max", "victim_health_new", "victim_shield_max", "victim_shield_new"]
+    __slots__ = ["ability_id", "attacker_class", "citadel_type", "damage", "damage_absorbed", "damage_direction", "entindex_ability", "entindex_attacker", "entindex_attacking_object", "entindex_inflictor", "entindex_victim", "flags", "health_lost", "hitgroup_id", "hits", "origin", "pre_damage", "type", "victim_class", "victim_health_max", "victim_health_new", "victim_shield_max", "victim_shield_new"]
     ABILITY_ID_FIELD_NUMBER: _ClassVar[int]
     ATTACKER_CLASS_FIELD_NUMBER: _ClassVar[int]
     CITADEL_TYPE_FIELD_NUMBER: _ClassVar[int]
     DAMAGE_ABSORBED_FIELD_NUMBER: _ClassVar[int]
+    DAMAGE_DIRECTION_FIELD_NUMBER: _ClassVar[int]
     DAMAGE_FIELD_NUMBER: _ClassVar[int]
     ENTINDEX_ABILITY_FIELD_NUMBER: _ClassVar[int]
     ENTINDEX_ATTACKER_FIELD_NUMBER: _ClassVar[int]
+    ENTINDEX_ATTACKING_OBJECT_FIELD_NUMBER: _ClassVar[int]
     ENTINDEX_INFLICTOR_FIELD_NUMBER: _ClassVar[int]
     ENTINDEX_VICTIM_FIELD_NUMBER: _ClassVar[int]
     FLAGS_FIELD_NUMBER: _ClassVar[int]
     HEALTH_LOST_FIELD_NUMBER: _ClassVar[int]
+    HITGROUP_ID_FIELD_NUMBER: _ClassVar[int]
     HITS_FIELD_NUMBER: _ClassVar[int]
     ORIGIN_FIELD_NUMBER: _ClassVar[int]
     PRE_DAMAGE_FIELD_NUMBER: _ClassVar[int]
@@ -198,12 +202,15 @@ class CCitadelUserMessage_Damage(_message.Message):
     citadel_type: int
     damage: int
     damage_absorbed: int
+    damage_direction: _networkbasetypes_pb2.CMsgVector
     entindex_ability: int
     entindex_attacker: int
+    entindex_attacking_object: int
     entindex_inflictor: int
     entindex_victim: int
     flags: int
     health_lost: int
+    hitgroup_id: int
     hits: int
     origin: _networkbasetypes_pb2.CMsgVector
     pre_damage: int
@@ -213,7 +220,7 @@ class CCitadelUserMessage_Damage(_message.Message):
     victim_health_new: int
     victim_shield_max: int
     victim_shield_new: int
-    def __init__(self, damage: _Optional[int] = ..., pre_damage: _Optional[int] = ..., type: _Optional[int] = ..., citadel_type: _Optional[int] = ..., origin: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., entindex_victim: _Optional[int] = ..., entindex_inflictor: _Optional[int] = ..., entindex_attacker: _Optional[int] = ..., entindex_ability: _Optional[int] = ..., damage_absorbed: _Optional[int] = ..., victim_health_max: _Optional[int] = ..., victim_health_new: _Optional[int] = ..., flags: _Optional[int] = ..., ability_id: _Optional[int] = ..., attacker_class: _Optional[int] = ..., victim_class: _Optional[int] = ..., victim_shield_max: _Optional[int] = ..., victim_shield_new: _Optional[int] = ..., hits: _Optional[int] = ..., health_lost: _Optional[int] = ...) -> None: ...
+    def __init__(self, damage: _Optional[int] = ..., pre_damage: _Optional[int] = ..., type: _Optional[int] = ..., citadel_type: _Optional[int] = ..., origin: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., entindex_victim: _Optional[int] = ..., entindex_inflictor: _Optional[int] = ..., entindex_attacker: _Optional[int] = ..., entindex_ability: _Optional[int] = ..., damage_absorbed: _Optional[int] = ..., victim_health_max: _Optional[int] = ..., victim_health_new: _Optional[int] = ..., flags: _Optional[int] = ..., ability_id: _Optional[int] = ..., attacker_class: _Optional[int] = ..., victim_class: _Optional[int] = ..., victim_shield_max: _Optional[int] = ..., victim_shield_new: _Optional[int] = ..., hits: _Optional[int] = ..., health_lost: _Optional[int] = ..., hitgroup_id: _Optional[int] = ..., entindex_attacking_object: _Optional[int] = ..., damage_direction: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ...) -> None: ...
 
 class CCitadelUserMessage_GameOver(_message.Message):
     __slots__ = ["just_a_test", "winning_team"]
@@ -488,6 +495,14 @@ class CCitadelUserMsg_DeathReplayData(_message.Message):
     killer_inflictor: int
     killer_scorer: int
     def __init__(self, killer_scorer: _Optional[int] = ..., killer_inflictor: _Optional[int] = ..., damage_summary: _Optional[_Union[CCitadelUserMsg_RecentDamageSummary, _Mapping]] = ...) -> None: ...
+
+class CCitadelUserMsg_FlexSlotUnlocked(_message.Message):
+    __slots__ = ["flexslot_unlocked", "team_number"]
+    FLEXSLOT_UNLOCKED_FIELD_NUMBER: _ClassVar[int]
+    TEAM_NUMBER_FIELD_NUMBER: _ClassVar[int]
+    flexslot_unlocked: int
+    team_number: int
+    def __init__(self, team_number: _Optional[int] = ..., flexslot_unlocked: _Optional[int] = ...) -> None: ...
 
 class CCitadelUserMsg_ForceShopClosed(_message.Message):
     __slots__ = []

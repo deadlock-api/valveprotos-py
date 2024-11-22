@@ -15,7 +15,7 @@ import networkbasetypes_pb2 as networkbasetypes__pb2
 import usercmd_pb2 as usercmd__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15\x63itadel_usercmd.proto\x1a\x16networkbasetypes.proto\x1a\rusercmd.proto\"\x90\x02\n\x11\x43\x43itadelUserCmdPB\x12\x1d\n\x04\x62\x61se\x18\x01 \x01(\x0b\x32\x0f.CBaseUserCmdPB\x12(\n\x13vec_camera_position\x18\x02 \x01(\x0b\x32\x0b.CMsgVector\x12&\n\x11\x61ng_camera_angles\x18\x03 \x01(\x0b\x32\x0b.CMsgQAngle\x12\x1f\n\x17\x65xecute_ability_indices\x18\x04 \x01(\x05\x12\x0f\n\x07in_shop\x18\x05 \x01(\x08\x12\x1c\n\x14\x63\x61mera_roaming_speed\x18\x06 \x01(\x02\x12\x19\n\x11using_free_cursor\x18\x08 \x01(\x08\x12\x1f\n\x13\x65nemy_hero_aimed_at\x18\n \x01(\x05:\x02-1')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15\x63itadel_usercmd.proto\x1a\x16networkbasetypes.proto\x1a\rusercmd.proto\"\xbe\x02\n\x11\x43\x43itadelUserCmdPB\x12\x1d\n\x04\x62\x61se\x18\x01 \x01(\x0b\x32\x0f.CBaseUserCmdPB\x12(\n\x13vec_camera_position\x18\x02 \x01(\x0b\x32\x0b.CMsgVector\x12&\n\x11\x61ng_camera_angles\x18\x03 \x01(\x0b\x32\x0b.CMsgQAngle\x12\x1f\n\x17\x65xecute_ability_indices\x18\x04 \x01(\x05\x12\x0f\n\x07in_shop\x18\x05 \x01(\x08\x12\x1c\n\x14\x63\x61mera_roaming_speed\x18\x06 \x01(\x02\x12\x19\n\x11using_free_cursor\x18\x08 \x01(\x08\x12\x1f\n\x13\x65nemy_hero_aimed_at\x18\n \x01(\x05:\x02-1\x12\x15\n\rmouse_delta_x\x18\x0b \x03(\x05\x12\x15\n\rmouse_delta_y\x18\x0c \x03(\x05')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'citadel_usercmd_pb2', globals())
@@ -23,5 +23,5 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   _CCITADELUSERCMDPB._serialized_start=65
-  _CCITADELUSERCMDPB._serialized_end=337
+  _CCITADELUSERCMDPB._serialized_end=383
 # @@protoc_insertion_point(module_scope)

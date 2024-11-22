@@ -23,6 +23,8 @@ k_EMsgClientToGCDevRequestCheatReportsResponse: EGCCitadelClientMessages
 k_EMsgClientToGCDevSetMMBias: EGCCitadelClientMessages
 k_EMsgClientToGCFindHeroBuilds: EGCCitadelClientMessages
 k_EMsgClientToGCFindHeroBuildsResponse: EGCCitadelClientMessages
+k_EMsgClientToGCGetAccountLeaderboards: EGCCitadelClientMessages
+k_EMsgClientToGCGetAccountLeaderboardsResponse: EGCCitadelClientMessages
 k_EMsgClientToGCGetAccountMatchReports: EGCCitadelClientMessages
 k_EMsgClientToGCGetAccountMatchReportsResponse: EGCCitadelClientMessages
 k_EMsgClientToGCGetAccountStats: EGCCitadelClientMessages
@@ -37,6 +39,10 @@ k_EMsgClientToGCGetFriendGameStatus: EGCCitadelClientMessages
 k_EMsgClientToGCGetFriendGameStatusResponse: EGCCitadelClientMessages
 k_EMsgClientToGCGetHeroChoice: EGCCitadelClientMessages
 k_EMsgClientToGCGetHeroChoiceResponse: EGCCitadelClientMessages
+k_EMsgClientToGCGetHeroMMRRankings: EGCCitadelClientMessages
+k_EMsgClientToGCGetHeroMMRRankingsResponse: EGCCitadelClientMessages
+k_EMsgClientToGCGetLeaderboard: EGCCitadelClientMessages
+k_EMsgClientToGCGetLeaderboardResponse: EGCCitadelClientMessages
 k_EMsgClientToGCGetMatchHistory: EGCCitadelClientMessages
 k_EMsgClientToGCGetMatchHistoryResponse: EGCCitadelClientMessages
 k_EMsgClientToGCGetMatchMetaData: EGCCitadelClientMessages
@@ -351,6 +357,7 @@ class CMsgClientToGCDevAction(_message.Message):
     k_eBookXPGrant: CMsgClientToGCDevAction.EAction
     k_eExonerateAccount: CMsgClientToGCDevAction.EAction
     k_eForceAccountStorage: CMsgClientToGCDevAction.EAction
+    k_eRequireAccountInMM: CMsgClientToGCDevAction.EAction
     k_eSetDeveloper: CMsgClientToGCDevAction.EAction
     k_eSetHeroStatus: CMsgClientToGCDevAction.EAction
     k_eSetMMR: CMsgClientToGCDevAction.EAction
@@ -427,6 +434,37 @@ class CMsgClientToGCFindHeroBuildsResponse(_message.Message):
     response: CMsgClientToGCFindHeroBuildsResponse.EResponse
     results: _containers.RepeatedCompositeFieldContainer[CMsgClientToGCFindHeroBuildsResponse.HeroBuildResult]
     def __init__(self, response: _Optional[_Union[CMsgClientToGCFindHeroBuildsResponse.EResponse, str]] = ..., results: _Optional[_Iterable[_Union[CMsgClientToGCFindHeroBuildsResponse.HeroBuildResult, _Mapping]]] = ...) -> None: ...
+
+class CMsgClientToGCGetAccountLeaderboards(_message.Message):
+    __slots__ = ["account_id"]
+    ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    account_id: int
+    def __init__(self, account_id: _Optional[int] = ...) -> None: ...
+
+class CMsgClientToGCGetAccountLeaderboardsResponse(_message.Message):
+    __slots__ = ["account_name", "entries", "result"]
+    class EResult(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+    class LeaderboardEntry(_message.Message):
+        __slots__ = ["hero_id", "rank", "region"]
+        HERO_ID_FIELD_NUMBER: _ClassVar[int]
+        RANK_FIELD_NUMBER: _ClassVar[int]
+        REGION_FIELD_NUMBER: _ClassVar[int]
+        hero_id: int
+        rank: int
+        region: _citadel_gcmessages_common_pb2.ECitadelLeaderboardRegion
+        def __init__(self, region: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelLeaderboardRegion, str]] = ..., hero_id: _Optional[int] = ..., rank: _Optional[int] = ...) -> None: ...
+    ACCOUNT_NAME_FIELD_NUMBER: _ClassVar[int]
+    ENTRIES_FIELD_NUMBER: _ClassVar[int]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    account_name: str
+    entries: _containers.RepeatedCompositeFieldContainer[CMsgClientToGCGetAccountLeaderboardsResponse.LeaderboardEntry]
+    k_eInternalError: CMsgClientToGCGetAccountLeaderboardsResponse.EResult
+    k_eInvalidPermission: CMsgClientToGCGetAccountLeaderboardsResponse.EResult
+    k_eSuccess: CMsgClientToGCGetAccountLeaderboardsResponse.EResult
+    k_eTooBusy: CMsgClientToGCGetAccountLeaderboardsResponse.EResult
+    result: CMsgClientToGCGetAccountLeaderboardsResponse.EResult
+    def __init__(self, result: _Optional[_Union[CMsgClientToGCGetAccountLeaderboardsResponse.EResult, str]] = ..., account_name: _Optional[str] = ..., entries: _Optional[_Iterable[_Union[CMsgClientToGCGetAccountLeaderboardsResponse.LeaderboardEntry, _Mapping]]] = ...) -> None: ...
 
 class CMsgClientToGCGetAccountMatchReports(_message.Message):
     __slots__ = ["match_id"]
@@ -591,6 +629,62 @@ class CMsgClientToGCGetHeroChoiceResponse(_message.Message):
     result: CMsgClientToGCGetHeroChoiceResponse.EResult
     select_count: int
     def __init__(self, result: _Optional[_Union[CMsgClientToGCGetHeroChoiceResponse.EResult, str]] = ..., hero_selections: _Optional[_Iterable[_Union[CMsgClientToGCGetHeroChoiceResponse.Hero, _Mapping]]] = ..., hero_choice_id: _Optional[int] = ..., select_count: _Optional[int] = ...) -> None: ...
+
+class CMsgClientToGCGetHeroMMRRankings(_message.Message):
+    __slots__ = ["target_account_id"]
+    TARGET_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    target_account_id: int
+    def __init__(self, target_account_id: _Optional[int] = ...) -> None: ...
+
+class CMsgClientToGCGetHeroMMRRankingsResponse(_message.Message):
+    __slots__ = ["heroes", "result"]
+    class EResult(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+    class Hero(_message.Message):
+        __slots__ = ["hero_id", "relative_mmr"]
+        HERO_ID_FIELD_NUMBER: _ClassVar[int]
+        RELATIVE_MMR_FIELD_NUMBER: _ClassVar[int]
+        hero_id: int
+        relative_mmr: int
+        def __init__(self, hero_id: _Optional[int] = ..., relative_mmr: _Optional[int] = ...) -> None: ...
+    HEROES_FIELD_NUMBER: _ClassVar[int]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    heroes: _containers.RepeatedCompositeFieldContainer[CMsgClientToGCGetHeroMMRRankingsResponse.Hero]
+    k_eInternalError: CMsgClientToGCGetHeroMMRRankingsResponse.EResult
+    k_eInvalidPermission: CMsgClientToGCGetHeroMMRRankingsResponse.EResult
+    k_eSuccess: CMsgClientToGCGetHeroMMRRankingsResponse.EResult
+    k_eTooBusy: CMsgClientToGCGetHeroMMRRankingsResponse.EResult
+    result: CMsgClientToGCGetHeroMMRRankingsResponse.EResult
+    def __init__(self, result: _Optional[_Union[CMsgClientToGCGetHeroMMRRankingsResponse.EResult, str]] = ..., heroes: _Optional[_Iterable[_Union[CMsgClientToGCGetHeroMMRRankingsResponse.Hero, _Mapping]]] = ...) -> None: ...
+
+class CMsgClientToGCGetLeaderboard(_message.Message):
+    __slots__ = ["hero_id", "leaderboard_region"]
+    HERO_ID_FIELD_NUMBER: _ClassVar[int]
+    LEADERBOARD_REGION_FIELD_NUMBER: _ClassVar[int]
+    hero_id: int
+    leaderboard_region: _citadel_gcmessages_common_pb2.ECitadelLeaderboardRegion
+    def __init__(self, leaderboard_region: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelLeaderboardRegion, str]] = ..., hero_id: _Optional[int] = ...) -> None: ...
+
+class CMsgClientToGCGetLeaderboardResponse(_message.Message):
+    __slots__ = ["entries", "result"]
+    class EResult(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+    class LeaderboardEntry(_message.Message):
+        __slots__ = ["account_name", "rank"]
+        ACCOUNT_NAME_FIELD_NUMBER: _ClassVar[int]
+        RANK_FIELD_NUMBER: _ClassVar[int]
+        account_name: str
+        rank: int
+        def __init__(self, account_name: _Optional[str] = ..., rank: _Optional[int] = ...) -> None: ...
+    ENTRIES_FIELD_NUMBER: _ClassVar[int]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    entries: _containers.RepeatedCompositeFieldContainer[CMsgClientToGCGetLeaderboardResponse.LeaderboardEntry]
+    k_eInternalError: CMsgClientToGCGetLeaderboardResponse.EResult
+    k_eInvalidArguments: CMsgClientToGCGetLeaderboardResponse.EResult
+    k_eSuccess: CMsgClientToGCGetLeaderboardResponse.EResult
+    k_eTooBusy: CMsgClientToGCGetLeaderboardResponse.EResult
+    result: CMsgClientToGCGetLeaderboardResponse.EResult
+    def __init__(self, result: _Optional[_Union[CMsgClientToGCGetLeaderboardResponse.EResult, str]] = ..., entries: _Optional[_Iterable[_Union[CMsgClientToGCGetLeaderboardResponse.LeaderboardEntry, _Mapping]]] = ...) -> None: ...
 
 class CMsgClientToGCGetMatchHistory(_message.Message):
     __slots__ = ["account_id", "continue_cursor", "ranked_interval"]
@@ -893,6 +987,7 @@ class CMsgClientToGCPartyAction(_message.Message):
     k_eSetBotDifficulty: CMsgClientToGCPartyAction.EAction
     k_eSetChatMode: CMsgClientToGCPartyAction.EAction
     k_eSetCheatsEnabled: CMsgClientToGCPartyAction.EAction
+    k_eSetDesiresLaningTogether: CMsgClientToGCPartyAction.EAction
     k_eSetDuplicateHeroesEnabled: CMsgClientToGCPartyAction.EAction
     k_eSetExperimentalHeroesEnabled: CMsgClientToGCPartyAction.EAction
     k_eSetMemberTeam: CMsgClientToGCPartyAction.EAction
@@ -1576,16 +1671,14 @@ class CMsgClientToGCUpdateHeroBuildResponse(_message.Message):
     def __init__(self, response: _Optional[_Union[CMsgClientToGCUpdateHeroBuildResponse.EResponse, str]] = ..., hero_build_id: _Optional[int] = ..., version: _Optional[int] = ...) -> None: ...
 
 class CMsgClientToGCUpdateRoster(_message.Message):
-    __slots__ = ["game_mode", "heroes", "match_mode", "solo_match"]
+    __slots__ = ["game_mode", "heroes", "match_mode"]
     GAME_MODE_FIELD_NUMBER: _ClassVar[int]
     HEROES_FIELD_NUMBER: _ClassVar[int]
     MATCH_MODE_FIELD_NUMBER: _ClassVar[int]
-    SOLO_MATCH_FIELD_NUMBER: _ClassVar[int]
     game_mode: _citadel_gcmessages_common_pb2.ECitadelGameMode
     heroes: _citadel_gcmessages_common_pb2.CMsgHeroSelectionMatchInfo
     match_mode: _citadel_gcmessages_common_pb2.ECitadelMatchMode
-    solo_match: bool
-    def __init__(self, heroes: _Optional[_Union[_citadel_gcmessages_common_pb2.CMsgHeroSelectionMatchInfo, _Mapping]] = ..., game_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelGameMode, str]] = ..., match_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMatchMode, str]] = ..., solo_match: bool = ...) -> None: ...
+    def __init__(self, heroes: _Optional[_Union[_citadel_gcmessages_common_pb2.CMsgHeroSelectionMatchInfo, _Mapping]] = ..., game_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelGameMode, str]] = ..., match_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMatchMode, str]] = ...) -> None: ...
 
 class CMsgClientToGCUpdateRosterResponse(_message.Message):
     __slots__ = ["result"]
@@ -1624,7 +1717,7 @@ class CMsgClientWelcomeCitadel(_message.Message):
     def __init__(self, currency: _Optional[int] = ..., extra_messages: _Optional[_Iterable[_Union[_gcsdk_gcmessages_pb2.CExtraMsgBlock, _Mapping]]] = ..., compatibility_version: _Optional[int] = ..., region_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelRegionMode, str]] = ...) -> None: ...
 
 class CMsgDevMatchInfo(_message.Message):
-    __slots__ = ["compat_version", "duration_s", "game_mode", "lobby_id", "match_id", "match_mode", "match_score", "net_worth_team_0", "net_worth_team_1", "objectives_mask_team0", "objectives_mask_team1", "open_spectator_slots", "players", "ranked_badge_level", "region_mode", "spectators", "start_time", "winning_team"]
+    __slots__ = ["compat_version", "duration_s", "game_mode", "lobby_id", "match_id", "match_mode", "match_score", "net_worth_team_0", "net_worth_team_1", "objectives_mask_team0", "objectives_mask_team1", "open_spectator_slots", "players", "region_mode", "spectators", "start_time", "winning_team"]
     class MatchPlayer(_message.Message):
         __slots__ = ["abandoned", "account_id", "hero_id", "team"]
         ABANDONED_FIELD_NUMBER: _ClassVar[int]
@@ -1649,7 +1742,6 @@ class CMsgDevMatchInfo(_message.Message):
     OBJECTIVES_MASK_TEAM1_FIELD_NUMBER: _ClassVar[int]
     OPEN_SPECTATOR_SLOTS_FIELD_NUMBER: _ClassVar[int]
     PLAYERS_FIELD_NUMBER: _ClassVar[int]
-    RANKED_BADGE_LEVEL_FIELD_NUMBER: _ClassVar[int]
     REGION_MODE_FIELD_NUMBER: _ClassVar[int]
     SPECTATORS_FIELD_NUMBER: _ClassVar[int]
     START_TIME_FIELD_NUMBER: _ClassVar[int]
@@ -1667,12 +1759,11 @@ class CMsgDevMatchInfo(_message.Message):
     objectives_mask_team1: int
     open_spectator_slots: int
     players: _containers.RepeatedCompositeFieldContainer[CMsgDevMatchInfo.MatchPlayer]
-    ranked_badge_level: int
     region_mode: _citadel_gcmessages_common_pb2.ECitadelRegionMode
     spectators: int
     start_time: int
     winning_team: _citadel_gcmessages_common_pb2.ECitadelLobbyTeam
-    def __init__(self, start_time: _Optional[int] = ..., winning_team: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelLobbyTeam, str]] = ..., match_id: _Optional[int] = ..., players: _Optional[_Iterable[_Union[CMsgDevMatchInfo.MatchPlayer, _Mapping]]] = ..., lobby_id: _Optional[int] = ..., net_worth_team_0: _Optional[int] = ..., net_worth_team_1: _Optional[int] = ..., duration_s: _Optional[int] = ..., spectators: _Optional[int] = ..., open_spectator_slots: _Optional[int] = ..., objectives_mask_team0: _Optional[int] = ..., objectives_mask_team1: _Optional[int] = ..., match_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMatchMode, str]] = ..., game_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelGameMode, str]] = ..., match_score: _Optional[int] = ..., region_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelRegionMode, str]] = ..., compat_version: _Optional[int] = ..., ranked_badge_level: _Optional[int] = ...) -> None: ...
+    def __init__(self, start_time: _Optional[int] = ..., winning_team: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelLobbyTeam, str]] = ..., match_id: _Optional[int] = ..., players: _Optional[_Iterable[_Union[CMsgDevMatchInfo.MatchPlayer, _Mapping]]] = ..., lobby_id: _Optional[int] = ..., net_worth_team_0: _Optional[int] = ..., net_worth_team_1: _Optional[int] = ..., duration_s: _Optional[int] = ..., spectators: _Optional[int] = ..., open_spectator_slots: _Optional[int] = ..., objectives_mask_team0: _Optional[int] = ..., objectives_mask_team1: _Optional[int] = ..., match_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMatchMode, str]] = ..., game_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelGameMode, str]] = ..., match_score: _Optional[int] = ..., region_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelRegionMode, str]] = ..., compat_version: _Optional[int] = ...) -> None: ...
 
 class CMsgGCToClientBookUpdated(_message.Message):
     __slots__ = ["book"]
@@ -1687,16 +1778,18 @@ class CMsgGCToClientCanRejoinParty(_message.Message):
     def __init__(self, party_id: _Optional[int] = ...) -> None: ...
 
 class CMsgGCToClientCommendNotification(_message.Message):
-    __slots__ = ["commend_type", "commender_account_id", "commender_hero_id", "commender_name"]
+    __slots__ = ["commend_type", "commender_account_id", "commender_hero_id", "commender_name", "match_id"]
     COMMENDER_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     COMMENDER_HERO_ID_FIELD_NUMBER: _ClassVar[int]
     COMMENDER_NAME_FIELD_NUMBER: _ClassVar[int]
     COMMEND_TYPE_FIELD_NUMBER: _ClassVar[int]
+    MATCH_ID_FIELD_NUMBER: _ClassVar[int]
     commend_type: ECommendType
     commender_account_id: int
     commender_hero_id: int
     commender_name: str
-    def __init__(self, commender_account_id: _Optional[int] = ..., commender_name: _Optional[str] = ..., commender_hero_id: _Optional[int] = ..., commend_type: _Optional[_Union[ECommendType, str]] = ...) -> None: ...
+    match_id: int
+    def __init__(self, commender_account_id: _Optional[int] = ..., commender_name: _Optional[str] = ..., commender_hero_id: _Optional[int] = ..., commend_type: _Optional[_Union[ECommendType, str]] = ..., match_id: _Optional[int] = ...) -> None: ...
 
 class CMsgGCToClientDevAnnouncements(_message.Message):
     __slots__ = ["announcements"]
