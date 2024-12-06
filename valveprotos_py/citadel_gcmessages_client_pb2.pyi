@@ -51,8 +51,6 @@ k_EMsgClientToGCGetOldHeroBuildData: EGCCitadelClientMessages
 k_EMsgClientToGCGetOldHeroBuildDataResponse: EGCCitadelClientMessages
 k_EMsgClientToGCGetProfileCard: EGCCitadelClientMessages
 k_EMsgClientToGCGetProfileCardResponse: EGCCitadelClientMessages
-k_EMsgClientToGCGetRankedIntervalStats: EGCCitadelClientMessages
-k_EMsgClientToGCGetRankedIntervalStatsResponse: EGCCitadelClientMessages
 k_EMsgClientToGCGrantForumAccess: EGCCitadelClientMessages
 k_EMsgClientToGCGrantForumAccessResponse: EGCCitadelClientMessages
 k_EMsgClientToGCIsInMatchmaking: EGCCitadelClientMessages
@@ -88,6 +86,8 @@ k_EMsgClientToGCReplacementSDRTicket: EGCCitadelClientMessages
 k_EMsgClientToGCReplacementSDRTicketResponse: EGCCitadelClientMessages
 k_EMsgClientToGCReportPlayerFromMatch: EGCCitadelClientMessages
 k_EMsgClientToGCReportPlayerFromMatchResponse: EGCCitadelClientMessages
+k_EMsgClientToGCSetHideHolidayModels: EGCCitadelClientMessages
+k_EMsgClientToGCSetHideHolidayModelsResponse: EGCCitadelClientMessages
 k_EMsgClientToGCSetNewPlayerProgress: EGCCitadelClientMessages
 k_EMsgClientToGCSetNewPlayerProgressResponse: EGCCitadelClientMessages
 k_EMsgClientToGCSetServerConVar: EGCCitadelClientMessages
@@ -123,7 +123,6 @@ k_EMsgGCToClientHeroLabsSchedule: EGCCitadelClientMessages
 k_EMsgGCToClientMatchmakingStopped: EGCCitadelClientMessages
 k_EMsgGCToClientPartyEvent: EGCCitadelClientMessages
 k_EMsgGCToClientProfileCardUpdated: EGCCitadelClientMessages
-k_EMsgGCToClientRankedSchedule: EGCCitadelClientMessages
 k_EMsgGCToClientSDRTicket: EGCCitadelClientMessages
 k_EProfileCardSlotType_Empty: EProfileCardSlotType
 k_EProfileCardSlotType_Hero: EProfileCardSlotType
@@ -670,12 +669,16 @@ class CMsgClientToGCGetLeaderboardResponse(_message.Message):
     class EResult(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     class LeaderboardEntry(_message.Message):
-        __slots__ = ["account_name", "rank"]
+        __slots__ = ["account_name", "badge_level", "rank", "top_hero_ids"]
         ACCOUNT_NAME_FIELD_NUMBER: _ClassVar[int]
+        BADGE_LEVEL_FIELD_NUMBER: _ClassVar[int]
         RANK_FIELD_NUMBER: _ClassVar[int]
+        TOP_HERO_IDS_FIELD_NUMBER: _ClassVar[int]
         account_name: str
+        badge_level: int
         rank: int
-        def __init__(self, account_name: _Optional[str] = ..., rank: _Optional[int] = ...) -> None: ...
+        top_hero_ids: _containers.RepeatedScalarFieldContainer[int]
+        def __init__(self, account_name: _Optional[str] = ..., rank: _Optional[int] = ..., top_hero_ids: _Optional[_Iterable[int]] = ..., badge_level: _Optional[int] = ...) -> None: ...
     ENTRIES_FIELD_NUMBER: _ClassVar[int]
     RESULT_FIELD_NUMBER: _ClassVar[int]
     entries: _containers.RepeatedCompositeFieldContainer[CMsgClientToGCGetLeaderboardResponse.LeaderboardEntry]
@@ -701,7 +704,7 @@ class CMsgClientToGCGetMatchHistoryResponse(_message.Message):
     class EResult(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     class Match(_message.Message):
-        __slots__ = ["abandoned_time_s", "denies", "game_mode", "hero_id", "hero_level", "last_hits", "match_duration_s", "match_id", "match_mode", "match_result", "net_worth", "objectives_mask_team0", "objectives_mask_team1", "player_assists", "player_deaths", "player_kills", "player_team", "start_time", "team_abandoned"]
+        __slots__ = ["abandoned_time_s", "denies", "game_mode", "hero_id", "hero_level", "last_hits", "match_duration_s", "match_id", "match_mode", "match_result", "net_worth", "not_scored", "objectives_mask_team0", "objectives_mask_team1", "player_assists", "player_deaths", "player_kills", "player_team", "start_time", "team_abandoned"]
         ABANDONED_TIME_S_FIELD_NUMBER: _ClassVar[int]
         DENIES_FIELD_NUMBER: _ClassVar[int]
         GAME_MODE_FIELD_NUMBER: _ClassVar[int]
@@ -713,6 +716,7 @@ class CMsgClientToGCGetMatchHistoryResponse(_message.Message):
         MATCH_MODE_FIELD_NUMBER: _ClassVar[int]
         MATCH_RESULT_FIELD_NUMBER: _ClassVar[int]
         NET_WORTH_FIELD_NUMBER: _ClassVar[int]
+        NOT_SCORED_FIELD_NUMBER: _ClassVar[int]
         OBJECTIVES_MASK_TEAM0_FIELD_NUMBER: _ClassVar[int]
         OBJECTIVES_MASK_TEAM1_FIELD_NUMBER: _ClassVar[int]
         PLAYER_ASSISTS_FIELD_NUMBER: _ClassVar[int]
@@ -732,6 +736,7 @@ class CMsgClientToGCGetMatchHistoryResponse(_message.Message):
         match_mode: _citadel_gcmessages_common_pb2.ECitadelMatchMode
         match_result: int
         net_worth: int
+        not_scored: bool
         objectives_mask_team0: int
         objectives_mask_team1: int
         player_assists: int
@@ -740,7 +745,7 @@ class CMsgClientToGCGetMatchHistoryResponse(_message.Message):
         player_team: _citadel_gcmessages_common_pb2.ECitadelLobbyTeam
         start_time: int
         team_abandoned: bool
-        def __init__(self, match_id: _Optional[int] = ..., hero_id: _Optional[int] = ..., match_duration_s: _Optional[int] = ..., start_time: _Optional[int] = ..., match_result: _Optional[int] = ..., player_team: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelLobbyTeam, str]] = ..., player_kills: _Optional[int] = ..., player_deaths: _Optional[int] = ..., player_assists: _Optional[int] = ..., last_hits: _Optional[int] = ..., denies: _Optional[int] = ..., hero_level: _Optional[int] = ..., net_worth: _Optional[int] = ..., objectives_mask_team0: _Optional[int] = ..., objectives_mask_team1: _Optional[int] = ..., team_abandoned: bool = ..., abandoned_time_s: _Optional[int] = ..., match_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMatchMode, str]] = ..., game_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelGameMode, str]] = ...) -> None: ...
+        def __init__(self, match_id: _Optional[int] = ..., hero_id: _Optional[int] = ..., match_duration_s: _Optional[int] = ..., start_time: _Optional[int] = ..., match_result: _Optional[int] = ..., player_team: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelLobbyTeam, str]] = ..., player_kills: _Optional[int] = ..., player_deaths: _Optional[int] = ..., player_assists: _Optional[int] = ..., last_hits: _Optional[int] = ..., denies: _Optional[int] = ..., hero_level: _Optional[int] = ..., net_worth: _Optional[int] = ..., objectives_mask_team0: _Optional[int] = ..., objectives_mask_team1: _Optional[int] = ..., team_abandoned: bool = ..., abandoned_time_s: _Optional[int] = ..., match_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMatchMode, str]] = ..., game_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelGameMode, str]] = ..., not_scored: bool = ...) -> None: ...
     CONTINUE_CURSOR_FIELD_NUMBER: _ClassVar[int]
     MATCHES_FIELD_NUMBER: _ClassVar[int]
     RESULT_FIELD_NUMBER: _ClassVar[int]
@@ -836,43 +841,6 @@ class CMsgClientToGCGetProfileCard(_message.Message):
     dev_access_hint: bool
     friend_access_hint: bool
     def __init__(self, account_id: _Optional[int] = ..., dev_access_hint: bool = ..., friend_access_hint: bool = ...) -> None: ...
-
-class CMsgClientToGCGetRankedIntervalStats(_message.Message):
-    __slots__ = ["account_id", "target_interval_id"]
-    ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
-    TARGET_INTERVAL_ID_FIELD_NUMBER: _ClassVar[int]
-    account_id: int
-    target_interval_id: int
-    def __init__(self, account_id: _Optional[int] = ..., target_interval_id: _Optional[int] = ...) -> None: ...
-
-class CMsgClientToGCGetRankedIntervalStatsResponse(_message.Message):
-    __slots__ = ["intervals", "result"]
-    class EResponse(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = []
-    class RankedInterval(_message.Message):
-        __slots__ = ["badge_level", "end_time", "interval_id", "matches_played", "start_time"]
-        BADGE_LEVEL_FIELD_NUMBER: _ClassVar[int]
-        END_TIME_FIELD_NUMBER: _ClassVar[int]
-        INTERVAL_ID_FIELD_NUMBER: _ClassVar[int]
-        MATCHES_PLAYED_FIELD_NUMBER: _ClassVar[int]
-        START_TIME_FIELD_NUMBER: _ClassVar[int]
-        badge_level: int
-        end_time: int
-        interval_id: int
-        matches_played: int
-        start_time: int
-        def __init__(self, interval_id: _Optional[int] = ..., matches_played: _Optional[int] = ..., badge_level: _Optional[int] = ..., start_time: _Optional[int] = ..., end_time: _Optional[int] = ...) -> None: ...
-    INTERVALS_FIELD_NUMBER: _ClassVar[int]
-    RESULT_FIELD_NUMBER: _ClassVar[int]
-    intervals: _containers.RepeatedCompositeFieldContainer[CMsgClientToGCGetRankedIntervalStatsResponse.RankedInterval]
-    k_eDisabled: CMsgClientToGCGetRankedIntervalStatsResponse.EResponse
-    k_eInternalError: CMsgClientToGCGetRankedIntervalStatsResponse.EResponse
-    k_eInvalidPermission: CMsgClientToGCGetRankedIntervalStatsResponse.EResponse
-    k_eRateLimited: CMsgClientToGCGetRankedIntervalStatsResponse.EResponse
-    k_eSuccess: CMsgClientToGCGetRankedIntervalStatsResponse.EResponse
-    k_eTooBusy: CMsgClientToGCGetRankedIntervalStatsResponse.EResponse
-    result: CMsgClientToGCGetRankedIntervalStatsResponse.EResponse
-    def __init__(self, result: _Optional[_Union[CMsgClientToGCGetRankedIntervalStatsResponse.EResponse, str]] = ..., intervals: _Optional[_Iterable[_Union[CMsgClientToGCGetRankedIntervalStatsResponse.RankedInterval, _Mapping]]] = ...) -> None: ...
 
 class CMsgClientToGCGrantForumAccess(_message.Message):
     __slots__ = ["email"]
@@ -990,6 +958,7 @@ class CMsgClientToGCPartyAction(_message.Message):
     k_eSetDesiresLaningTogether: CMsgClientToGCPartyAction.EAction
     k_eSetDuplicateHeroesEnabled: CMsgClientToGCPartyAction.EAction
     k_eSetExperimentalHeroesEnabled: CMsgClientToGCPartyAction.EAction
+    k_eSetMMPreference: CMsgClientToGCPartyAction.EAction
     k_eSetMemberTeam: CMsgClientToGCPartyAction.EAction
     k_eSetPlayerSlot: CMsgClientToGCPartyAction.EAction
     k_eSetPlayerType: CMsgClientToGCPartyAction.EAction
@@ -1029,20 +998,22 @@ class CMsgClientToGCPartyActionResponse(_message.Message):
     def __init__(self, result: _Optional[_Union[CMsgClientToGCPartyActionResponse.EResponse, str]] = ...) -> None: ...
 
 class CMsgClientToGCPartyCreate(_message.Message):
-    __slots__ = ["disable_party_code", "invite_account_id", "is_private_lobby", "party_mm_info", "region_mode", "server_search_key"]
+    __slots__ = ["disable_party_code", "invite_account_id", "is_private_lobby", "mm_preference", "party_mm_info", "region_mode", "server_search_key"]
     DISABLE_PARTY_CODE_FIELD_NUMBER: _ClassVar[int]
     INVITE_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     IS_PRIVATE_LOBBY_FIELD_NUMBER: _ClassVar[int]
+    MM_PREFERENCE_FIELD_NUMBER: _ClassVar[int]
     PARTY_MM_INFO_FIELD_NUMBER: _ClassVar[int]
     REGION_MODE_FIELD_NUMBER: _ClassVar[int]
     SERVER_SEARCH_KEY_FIELD_NUMBER: _ClassVar[int]
     disable_party_code: bool
     invite_account_id: int
     is_private_lobby: bool
+    mm_preference: _citadel_gcmessages_common_pb2.ECitadelMMPreference
     party_mm_info: CMsgPartyMMInfo
     region_mode: _citadel_gcmessages_common_pb2.ECitadelRegionMode
     server_search_key: str
-    def __init__(self, party_mm_info: _Optional[_Union[CMsgPartyMMInfo, _Mapping]] = ..., invite_account_id: _Optional[int] = ..., disable_party_code: bool = ..., is_private_lobby: bool = ..., region_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelRegionMode, str]] = ..., server_search_key: _Optional[str] = ...) -> None: ...
+    def __init__(self, party_mm_info: _Optional[_Union[CMsgPartyMMInfo, _Mapping]] = ..., invite_account_id: _Optional[int] = ..., disable_party_code: bool = ..., is_private_lobby: bool = ..., region_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelRegionMode, str]] = ..., server_search_key: _Optional[str] = ..., mm_preference: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMMPreference, str]] = ...) -> None: ...
 
 class CMsgClientToGCPartyCreateResponse(_message.Message):
     __slots__ = ["party_id", "result"]
@@ -1166,22 +1137,20 @@ class CMsgClientToGCPartyLeaveResponse(_message.Message):
     def __init__(self, result: _Optional[_Union[CMsgClientToGCPartyLeaveResponse.EResponse, str]] = ...) -> None: ...
 
 class CMsgClientToGCPartySetMode(_message.Message):
-    __slots__ = ["bot_difficulty", "dev_server_command", "game_mode", "match_mode", "party_id", "ranked_schedule", "region_mode"]
+    __slots__ = ["bot_difficulty", "dev_server_command", "game_mode", "match_mode", "party_id", "region_mode"]
     BOT_DIFFICULTY_FIELD_NUMBER: _ClassVar[int]
     DEV_SERVER_COMMAND_FIELD_NUMBER: _ClassVar[int]
     GAME_MODE_FIELD_NUMBER: _ClassVar[int]
     MATCH_MODE_FIELD_NUMBER: _ClassVar[int]
     PARTY_ID_FIELD_NUMBER: _ClassVar[int]
-    RANKED_SCHEDULE_FIELD_NUMBER: _ClassVar[int]
     REGION_MODE_FIELD_NUMBER: _ClassVar[int]
     bot_difficulty: _citadel_gcmessages_common_pb2.ECitadelBotDifficulty
     dev_server_command: str
     game_mode: _citadel_gcmessages_common_pb2.ECitadelGameMode
     match_mode: _citadel_gcmessages_common_pb2.ECitadelMatchMode
     party_id: int
-    ranked_schedule: int
     region_mode: _citadel_gcmessages_common_pb2.ECitadelRegionMode
-    def __init__(self, party_id: _Optional[int] = ..., match_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMatchMode, str]] = ..., game_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelGameMode, str]] = ..., bot_difficulty: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelBotDifficulty, str]] = ..., dev_server_command: _Optional[str] = ..., region_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelRegionMode, str]] = ..., ranked_schedule: _Optional[int] = ...) -> None: ...
+    def __init__(self, party_id: _Optional[int] = ..., match_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMatchMode, str]] = ..., game_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelGameMode, str]] = ..., bot_difficulty: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelBotDifficulty, str]] = ..., dev_server_command: _Optional[str] = ..., region_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelRegionMode, str]] = ...) -> None: ...
 
 class CMsgClientToGCPartySetModeResponse(_message.Message):
     __slots__ = ["account_id", "result", "time_stamp"]
@@ -1191,6 +1160,7 @@ class CMsgClientToGCPartySetModeResponse(_message.Message):
     RESULT_FIELD_NUMBER: _ClassVar[int]
     TIME_STAMP_FIELD_NUMBER: _ClassVar[int]
     account_id: int
+    k_eAccountLocked: CMsgClientToGCPartySetModeResponse.EResponse
     k_eAlreadyDrafting: CMsgClientToGCPartySetModeResponse.EResponse
     k_eCannotChangeWhileReady: CMsgClientToGCPartySetModeResponse.EResponse
     k_eDisabled: CMsgClientToGCPartySetModeResponse.EResponse
@@ -1299,12 +1269,14 @@ class CMsgClientToGCPartyStartMatchResponse(_message.Message):
 class CMsgClientToGCPostMatchSurveyResponse(_message.Message):
     __slots__ = ["match_id", "post_match_survey"]
     class PostMatchSurvey(_message.Message):
-        __slots__ = ["question_id", "response_value"]
+        __slots__ = ["question_id", "response_freeform", "response_value"]
         QUESTION_ID_FIELD_NUMBER: _ClassVar[int]
+        RESPONSE_FREEFORM_FIELD_NUMBER: _ClassVar[int]
         RESPONSE_VALUE_FIELD_NUMBER: _ClassVar[int]
         question_id: int
+        response_freeform: str
         response_value: int
-        def __init__(self, question_id: _Optional[int] = ..., response_value: _Optional[int] = ...) -> None: ...
+        def __init__(self, question_id: _Optional[int] = ..., response_value: _Optional[int] = ..., response_freeform: _Optional[str] = ...) -> None: ...
     MATCH_ID_FIELD_NUMBER: _ClassVar[int]
     POST_MATCH_SURVEY_FIELD_NUMBER: _ClassVar[int]
     match_id: int
@@ -1412,6 +1384,18 @@ class CMsgClientToGCRequestCheatReportsResponse(_message.Message):
     k_eSuccess: CMsgClientToGCRequestCheatReportsResponse.EResult
     result: CMsgClientToGCRequestCheatReportsResponse.EResult
     def __init__(self, result: _Optional[_Union[CMsgClientToGCRequestCheatReportsResponse.EResult, str]] = ..., cheat_reports: _Optional[_Iterable[_Union[CMsgClientToGCRequestCheatReportsResponse.RecentCheatReport, _Mapping]]] = ...) -> None: ...
+
+class CMsgClientToGCSetHideHolidayModels(_message.Message):
+    __slots__ = ["hide_holiday_models"]
+    HIDE_HOLIDAY_MODELS_FIELD_NUMBER: _ClassVar[int]
+    hide_holiday_models: bool
+    def __init__(self, hide_holiday_models: bool = ...) -> None: ...
+
+class CMsgClientToGCSetHideHolidayModelsResponse(_message.Message):
+    __slots__ = ["success"]
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    success: bool
+    def __init__(self, success: bool = ...) -> None: ...
 
 class CMsgClientToGCSetNewPlayerProgress(_message.Message):
     __slots__ = ["flag"]
@@ -1528,6 +1512,7 @@ class CMsgClientToGCStartMatchmakingResponse(_message.Message):
     RESULT_FIELD_NUMBER: _ClassVar[int]
     TIME_STAMP_FIELD_NUMBER: _ClassVar[int]
     debug_message: str
+    k_EResult_AccountLocked: CMsgClientToGCStartMatchmakingResponse.EResultCode
     k_EResult_AlreadyFindingMatch: CMsgClientToGCStartMatchmakingResponse.EResultCode
     k_EResult_DurationControlBlocked: CMsgClientToGCStartMatchmakingResponse.EResultCode
     k_EResult_HeroLabsMMNotOpen: CMsgClientToGCStartMatchmakingResponse.EResultCode
@@ -1920,36 +1905,6 @@ class CMsgGCToClientPartyEvent(_message.Message):
     uint_data: int
     def __init__(self, party_id: _Optional[int] = ..., event: _Optional[_Union[CMsgGCToClientPartyEvent.EEvent, str]] = ..., initiator_account_id: _Optional[int] = ..., target_account_id: _Optional[int] = ..., bytes_data: _Optional[bytes] = ..., str_data: _Optional[str] = ..., uint_data: _Optional[int] = ...) -> None: ...
 
-class CMsgGCToClientRankedSchedule(_message.Message):
-    __slots__ = ["active_interval_end", "active_interval_start", "active_ranked_interval", "schedules"]
-    class Schedule(_message.Message):
-        __slots__ = ["is_open", "schedule_id", "weekdays", "weekends"]
-        IS_OPEN_FIELD_NUMBER: _ClassVar[int]
-        SCHEDULE_ID_FIELD_NUMBER: _ClassVar[int]
-        WEEKDAYS_FIELD_NUMBER: _ClassVar[int]
-        WEEKENDS_FIELD_NUMBER: _ClassVar[int]
-        is_open: bool
-        schedule_id: int
-        weekdays: _containers.RepeatedCompositeFieldContainer[CMsgGCToClientRankedSchedule.TimeRange]
-        weekends: _containers.RepeatedCompositeFieldContainer[CMsgGCToClientRankedSchedule.TimeRange]
-        def __init__(self, schedule_id: _Optional[int] = ..., weekends: _Optional[_Iterable[_Union[CMsgGCToClientRankedSchedule.TimeRange, _Mapping]]] = ..., weekdays: _Optional[_Iterable[_Union[CMsgGCToClientRankedSchedule.TimeRange, _Mapping]]] = ..., is_open: bool = ...) -> None: ...
-    class TimeRange(_message.Message):
-        __slots__ = ["end_time", "start_time"]
-        END_TIME_FIELD_NUMBER: _ClassVar[int]
-        START_TIME_FIELD_NUMBER: _ClassVar[int]
-        end_time: int
-        start_time: int
-        def __init__(self, start_time: _Optional[int] = ..., end_time: _Optional[int] = ...) -> None: ...
-    ACTIVE_INTERVAL_END_FIELD_NUMBER: _ClassVar[int]
-    ACTIVE_INTERVAL_START_FIELD_NUMBER: _ClassVar[int]
-    ACTIVE_RANKED_INTERVAL_FIELD_NUMBER: _ClassVar[int]
-    SCHEDULES_FIELD_NUMBER: _ClassVar[int]
-    active_interval_end: int
-    active_interval_start: int
-    active_ranked_interval: int
-    schedules: _containers.RepeatedCompositeFieldContainer[CMsgGCToClientRankedSchedule.Schedule]
-    def __init__(self, schedules: _Optional[_Iterable[_Union[CMsgGCToClientRankedSchedule.Schedule, _Mapping]]] = ..., active_ranked_interval: _Optional[int] = ..., active_interval_start: _Optional[int] = ..., active_interval_end: _Optional[int] = ...) -> None: ...
-
 class CMsgGCToClientSDRTicket(_message.Message):
     __slots__ = ["ticket"]
     TICKET_FIELD_NUMBER: _ClassVar[int]
@@ -2074,7 +2029,7 @@ class CSOAccountSyncStorage(_message.Message):
     def __init__(self, account_id: _Optional[int] = ..., id: _Optional[int] = ..., value: _Optional[int] = ...) -> None: ...
 
 class CSOGameAccountClient(_message.Message):
-    __slots__ = ["account_id", "comms_ban_until", "flags", "hero_labs_matches_since_test_hero", "hero_unlock_credits", "kills", "losses", "low_priority_games_remaining", "mm_ban_until", "most_played_hero_id", "new_player_progress", "permissions", "ranked_badge_interval", "ranked_badge_level", "ranked_interval", "ranked_matches", "report_ban_until", "wins"]
+    __slots__ = ["account_id", "comms_ban_until", "flags", "hero_labs_matches_since_test_hero", "hero_unlock_credits", "kills", "losses", "low_priority_games_remaining", "mm_ban_until", "most_played_hero_id", "new_player_progress", "permissions", "ranked_badge_level", "report_ban_until", "wins"]
     class EFlags(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
@@ -2089,10 +2044,7 @@ class CSOGameAccountClient(_message.Message):
     MOST_PLAYED_HERO_ID_FIELD_NUMBER: _ClassVar[int]
     NEW_PLAYER_PROGRESS_FIELD_NUMBER: _ClassVar[int]
     PERMISSIONS_FIELD_NUMBER: _ClassVar[int]
-    RANKED_BADGE_INTERVAL_FIELD_NUMBER: _ClassVar[int]
     RANKED_BADGE_LEVEL_FIELD_NUMBER: _ClassVar[int]
-    RANKED_INTERVAL_FIELD_NUMBER: _ClassVar[int]
-    RANKED_MATCHES_FIELD_NUMBER: _ClassVar[int]
     REPORT_BAN_UNTIL_FIELD_NUMBER: _ClassVar[int]
     WINS_FIELD_NUMBER: _ClassVar[int]
     account_id: int
@@ -2106,6 +2058,7 @@ class CSOGameAccountClient(_message.Message):
     k_eDeveloper: CSOGameAccountClient.EFlags
     k_eExternalModerator: CSOGameAccountClient.EFlags
     k_eGotInitialHeroes: CSOGameAccountClient.EFlags
+    k_eHideHolidayModels: CSOGameAccountClient.EFlags
     kills: int
     losses: int
     low_priority_games_remaining: int
@@ -2113,13 +2066,10 @@ class CSOGameAccountClient(_message.Message):
     most_played_hero_id: int
     new_player_progress: int
     permissions: int
-    ranked_badge_interval: int
     ranked_badge_level: int
-    ranked_interval: int
-    ranked_matches: int
     report_ban_until: int
     wins: int
-    def __init__(self, account_id: _Optional[int] = ..., flags: _Optional[int] = ..., wins: _Optional[int] = ..., losses: _Optional[int] = ..., kills: _Optional[int] = ..., most_played_hero_id: _Optional[int] = ..., permissions: _Optional[int] = ..., new_player_progress: _Optional[int] = ..., hero_unlock_credits: _Optional[int] = ..., mm_ban_until: _Optional[int] = ..., comms_ban_until: _Optional[int] = ..., low_priority_games_remaining: _Optional[int] = ..., report_ban_until: _Optional[int] = ..., ranked_badge_level: _Optional[int] = ..., ranked_badge_interval: _Optional[int] = ..., ranked_matches: _Optional[int] = ..., ranked_interval: _Optional[int] = ..., hero_labs_matches_since_test_hero: _Optional[int] = ...) -> None: ...
+    def __init__(self, account_id: _Optional[int] = ..., flags: _Optional[int] = ..., wins: _Optional[int] = ..., losses: _Optional[int] = ..., kills: _Optional[int] = ..., most_played_hero_id: _Optional[int] = ..., permissions: _Optional[int] = ..., new_player_progress: _Optional[int] = ..., hero_unlock_credits: _Optional[int] = ..., mm_ban_until: _Optional[int] = ..., comms_ban_until: _Optional[int] = ..., low_priority_games_remaining: _Optional[int] = ..., report_ban_until: _Optional[int] = ..., ranked_badge_level: _Optional[int] = ..., hero_labs_matches_since_test_hero: _Optional[int] = ...) -> None: ...
 
 class EGCCitadelClientMessages(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []

@@ -26,6 +26,7 @@ VOICEDATA_FORMAT_ENGINE: VoiceDataFormat_t
 VOICEDATA_FORMAT_OPUS: VoiceDataFormat_t
 VOICEDATA_FORMAT_STEAM: VoiceDataFormat_t
 bi_GameEvent: Bidirectional_Messages
+bi_PredictionEvent: Bidirectional_Messages
 bi_RebroadcastGameEvent: Bidirectional_Messages
 bi_RebroadcastSource: Bidirectional_Messages
 bi_RelayInfo: Bidirectional_Messages_LowFrequency
@@ -80,6 +81,22 @@ svc_UserMessage: SVC_Messages
 svc_VoiceData: SVC_Messages
 svc_VoiceInit: SVC_Messages
 svc_dummy: SVC_Messages_LowFrequency
+
+class CBidirMsg_PredictionEvent(_message.Message):
+    __slots__ = ["event_data", "event_id", "sync_type", "sync_val_uint32"]
+    class ESyncType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+    EVENT_DATA_FIELD_NUMBER: _ClassVar[int]
+    EVENT_ID_FIELD_NUMBER: _ClassVar[int]
+    ST_Tick: CBidirMsg_PredictionEvent.ESyncType
+    ST_UserCmdNum: CBidirMsg_PredictionEvent.ESyncType
+    SYNC_TYPE_FIELD_NUMBER: _ClassVar[int]
+    SYNC_VAL_UINT32_FIELD_NUMBER: _ClassVar[int]
+    event_data: bytes
+    event_id: int
+    sync_type: int
+    sync_val_uint32: int
+    def __init__(self, event_id: _Optional[int] = ..., event_data: _Optional[bytes] = ..., sync_type: _Optional[int] = ..., sync_val_uint32: _Optional[int] = ...) -> None: ...
 
 class CBidirMsg_RebroadcastGameEvent(_message.Message):
     __slots__ = ["buftype", "clientbitcount", "posttoserver", "receivingclients"]

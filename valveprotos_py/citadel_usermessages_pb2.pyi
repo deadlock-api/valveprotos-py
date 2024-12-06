@@ -93,6 +93,7 @@ k_EUserMsg_QuickResponse: CitadelUserMessageIds
 k_EUserMsg_RecentDamageSummary: CitadelUserMessageIds
 k_EUserMsg_RejuvStatus: CitadelUserMessageIds
 k_EUserMsg_ReturnIdol: CitadelUserMessageIds
+k_EUserMsg_SeasonalAchievementUnlocked: CitadelUserMessageIds
 k_EUserMsg_SetClientCameraAngles: CitadelUserMessageIds
 k_EUserMsg_SpectatorTeamChanged: CitadelUserMessageIds
 k_EUserMsg_StaminaDrained: CitadelUserMessageIds
@@ -137,16 +138,18 @@ class CCitadelUserMessage_AuraModifierApplied(_message.Message):
     def __init__(self, entindex_caster: _Optional[int] = ..., entindex_target: _Optional[int] = ..., modifier_type_id: _Optional[int] = ..., modifier_serial_number: _Optional[int] = ..., aura_start_time: _Optional[float] = ..., aura_end_time: _Optional[float] = ...) -> None: ...
 
 class CCitadelUserMessage_BulletHit(_message.Message):
-    __slots__ = ["hit_entindex", "pellet", "shotid", "weapon_entindex"]
+    __slots__ = ["hit_entindex", "is_predicted", "pellet", "shotid", "weapon_entindex"]
     HIT_ENTINDEX_FIELD_NUMBER: _ClassVar[int]
+    IS_PREDICTED_FIELD_NUMBER: _ClassVar[int]
     PELLET_FIELD_NUMBER: _ClassVar[int]
     SHOTID_FIELD_NUMBER: _ClassVar[int]
     WEAPON_ENTINDEX_FIELD_NUMBER: _ClassVar[int]
     hit_entindex: int
+    is_predicted: bool
     pellet: int
     shotid: int
     weapon_entindex: int
-    def __init__(self, shotid: _Optional[int] = ..., pellet: _Optional[int] = ..., hit_entindex: _Optional[int] = ..., weapon_entindex: _Optional[int] = ...) -> None: ...
+    def __init__(self, shotid: _Optional[int] = ..., pellet: _Optional[int] = ..., hit_entindex: _Optional[int] = ..., weapon_entindex: _Optional[int] = ..., is_predicted: bool = ...) -> None: ...
 
 class CCitadelUserMessage_CurrencyChanged(_message.Message):
     __slots__ = ["ability_id", "currency_source", "currency_type", "delta", "entindex_hero_pawn", "entindex_victim", "new_value", "notification", "playsound", "victim_pos"]
@@ -813,6 +816,14 @@ class CCitadelUserMsg_ReturnIdol(_message.Message):
     location_index: int
     return_location: _networkbasetypes_pb2.CMsgVector
     def __init__(self, location_index: _Optional[int] = ..., return_location: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., location_enabled: bool = ...) -> None: ...
+
+class CCitadelUserMsg_SeasonalAchievementUnlocked(_message.Message):
+    __slots__ = ["account_id", "hero_id"]
+    ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    HERO_ID_FIELD_NUMBER: _ClassVar[int]
+    account_id: int
+    hero_id: int
+    def __init__(self, account_id: _Optional[int] = ..., hero_id: _Optional[int] = ...) -> None: ...
 
 class CCitadelUserMsg_SetClientCameraAngles(_message.Message):
     __slots__ = ["camera_angles", "player_slot"]

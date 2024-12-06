@@ -13,6 +13,7 @@ CITADEL_CM_ExecuteMapUnitAbility: ECitadelClientMessages
 CITADEL_CM_GetDamageStats: ECitadelClientMessages
 CITADEL_CM_MapLine: ECitadelClientMessages
 CITADEL_CM_MapPing: ECitadelClientMessages
+CITADEL_CM_MutePlayers: ECitadelClientMessages
 CITADEL_CM_Pause: ECitadelClientMessages
 CITADEL_CM_PerfReport: ECitadelClientMessages
 CITADEL_CM_PerformanceStats: ECitadelClientMessages
@@ -102,6 +103,14 @@ class CCitadelClientMsg_MapPing(_message.Message):
     is_minimap_ping: bool
     ping_location: _networkbasetypes_pb2.CMsgVector
     def __init__(self, ping_location: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., event_type: _Optional[int] = ..., entity_index: _Optional[int] = ..., is_aggressive_ping: bool = ..., is_minimap_ping: bool = ..., is_blind_ping: bool = ...) -> None: ...
+
+class CCitadelClientMsg_MutePlayers(_message.Message):
+    __slots__ = ["player_slots", "unmute"]
+    PLAYER_SLOTS_FIELD_NUMBER: _ClassVar[int]
+    UNMUTE_FIELD_NUMBER: _ClassVar[int]
+    player_slots: _containers.RepeatedScalarFieldContainer[int]
+    unmute: bool
+    def __init__(self, player_slots: _Optional[_Iterable[int]] = ..., unmute: bool = ...) -> None: ...
 
 class CCitadelClientMsg_Pause(_message.Message):
     __slots__ = []

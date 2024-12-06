@@ -397,7 +397,7 @@ class CMsgServerSignoutData_DetailedStats(_message.Message):
     class TimeSample(_message.Message):
         __slots__ = ["gold_stats", "match_time_s", "stats"]
         class GoldStats(_message.Message):
-            __slots__ = ["boss", "boss_orb", "death_loss", "denied", "lane_creep", "lane_creep_orb", "neutral_creep", "neutral_creep_orb", "player", "player_orb", "treasure"]
+            __slots__ = ["boss", "boss_orb", "death_loss", "denied", "lane_creep", "lane_creep_orb", "neutral_creep", "neutral_creep_orb", "player", "player_orb", "team_bonus", "treasure"]
             BOSS_FIELD_NUMBER: _ClassVar[int]
             BOSS_ORB_FIELD_NUMBER: _ClassVar[int]
             DEATH_LOSS_FIELD_NUMBER: _ClassVar[int]
@@ -408,6 +408,7 @@ class CMsgServerSignoutData_DetailedStats(_message.Message):
             NEUTRAL_CREEP_ORB_FIELD_NUMBER: _ClassVar[int]
             PLAYER_FIELD_NUMBER: _ClassVar[int]
             PLAYER_ORB_FIELD_NUMBER: _ClassVar[int]
+            TEAM_BONUS_FIELD_NUMBER: _ClassVar[int]
             TREASURE_FIELD_NUMBER: _ClassVar[int]
             boss: int
             boss_orb: int
@@ -419,8 +420,9 @@ class CMsgServerSignoutData_DetailedStats(_message.Message):
             neutral_creep_orb: int
             player: int
             player_orb: int
+            team_bonus: int
             treasure: int
-            def __init__(self, player: _Optional[int] = ..., player_orb: _Optional[int] = ..., lane_creep_orb: _Optional[int] = ..., neutral_creep_orb: _Optional[int] = ..., boss: _Optional[int] = ..., boss_orb: _Optional[int] = ..., treasure: _Optional[int] = ..., denied: _Optional[int] = ..., death_loss: _Optional[int] = ..., lane_creep: _Optional[int] = ..., neutral_creep: _Optional[int] = ...) -> None: ...
+            def __init__(self, player: _Optional[int] = ..., player_orb: _Optional[int] = ..., lane_creep_orb: _Optional[int] = ..., neutral_creep_orb: _Optional[int] = ..., boss: _Optional[int] = ..., boss_orb: _Optional[int] = ..., treasure: _Optional[int] = ..., denied: _Optional[int] = ..., death_loss: _Optional[int] = ..., lane_creep: _Optional[int] = ..., neutral_creep: _Optional[int] = ..., team_bonus: _Optional[int] = ...) -> None: ...
         class Stats(_message.Message):
             __slots__ = ["ability_points", "absorption_provided", "assists", "boss_damage", "creep_damage", "creep_kills", "damage_absorbed", "deaths", "denies", "heal_lost", "heal_prevented", "kills", "max_health", "net_worth", "neutral_damage", "neutral_kills", "player_damage", "player_damage_taken", "player_healing", "possible_creeps", "self_healing", "shots_hit", "shots_missed", "tech_power", "weapon_power"]
             ABILITY_POINTS_FIELD_NUMBER: _ClassVar[int]
@@ -884,11 +886,12 @@ class CSOCitadelServerStaticLobby(_message.Message):
         console_string: str
         def __init__(self, console_string: _Optional[str] = ...) -> None: ...
     class Member(_message.Message):
-        __slots__ = ["account_id", "award_ids", "gc_account_data", "hero_id", "is_comms_restricted", "lane_id", "party_desires_laning_together", "party_index", "persona_name", "platform", "player_slot", "team"]
+        __slots__ = ["account_id", "award_ids", "gc_account_data", "hero_id", "hide_holiday_models", "is_comms_restricted", "lane_id", "party_desires_laning_together", "party_index", "persona_name", "platform", "player_slot", "team"]
         ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
         AWARD_IDS_FIELD_NUMBER: _ClassVar[int]
         GC_ACCOUNT_DATA_FIELD_NUMBER: _ClassVar[int]
         HERO_ID_FIELD_NUMBER: _ClassVar[int]
+        HIDE_HOLIDAY_MODELS_FIELD_NUMBER: _ClassVar[int]
         IS_COMMS_RESTRICTED_FIELD_NUMBER: _ClassVar[int]
         LANE_ID_FIELD_NUMBER: _ClassVar[int]
         PARTY_DESIRES_LANING_TOGETHER_FIELD_NUMBER: _ClassVar[int]
@@ -901,6 +904,7 @@ class CSOCitadelServerStaticLobby(_message.Message):
         award_ids: _containers.RepeatedScalarFieldContainer[CSOCitadelServerStaticLobby.EAwardIDs]
         gc_account_data: _citadel_gcmessages_common_pb2.CMsgGCAccountData
         hero_id: int
+        hide_holiday_models: bool
         is_comms_restricted: bool
         lane_id: int
         party_desires_laning_together: bool
@@ -909,7 +913,7 @@ class CSOCitadelServerStaticLobby(_message.Message):
         platform: _steammessages_pb2.EGCPlatform
         player_slot: int
         team: _citadel_gcmessages_common_pb2.ECitadelLobbyTeam
-        def __init__(self, account_id: _Optional[int] = ..., persona_name: _Optional[str] = ..., team: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelLobbyTeam, str]] = ..., player_slot: _Optional[int] = ..., hero_id: _Optional[int] = ..., party_index: _Optional[int] = ..., platform: _Optional[_Union[_steammessages_pb2.EGCPlatform, str]] = ..., award_ids: _Optional[_Iterable[_Union[CSOCitadelServerStaticLobby.EAwardIDs, str]]] = ..., is_comms_restricted: bool = ..., lane_id: _Optional[int] = ..., gc_account_data: _Optional[_Union[_citadel_gcmessages_common_pb2.CMsgGCAccountData, _Mapping]] = ..., party_desires_laning_together: bool = ...) -> None: ...
+        def __init__(self, account_id: _Optional[int] = ..., persona_name: _Optional[str] = ..., team: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelLobbyTeam, str]] = ..., player_slot: _Optional[int] = ..., hero_id: _Optional[int] = ..., party_index: _Optional[int] = ..., platform: _Optional[_Union[_steammessages_pb2.EGCPlatform, str]] = ..., award_ids: _Optional[_Iterable[_Union[CSOCitadelServerStaticLobby.EAwardIDs, str]]] = ..., is_comms_restricted: bool = ..., lane_id: _Optional[int] = ..., gc_account_data: _Optional[_Union[_citadel_gcmessages_common_pb2.CMsgGCAccountData, _Mapping]] = ..., party_desires_laning_together: bool = ..., hide_holiday_models: bool = ...) -> None: ...
     AVERAGE_BADGE_TEAM_0_FIELD_NUMBER: _ClassVar[int]
     AVERAGE_BADGE_TEAM_1_FIELD_NUMBER: _ClassVar[int]
     BOT_DIFFICULTY_FIELD_NUMBER: _ClassVar[int]

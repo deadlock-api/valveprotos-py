@@ -26,6 +26,9 @@ k_ECitadelLeaderboardRegion_SAmerica: ECitadelLeaderboardRegion
 k_ECitadelLobbyTeam_Spectator: ECitadelLobbyTeam
 k_ECitadelLobbyTeam_Team0: ECitadelLobbyTeam
 k_ECitadelLobbyTeam_Team1: ECitadelLobbyTeam
+k_ECitadelMMPreference_Casual: ECitadelMMPreference
+k_ECitadelMMPreference_Invalid: ECitadelMMPreference
+k_ECitadelMMPreference_Serious: ECitadelMMPreference
 k_ECitadelMatchMode_CoopBot: ECitadelMatchMode
 k_ECitadelMatchMode_HeroLabs: ECitadelMatchMode
 k_ECitadelMatchMode_Invalid: ECitadelMatchMode
@@ -571,6 +574,7 @@ class CMsgMatchMetaDataContents(_message.Message):
     k_eOutcome_Error: CMsgMatchMetaDataContents.EMatchOutcome
     k_eOutcome_TeamWin: CMsgMatchMetaDataContents.EMatchOutcome
     k_ePlayers: CMsgMatchMetaDataContents.EGoldSource
+    k_eTeamBonus: CMsgMatchMetaDataContents.EGoldSource
     k_eTreasure: CMsgMatchMetaDataContents.EGoldSource
     match_info: CMsgMatchMetaDataContents.MatchInfo
     def __init__(self, match_info: _Optional[_Union[CMsgMatchMetaDataContents.MatchInfo, _Mapping]] = ...) -> None: ...
@@ -664,10 +668,11 @@ class CMsgRegionPingTimesClient(_message.Message):
     def __init__(self, data_center_codes: _Optional[_Iterable[int]] = ..., ping_times: _Optional[_Iterable[int]] = ...) -> None: ...
 
 class CMsgStartFindingMatchInfo(_message.Message):
-    __slots__ = ["bot_difficulty", "game_mode", "match_mode", "prefer_solo_only", "region_mode", "server_command_string", "server_search_key"]
+    __slots__ = ["bot_difficulty", "game_mode", "match_mode", "mm_preference", "prefer_solo_only", "region_mode", "server_command_string", "server_search_key"]
     BOT_DIFFICULTY_FIELD_NUMBER: _ClassVar[int]
     GAME_MODE_FIELD_NUMBER: _ClassVar[int]
     MATCH_MODE_FIELD_NUMBER: _ClassVar[int]
+    MM_PREFERENCE_FIELD_NUMBER: _ClassVar[int]
     PREFER_SOLO_ONLY_FIELD_NUMBER: _ClassVar[int]
     REGION_MODE_FIELD_NUMBER: _ClassVar[int]
     SERVER_COMMAND_STRING_FIELD_NUMBER: _ClassVar[int]
@@ -675,11 +680,12 @@ class CMsgStartFindingMatchInfo(_message.Message):
     bot_difficulty: ECitadelBotDifficulty
     game_mode: ECitadelGameMode
     match_mode: ECitadelMatchMode
+    mm_preference: ECitadelMMPreference
     prefer_solo_only: bool
     region_mode: ECitadelRegionMode
     server_command_string: str
     server_search_key: str
-    def __init__(self, server_search_key: _Optional[str] = ..., server_command_string: _Optional[str] = ..., match_mode: _Optional[_Union[ECitadelMatchMode, str]] = ..., game_mode: _Optional[_Union[ECitadelGameMode, str]] = ..., bot_difficulty: _Optional[_Union[ECitadelBotDifficulty, str]] = ..., region_mode: _Optional[_Union[ECitadelRegionMode, str]] = ..., prefer_solo_only: bool = ...) -> None: ...
+    def __init__(self, server_search_key: _Optional[str] = ..., server_command_string: _Optional[str] = ..., match_mode: _Optional[_Union[ECitadelMatchMode, str]] = ..., game_mode: _Optional[_Union[ECitadelGameMode, str]] = ..., bot_difficulty: _Optional[_Union[ECitadelBotDifficulty, str]] = ..., region_mode: _Optional[_Union[ECitadelRegionMode, str]] = ..., prefer_solo_only: bool = ..., mm_preference: _Optional[_Union[ECitadelMMPreference, str]] = ...) -> None: ...
 
 class CSOCitadelLobby(_message.Message):
     __slots__ = ["compatibility_version", "extra_messages", "game_mode", "lobby_id", "match_id", "match_mode", "match_punishes_abandons", "safe_to_abandon", "sdr_address", "server_state", "server_steam_id", "server_version", "udp_connect_ip", "udp_connect_port"]
@@ -714,7 +720,7 @@ class CSOCitadelLobby(_message.Message):
     def __init__(self, lobby_id: _Optional[int] = ..., match_id: _Optional[int] = ..., match_mode: _Optional[_Union[ECitadelMatchMode, str]] = ..., game_mode: _Optional[_Union[ECitadelGameMode, str]] = ..., compatibility_version: _Optional[int] = ..., extra_messages: _Optional[_Iterable[_Union[_gcsdk_gcmessages_pb2.CExtraMsgBlock, _Mapping]]] = ..., server_steam_id: _Optional[int] = ..., server_state: _Optional[_Union[ELobbyServerState, str]] = ..., udp_connect_ip: _Optional[int] = ..., udp_connect_port: _Optional[int] = ..., sdr_address: _Optional[bytes] = ..., server_version: _Optional[int] = ..., safe_to_abandon: bool = ..., match_punishes_abandons: bool = ...) -> None: ...
 
 class CSOCitadelParty(_message.Message):
-    __slots__ = ["bot_difficulty", "chat_mode", "desires_laning_together", "dev_server_command", "game_mode", "invites", "is_high_skill_range_party", "is_private_lobby", "join_code", "left_members", "match_making_start_time", "match_mode", "members", "party_id", "private_lobby_settings", "region_mode", "server_search_key"]
+    __slots__ = ["bot_difficulty", "chat_mode", "desires_laning_together", "dev_server_command", "game_mode", "invites", "is_high_skill_range_party", "is_private_lobby", "join_code", "left_members", "match_making_start_time", "match_mode", "members", "mm_preference", "party_id", "private_lobby_settings", "region_mode", "server_search_key"]
     class EChatMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     class EMemberRights(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
@@ -812,6 +818,7 @@ class CSOCitadelParty(_message.Message):
     MATCH_MAKING_START_TIME_FIELD_NUMBER: _ClassVar[int]
     MATCH_MODE_FIELD_NUMBER: _ClassVar[int]
     MEMBERS_FIELD_NUMBER: _ClassVar[int]
+    MM_PREFERENCE_FIELD_NUMBER: _ClassVar[int]
     PARTY_ID_FIELD_NUMBER: _ClassVar[int]
     PRIVATE_LOBBY_SETTINGS_FIELD_NUMBER: _ClassVar[int]
     REGION_MODE_FIELD_NUMBER: _ClassVar[int]
@@ -836,11 +843,12 @@ class CSOCitadelParty(_message.Message):
     match_making_start_time: int
     match_mode: ECitadelMatchMode
     members: _containers.RepeatedCompositeFieldContainer[CSOCitadelParty.Member]
+    mm_preference: ECitadelMMPreference
     party_id: int
     private_lobby_settings: CSOCitadelParty.PrivateLobbySettings
     region_mode: ECitadelRegionMode
     server_search_key: str
-    def __init__(self, party_id: _Optional[int] = ..., members: _Optional[_Iterable[_Union[CSOCitadelParty.Member, _Mapping]]] = ..., invites: _Optional[_Iterable[_Union[CSOCitadelParty.Invite, _Mapping]]] = ..., dev_server_command: _Optional[str] = ..., left_members: _Optional[_Iterable[_Union[CSOCitadelParty.LeftMember, _Mapping]]] = ..., join_code: _Optional[int] = ..., bot_difficulty: _Optional[_Union[ECitadelBotDifficulty, str]] = ..., match_mode: _Optional[_Union[ECitadelMatchMode, str]] = ..., game_mode: _Optional[_Union[ECitadelGameMode, str]] = ..., match_making_start_time: _Optional[int] = ..., server_search_key: _Optional[str] = ..., is_high_skill_range_party: bool = ..., chat_mode: _Optional[_Union[CSOCitadelParty.EChatMode, str]] = ..., region_mode: _Optional[_Union[ECitadelRegionMode, str]] = ..., is_private_lobby: bool = ..., private_lobby_settings: _Optional[_Union[CSOCitadelParty.PrivateLobbySettings, _Mapping]] = ..., desires_laning_together: bool = ...) -> None: ...
+    def __init__(self, party_id: _Optional[int] = ..., members: _Optional[_Iterable[_Union[CSOCitadelParty.Member, _Mapping]]] = ..., invites: _Optional[_Iterable[_Union[CSOCitadelParty.Invite, _Mapping]]] = ..., dev_server_command: _Optional[str] = ..., left_members: _Optional[_Iterable[_Union[CSOCitadelParty.LeftMember, _Mapping]]] = ..., join_code: _Optional[int] = ..., bot_difficulty: _Optional[_Union[ECitadelBotDifficulty, str]] = ..., match_mode: _Optional[_Union[ECitadelMatchMode, str]] = ..., game_mode: _Optional[_Union[ECitadelGameMode, str]] = ..., match_making_start_time: _Optional[int] = ..., server_search_key: _Optional[str] = ..., is_high_skill_range_party: bool = ..., chat_mode: _Optional[_Union[CSOCitadelParty.EChatMode, str]] = ..., region_mode: _Optional[_Union[ECitadelRegionMode, str]] = ..., is_private_lobby: bool = ..., private_lobby_settings: _Optional[_Union[CSOCitadelParty.PrivateLobbySettings, _Mapping]] = ..., desires_laning_together: bool = ..., mm_preference: _Optional[_Union[ECitadelMMPreference, str]] = ...) -> None: ...
 
 class CMsgLaneColor(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []
@@ -855,6 +863,9 @@ class ECitadelLobbyTeam(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []
 
 class ECitadelAccountStatMedal(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = []
+
+class ECitadelMMPreference(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []
 
 class ECitadelObjective(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):

@@ -17,6 +17,7 @@ DEM_FullPacket: EDemoCommands
 DEM_IsCompressed: EDemoCommands
 DEM_Max: EDemoCommands
 DEM_Packet: EDemoCommands
+DEM_Recovery: EDemoCommands
 DEM_SaveGame: EDemoCommands
 DEM_SendTables: EDemoCommands
 DEM_SignonPacket: EDemoCommands
@@ -145,6 +146,21 @@ class CDemoPacket(_message.Message):
     DATA_FIELD_NUMBER: _ClassVar[int]
     data: bytes
     def __init__(self, data: _Optional[bytes] = ...) -> None: ...
+
+class CDemoRecovery(_message.Message):
+    __slots__ = ["initial_spawn_group", "spawn_group_message"]
+    class DemoInitialSpawnGroupEntry(_message.Message):
+        __slots__ = ["spawngrouphandle", "was_created"]
+        SPAWNGROUPHANDLE_FIELD_NUMBER: _ClassVar[int]
+        WAS_CREATED_FIELD_NUMBER: _ClassVar[int]
+        spawngrouphandle: int
+        was_created: bool
+        def __init__(self, spawngrouphandle: _Optional[int] = ..., was_created: bool = ...) -> None: ...
+    INITIAL_SPAWN_GROUP_FIELD_NUMBER: _ClassVar[int]
+    SPAWN_GROUP_MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    initial_spawn_group: CDemoRecovery.DemoInitialSpawnGroupEntry
+    spawn_group_message: bytes
+    def __init__(self, initial_spawn_group: _Optional[_Union[CDemoRecovery.DemoInitialSpawnGroupEntry, _Mapping]] = ..., spawn_group_message: _Optional[bytes] = ...) -> None: ...
 
 class CDemoSaveGame(_message.Message):
     __slots__ = ["data", "signature", "steam_id", "version"]
