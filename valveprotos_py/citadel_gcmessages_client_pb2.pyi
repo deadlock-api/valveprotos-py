@@ -1426,18 +1426,16 @@ class CMsgClientToGCSetServerConVarResponse(_message.Message):
     def __init__(self, message: _Optional[str] = ...) -> None: ...
 
 class CMsgClientToGCSpectateLobby(_message.Message):
-    __slots__ = ["client_platform", "client_version", "lobby_id", "match_id", "region_mode"]
+    __slots__ = ["client_platform", "client_version", "lobby_id", "match_id"]
     CLIENT_PLATFORM_FIELD_NUMBER: _ClassVar[int]
     CLIENT_VERSION_FIELD_NUMBER: _ClassVar[int]
     LOBBY_ID_FIELD_NUMBER: _ClassVar[int]
     MATCH_ID_FIELD_NUMBER: _ClassVar[int]
-    REGION_MODE_FIELD_NUMBER: _ClassVar[int]
     client_platform: _steammessages_pb2.EGCPlatform
     client_version: int
     lobby_id: int
     match_id: int
-    region_mode: _citadel_gcmessages_common_pb2.ECitadelRegionMode
-    def __init__(self, lobby_id: _Optional[int] = ..., region_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelRegionMode, str]] = ..., client_version: _Optional[int] = ..., client_platform: _Optional[_Union[_steammessages_pb2.EGCPlatform, str]] = ..., match_id: _Optional[int] = ...) -> None: ...
+    def __init__(self, lobby_id: _Optional[int] = ..., client_version: _Optional[int] = ..., client_platform: _Optional[_Union[_steammessages_pb2.EGCPlatform, str]] = ..., match_id: _Optional[int] = ...) -> None: ...
 
 class CMsgClientToGCSpectateLobbyResponse(_message.Message):
     __slots__ = ["result"]
@@ -1446,16 +1444,14 @@ class CMsgClientToGCSpectateLobbyResponse(_message.Message):
     def __init__(self, result: _Optional[_Union[CMsgClientToGCSpectateUserResponse, _Mapping]] = ...) -> None: ...
 
 class CMsgClientToGCSpectateUser(_message.Message):
-    __slots__ = ["client_platform", "client_version", "region_mode", "spectate_account_id"]
+    __slots__ = ["client_platform", "client_version", "spectate_account_id"]
     CLIENT_PLATFORM_FIELD_NUMBER: _ClassVar[int]
     CLIENT_VERSION_FIELD_NUMBER: _ClassVar[int]
-    REGION_MODE_FIELD_NUMBER: _ClassVar[int]
     SPECTATE_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     client_platform: _steammessages_pb2.EGCPlatform
     client_version: int
-    region_mode: _citadel_gcmessages_common_pb2.ECitadelRegionMode
     spectate_account_id: int
-    def __init__(self, spectate_account_id: _Optional[int] = ..., region_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelRegionMode, str]] = ..., client_version: _Optional[int] = ..., client_platform: _Optional[_Union[_steammessages_pb2.EGCPlatform, str]] = ...) -> None: ...
+    def __init__(self, spectate_account_id: _Optional[int] = ..., client_version: _Optional[int] = ..., client_platform: _Optional[_Union[_steammessages_pb2.EGCPlatform, str]] = ...) -> None: ...
 
 class CMsgClientToGCSpectateUserResponse(_message.Message):
     __slots__ = ["client_broadcast_url", "lobby_id", "result", "sdr_key", "server_steam_id", "udp_connect_ip", "udp_connect_port"]
