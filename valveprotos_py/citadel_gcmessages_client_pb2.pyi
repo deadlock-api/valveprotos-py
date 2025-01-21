@@ -1217,6 +1217,7 @@ class CMsgClientToGCPartySetReadyStateResponse(_message.Message):
     k_eRateLimited: CMsgClientToGCPartySetReadyStateResponse.EResponse
     k_eSuccess: CMsgClientToGCPartySetReadyStateResponse.EResponse
     k_eTooBusy: CMsgClientToGCPartySetReadyStateResponse.EResponse
+    k_eTooManyLimitedHeroes: CMsgClientToGCPartySetReadyStateResponse.EResponse
     result: CMsgClientToGCPartySetReadyStateResponse.EResponse
     def __init__(self, result: _Optional[_Union[CMsgClientToGCPartySetReadyStateResponse.EResponse, str]] = ...) -> None: ...
 
@@ -1533,6 +1534,7 @@ class CMsgClientToGCStartMatchmakingResponse(_message.Message):
     k_EResult_RankedMMNotOpen: CMsgClientToGCStartMatchmakingResponse.EResultCode
     k_EResult_RankedNotUnlocked: CMsgClientToGCStartMatchmakingResponse.EResultCode
     k_EResult_RegionInfoNotProvided: CMsgClientToGCStartMatchmakingResponse.EResultCode
+    k_EResult_TooManyLimitedHeroes: CMsgClientToGCStartMatchmakingResponse.EResultCode
     result: CMsgClientToGCStartMatchmakingResponse.EResultCode
     time_stamp: int
     def __init__(self, result: _Optional[_Union[CMsgClientToGCStartMatchmakingResponse.EResultCode, str]] = ..., time_stamp: _Optional[int] = ..., debug_message: _Optional[str] = ...) -> None: ...
@@ -1796,7 +1798,7 @@ class CMsgGCToClientDevAnnouncements(_message.Message):
     def __init__(self, announcements: _Optional[_Iterable[_Union[CMsgGCToClientDevAnnouncements.Announcement, _Mapping]]] = ...) -> None: ...
 
 class CMsgGCToClientDevPlaytestStatus(_message.Message):
-    __slots__ = ["active_match_count", "dev_available_servers", "dev_queue_size", "hero_whitelists", "is_mm_enabled", "locked_heroes", "mm_pause_time", "party_shared_heroes", "valid_client_versions"]
+    __slots__ = ["active_match_count", "dev_available_servers", "dev_queue_size", "hero_whitelists", "is_mm_enabled", "locked_heroes", "mm_pause_time", "party_shared_heroes", "roster_non_limited_heroes", "valid_client_versions"]
     class DevQueueSize(_message.Message):
         __slots__ = ["match_mode", "queue_size"]
         MATCH_MODE_FIELD_NUMBER: _ClassVar[int]
@@ -1819,6 +1821,7 @@ class CMsgGCToClientDevPlaytestStatus(_message.Message):
     LOCKED_HEROES_FIELD_NUMBER: _ClassVar[int]
     MM_PAUSE_TIME_FIELD_NUMBER: _ClassVar[int]
     PARTY_SHARED_HEROES_FIELD_NUMBER: _ClassVar[int]
+    ROSTER_NON_LIMITED_HEROES_FIELD_NUMBER: _ClassVar[int]
     VALID_CLIENT_VERSIONS_FIELD_NUMBER: _ClassVar[int]
     active_match_count: int
     dev_available_servers: int
@@ -1828,8 +1831,9 @@ class CMsgGCToClientDevPlaytestStatus(_message.Message):
     locked_heroes: bool
     mm_pause_time: int
     party_shared_heroes: bool
+    roster_non_limited_heroes: int
     valid_client_versions: _containers.RepeatedScalarFieldContainer[int]
-    def __init__(self, dev_queue_size: _Optional[_Iterable[_Union[CMsgGCToClientDevPlaytestStatus.DevQueueSize, _Mapping]]] = ..., dev_available_servers: _Optional[int] = ..., is_mm_enabled: bool = ..., locked_heroes: bool = ..., party_shared_heroes: bool = ..., hero_whitelists: _Optional[_Iterable[_Union[CMsgGCToClientDevPlaytestStatus.HeroWhitelist, _Mapping]]] = ..., mm_pause_time: _Optional[int] = ..., valid_client_versions: _Optional[_Iterable[int]] = ..., active_match_count: _Optional[int] = ...) -> None: ...
+    def __init__(self, dev_queue_size: _Optional[_Iterable[_Union[CMsgGCToClientDevPlaytestStatus.DevQueueSize, _Mapping]]] = ..., dev_available_servers: _Optional[int] = ..., is_mm_enabled: bool = ..., locked_heroes: bool = ..., party_shared_heroes: bool = ..., hero_whitelists: _Optional[_Iterable[_Union[CMsgGCToClientDevPlaytestStatus.HeroWhitelist, _Mapping]]] = ..., mm_pause_time: _Optional[int] = ..., valid_client_versions: _Optional[_Iterable[int]] = ..., active_match_count: _Optional[int] = ..., roster_non_limited_heroes: _Optional[int] = ...) -> None: ...
 
 class CMsgGCToClientHeroLabsSchedule(_message.Message):
     __slots__ = ["schedules"]

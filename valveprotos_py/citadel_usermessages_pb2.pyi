@@ -398,16 +398,10 @@ class CCitadelUserMsg_CameraController(_message.Message):
         start_vector: _networkbasetypes_pb2.CMsgVector
         def __init__(self, start_float: _Optional[float] = ..., start_vector: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., end_float: _Optional[float] = ..., end_vector: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., bias: _Optional[float] = ..., gain: _Optional[float] = ..., duration: _Optional[float] = ...) -> None: ...
     class Maintain(_message.Message):
-        __slots__ = ["duration", "maintain_current", "maintain_float", "maintain_vector"]
+        __slots__ = ["duration"]
         DURATION_FIELD_NUMBER: _ClassVar[int]
-        MAINTAIN_CURRENT_FIELD_NUMBER: _ClassVar[int]
-        MAINTAIN_FLOAT_FIELD_NUMBER: _ClassVar[int]
-        MAINTAIN_VECTOR_FIELD_NUMBER: _ClassVar[int]
         duration: float
-        maintain_current: bool
-        maintain_float: float
-        maintain_vector: _networkbasetypes_pb2.CMsgVector
-        def __init__(self, duration: _Optional[float] = ..., maintain_vector: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., maintain_float: _Optional[float] = ..., maintain_current: bool = ...) -> None: ...
+        def __init__(self, duration: _Optional[float] = ...) -> None: ...
     class Spring(_message.Message):
         __slots__ = ["max_duration", "min_speed", "spring_strength", "target_float", "target_vector"]
         MAX_DURATION_FIELD_NUMBER: _ClassVar[int]
