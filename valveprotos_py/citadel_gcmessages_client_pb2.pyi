@@ -665,7 +665,7 @@ class CMsgClientToGCGetLeaderboard(_message.Message):
     def __init__(self, leaderboard_region: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelLeaderboardRegion, str]] = ..., hero_id: _Optional[int] = ...) -> None: ...
 
 class CMsgClientToGCGetLeaderboardResponse(_message.Message):
-    __slots__ = ["entries", "result"]
+    __slots__ = ["entries", "local_player_index", "result"]
     class EResult(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     class LeaderboardEntry(_message.Message):
@@ -680,14 +680,16 @@ class CMsgClientToGCGetLeaderboardResponse(_message.Message):
         top_hero_ids: _containers.RepeatedScalarFieldContainer[int]
         def __init__(self, account_name: _Optional[str] = ..., rank: _Optional[int] = ..., top_hero_ids: _Optional[_Iterable[int]] = ..., badge_level: _Optional[int] = ...) -> None: ...
     ENTRIES_FIELD_NUMBER: _ClassVar[int]
+    LOCAL_PLAYER_INDEX_FIELD_NUMBER: _ClassVar[int]
     RESULT_FIELD_NUMBER: _ClassVar[int]
     entries: _containers.RepeatedCompositeFieldContainer[CMsgClientToGCGetLeaderboardResponse.LeaderboardEntry]
     k_eInternalError: CMsgClientToGCGetLeaderboardResponse.EResult
     k_eInvalidArguments: CMsgClientToGCGetLeaderboardResponse.EResult
     k_eSuccess: CMsgClientToGCGetLeaderboardResponse.EResult
     k_eTooBusy: CMsgClientToGCGetLeaderboardResponse.EResult
+    local_player_index: int
     result: CMsgClientToGCGetLeaderboardResponse.EResult
-    def __init__(self, result: _Optional[_Union[CMsgClientToGCGetLeaderboardResponse.EResult, str]] = ..., entries: _Optional[_Iterable[_Union[CMsgClientToGCGetLeaderboardResponse.LeaderboardEntry, _Mapping]]] = ...) -> None: ...
+    def __init__(self, result: _Optional[_Union[CMsgClientToGCGetLeaderboardResponse.EResult, str]] = ..., entries: _Optional[_Iterable[_Union[CMsgClientToGCGetLeaderboardResponse.LeaderboardEntry, _Mapping]]] = ..., local_player_index: _Optional[int] = ...) -> None: ...
 
 class CMsgClientToGCGetMatchHistory(_message.Message):
     __slots__ = ["account_id", "continue_cursor", "ranked_interval"]

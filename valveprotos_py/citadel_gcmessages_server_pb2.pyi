@@ -877,7 +877,7 @@ class CSOCitadelServerDynamicLobby(_message.Message):
     def __init__(self, lobby_id: _Optional[int] = ..., left_account_ids: _Optional[_Iterable[int]] = ..., broadcast_active: bool = ..., spectator_count: _Optional[int] = ...) -> None: ...
 
 class CSOCitadelServerStaticLobby(_message.Message):
-    __slots__ = ["average_badge_team_0", "average_badge_team_1", "bot_difficulty", "broadcast_url", "cheats_enabled", "dev_settings", "duplicate_heroes_enabled", "experimental_gameplay_state", "experimental_heroes_enabled", "extra_messages", "gc_provided_heroes", "is_high_skill_range_parties", "is_restricted_access", "level_name", "lobby_id", "low_pri_pool", "match_start_time", "members", "metadata_salt", "new_player_pool", "region_mode", "replay_salt", "server_steam_id"]
+    __slots__ = ["average_badge_team_0", "average_badge_team_1", "bot_difficulty", "broadcast_url", "cheats_enabled", "dev_settings", "duplicate_heroes_enabled", "experimental_heroes_enabled", "extra_messages", "gameplay_experiment", "gc_provided_heroes", "is_high_skill_range_parties", "is_restricted_access", "level_name", "lobby_id", "low_pri_pool", "match_start_time", "members", "metadata_salt", "new_player_pool", "region_mode", "replay_salt", "server_steam_id"]
     class EAwardIDs(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     class DevSettings(_message.Message):
@@ -921,9 +921,9 @@ class CSOCitadelServerStaticLobby(_message.Message):
     CHEATS_ENABLED_FIELD_NUMBER: _ClassVar[int]
     DEV_SETTINGS_FIELD_NUMBER: _ClassVar[int]
     DUPLICATE_HEROES_ENABLED_FIELD_NUMBER: _ClassVar[int]
-    EXPERIMENTAL_GAMEPLAY_STATE_FIELD_NUMBER: _ClassVar[int]
     EXPERIMENTAL_HEROES_ENABLED_FIELD_NUMBER: _ClassVar[int]
     EXTRA_MESSAGES_FIELD_NUMBER: _ClassVar[int]
+    GAMEPLAY_EXPERIMENT_FIELD_NUMBER: _ClassVar[int]
     GC_PROVIDED_HEROES_FIELD_NUMBER: _ClassVar[int]
     IS_HIGH_SKILL_RANGE_PARTIES_FIELD_NUMBER: _ClassVar[int]
     IS_RESTRICTED_ACCESS_FIELD_NUMBER: _ClassVar[int]
@@ -944,9 +944,9 @@ class CSOCitadelServerStaticLobby(_message.Message):
     cheats_enabled: bool
     dev_settings: CSOCitadelServerStaticLobby.DevSettings
     duplicate_heroes_enabled: bool
-    experimental_gameplay_state: int
     experimental_heroes_enabled: bool
     extra_messages: _containers.RepeatedCompositeFieldContainer[_gcsdk_gcmessages_pb2.CExtraMsgBlock]
+    gameplay_experiment: str
     gc_provided_heroes: bool
     is_high_skill_range_parties: bool
     is_restricted_access: bool
@@ -961,7 +961,7 @@ class CSOCitadelServerStaticLobby(_message.Message):
     region_mode: _citadel_gcmessages_common_pb2.ECitadelRegionMode
     replay_salt: int
     server_steam_id: int
-    def __init__(self, extra_messages: _Optional[_Iterable[_Union[_gcsdk_gcmessages_pb2.CExtraMsgBlock, _Mapping]]] = ..., server_steam_id: _Optional[int] = ..., lobby_id: _Optional[int] = ..., replay_salt: _Optional[int] = ..., level_name: _Optional[str] = ..., members: _Optional[_Iterable[_Union[CSOCitadelServerStaticLobby.Member, _Mapping]]] = ..., dev_settings: _Optional[_Union[CSOCitadelServerStaticLobby.DevSettings, _Mapping]] = ..., gc_provided_heroes: bool = ..., bot_difficulty: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelBotDifficulty, str]] = ..., metadata_salt: _Optional[int] = ..., match_start_time: _Optional[int] = ..., experimental_gameplay_state: _Optional[int] = ..., region_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelRegionMode, str]] = ..., broadcast_url: _Optional[str] = ..., new_player_pool: bool = ..., low_pri_pool: bool = ..., is_restricted_access: bool = ..., cheats_enabled: bool = ..., duplicate_heroes_enabled: bool = ..., is_high_skill_range_parties: bool = ..., experimental_heroes_enabled: bool = ..., average_badge_team_0: _Optional[int] = ..., average_badge_team_1: _Optional[int] = ...) -> None: ...
+    def __init__(self, extra_messages: _Optional[_Iterable[_Union[_gcsdk_gcmessages_pb2.CExtraMsgBlock, _Mapping]]] = ..., server_steam_id: _Optional[int] = ..., lobby_id: _Optional[int] = ..., replay_salt: _Optional[int] = ..., level_name: _Optional[str] = ..., members: _Optional[_Iterable[_Union[CSOCitadelServerStaticLobby.Member, _Mapping]]] = ..., dev_settings: _Optional[_Union[CSOCitadelServerStaticLobby.DevSettings, _Mapping]] = ..., gc_provided_heroes: bool = ..., bot_difficulty: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelBotDifficulty, str]] = ..., metadata_salt: _Optional[int] = ..., match_start_time: _Optional[int] = ..., region_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelRegionMode, str]] = ..., broadcast_url: _Optional[str] = ..., new_player_pool: bool = ..., low_pri_pool: bool = ..., is_restricted_access: bool = ..., cheats_enabled: bool = ..., duplicate_heroes_enabled: bool = ..., is_high_skill_range_parties: bool = ..., experimental_heroes_enabled: bool = ..., average_badge_team_0: _Optional[int] = ..., average_badge_team_1: _Optional[int] = ..., gameplay_experiment: _Optional[str] = ...) -> None: ...
 
 class CServerLobbyData_AutoTest(_message.Message):
     __slots__ = ["max_duration_s"]

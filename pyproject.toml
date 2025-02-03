@@ -7,11 +7,13 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-protobuf = "^5.28.3"
+protobuf = "^5.29.3"
 
 [tool.poetry.group.dev.dependencies]
 requests = "^2.32.3"
 PyGithub = "^2.5.0"
+protobuf-to-pydantic = {version = "^0.3.0.3", extras = ["mypy-protobuf"]}
+toml = "^0.10.2"
 
 [build-system]
 requires = ["poetry-core"]
