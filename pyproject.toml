@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 protobuf = "^5.29.3"
+protobuf-to-pydantic = "^0.3.0.3"
 
 [tool.poetry.group.dev.dependencies]
 requests = "^2.32.3"
