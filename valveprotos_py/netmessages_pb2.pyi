@@ -392,6 +392,68 @@ class CMsgServerUserCmd(_message.Message):
     server_tick_executed: int
     def __init__(self, data: _Optional[bytes] = ..., cmd_number: _Optional[int] = ..., player_slot: _Optional[int] = ..., server_tick_executed: _Optional[int] = ..., client_tick: _Optional[int] = ...) -> None: ...
 
+class CMsgSource2NetworkFlowQuality(_message.Message):
+    __slots__ = ["bytes_sec_p95", "bytes_sec_p99", "bytes_total", "bytes_total_reliable", "bytes_total_voice", "duration", "enginemsgs_sec_p95", "enginemsgs_sec_p99", "enginemsgs_total", "recvmargin_p1", "recvmargin_p25", "recvmargin_p5", "recvmargin_p50", "recvmargin_p75", "recvmargin_p95", "tick_missrate_samples_perfect", "tick_missrate_samples_perfectnet", "tick_missrate_samples_total", "tick_missratenet_p75_x10", "tick_missratenet_p95_x10", "tick_missratenet_p99_x10", "ticks_bad_dropped", "ticks_bad_late", "ticks_bad_other", "ticks_fixed_dropped", "ticks_fixed_late", "ticks_good", "ticks_good_almost_late", "ticks_total"]
+    BYTES_SEC_P95_FIELD_NUMBER: _ClassVar[int]
+    BYTES_SEC_P99_FIELD_NUMBER: _ClassVar[int]
+    BYTES_TOTAL_FIELD_NUMBER: _ClassVar[int]
+    BYTES_TOTAL_RELIABLE_FIELD_NUMBER: _ClassVar[int]
+    BYTES_TOTAL_VOICE_FIELD_NUMBER: _ClassVar[int]
+    DURATION_FIELD_NUMBER: _ClassVar[int]
+    ENGINEMSGS_SEC_P95_FIELD_NUMBER: _ClassVar[int]
+    ENGINEMSGS_SEC_P99_FIELD_NUMBER: _ClassVar[int]
+    ENGINEMSGS_TOTAL_FIELD_NUMBER: _ClassVar[int]
+    RECVMARGIN_P1_FIELD_NUMBER: _ClassVar[int]
+    RECVMARGIN_P25_FIELD_NUMBER: _ClassVar[int]
+    RECVMARGIN_P50_FIELD_NUMBER: _ClassVar[int]
+    RECVMARGIN_P5_FIELD_NUMBER: _ClassVar[int]
+    RECVMARGIN_P75_FIELD_NUMBER: _ClassVar[int]
+    RECVMARGIN_P95_FIELD_NUMBER: _ClassVar[int]
+    TICKS_BAD_DROPPED_FIELD_NUMBER: _ClassVar[int]
+    TICKS_BAD_LATE_FIELD_NUMBER: _ClassVar[int]
+    TICKS_BAD_OTHER_FIELD_NUMBER: _ClassVar[int]
+    TICKS_FIXED_DROPPED_FIELD_NUMBER: _ClassVar[int]
+    TICKS_FIXED_LATE_FIELD_NUMBER: _ClassVar[int]
+    TICKS_GOOD_ALMOST_LATE_FIELD_NUMBER: _ClassVar[int]
+    TICKS_GOOD_FIELD_NUMBER: _ClassVar[int]
+    TICKS_TOTAL_FIELD_NUMBER: _ClassVar[int]
+    TICK_MISSRATENET_P75_X10_FIELD_NUMBER: _ClassVar[int]
+    TICK_MISSRATENET_P95_X10_FIELD_NUMBER: _ClassVar[int]
+    TICK_MISSRATENET_P99_X10_FIELD_NUMBER: _ClassVar[int]
+    TICK_MISSRATE_SAMPLES_PERFECTNET_FIELD_NUMBER: _ClassVar[int]
+    TICK_MISSRATE_SAMPLES_PERFECT_FIELD_NUMBER: _ClassVar[int]
+    TICK_MISSRATE_SAMPLES_TOTAL_FIELD_NUMBER: _ClassVar[int]
+    bytes_sec_p95: int
+    bytes_sec_p99: int
+    bytes_total: int
+    bytes_total_reliable: int
+    bytes_total_voice: int
+    duration: int
+    enginemsgs_sec_p95: int
+    enginemsgs_sec_p99: int
+    enginemsgs_total: int
+    recvmargin_p1: int
+    recvmargin_p25: int
+    recvmargin_p5: int
+    recvmargin_p50: int
+    recvmargin_p75: int
+    recvmargin_p95: int
+    tick_missrate_samples_perfect: int
+    tick_missrate_samples_perfectnet: int
+    tick_missrate_samples_total: int
+    tick_missratenet_p75_x10: int
+    tick_missratenet_p95_x10: int
+    tick_missratenet_p99_x10: int
+    ticks_bad_dropped: int
+    ticks_bad_late: int
+    ticks_bad_other: int
+    ticks_fixed_dropped: int
+    ticks_fixed_late: int
+    ticks_good: int
+    ticks_good_almost_late: int
+    ticks_total: int
+    def __init__(self, duration: _Optional[int] = ..., bytes_total: _Optional[int] = ..., bytes_total_reliable: _Optional[int] = ..., bytes_total_voice: _Optional[int] = ..., bytes_sec_p95: _Optional[int] = ..., bytes_sec_p99: _Optional[int] = ..., enginemsgs_total: _Optional[int] = ..., enginemsgs_sec_p95: _Optional[int] = ..., enginemsgs_sec_p99: _Optional[int] = ..., ticks_total: _Optional[int] = ..., ticks_good: _Optional[int] = ..., ticks_good_almost_late: _Optional[int] = ..., ticks_fixed_dropped: _Optional[int] = ..., ticks_fixed_late: _Optional[int] = ..., ticks_bad_dropped: _Optional[int] = ..., ticks_bad_late: _Optional[int] = ..., ticks_bad_other: _Optional[int] = ..., tick_missrate_samples_total: _Optional[int] = ..., tick_missrate_samples_perfect: _Optional[int] = ..., tick_missrate_samples_perfectnet: _Optional[int] = ..., tick_missratenet_p75_x10: _Optional[int] = ..., tick_missratenet_p95_x10: _Optional[int] = ..., tick_missratenet_p99_x10: _Optional[int] = ..., recvmargin_p1: _Optional[int] = ..., recvmargin_p5: _Optional[int] = ..., recvmargin_p25: _Optional[int] = ..., recvmargin_p50: _Optional[int] = ..., recvmargin_p75: _Optional[int] = ..., recvmargin_p95: _Optional[int] = ...) -> None: ...
+
 class CMsgSource2SystemSpecs(_message.Message):
     __slots__ = ["cpu_brand", "cpu_id", "cpu_model", "cpu_num_physical", "gpu_driver_name", "gpu_driver_version_high", "gpu_driver_version_low", "gpu_dx_support_level", "gpu_rendersystem_dll_name", "gpu_texture_memory_size_mb", "gpu_vendor_id", "ram_physical_total_mb"]
     CPU_BRAND_FIELD_NUMBER: _ClassVar[int]
@@ -431,9 +493,18 @@ class CMsgSource2VProfLiteReport(_message.Message):
     def __init__(self, total: _Optional[_Union[CMsgSource2VProfLiteReportItem, _Mapping]] = ..., items: _Optional[_Iterable[_Union[CMsgSource2VProfLiteReportItem, _Mapping]]] = ..., discarded_frames: _Optional[int] = ...) -> None: ...
 
 class CMsgSource2VProfLiteReportItem(_message.Message):
-    __slots__ = ["active_samples", "name", "usec_avg_active", "usec_avg_all", "usec_max", "usec_p50_active", "usec_p50_all", "usec_p99_active", "usec_p99_all"]
+    __slots__ = ["active_samples", "active_samples_1secmax", "name", "usec_1secmax_avg_active", "usec_1secmax_avg_all", "usec_1secmax_p50_active", "usec_1secmax_p50_all", "usec_1secmax_p95_active", "usec_1secmax_p95_all", "usec_1secmax_p99_active", "usec_1secmax_p99_all", "usec_avg_active", "usec_avg_all", "usec_max", "usec_p50_active", "usec_p50_all", "usec_p99_active", "usec_p99_all"]
+    ACTIVE_SAMPLES_1SECMAX_FIELD_NUMBER: _ClassVar[int]
     ACTIVE_SAMPLES_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
+    USEC_1SECMAX_AVG_ACTIVE_FIELD_NUMBER: _ClassVar[int]
+    USEC_1SECMAX_AVG_ALL_FIELD_NUMBER: _ClassVar[int]
+    USEC_1SECMAX_P50_ACTIVE_FIELD_NUMBER: _ClassVar[int]
+    USEC_1SECMAX_P50_ALL_FIELD_NUMBER: _ClassVar[int]
+    USEC_1SECMAX_P95_ACTIVE_FIELD_NUMBER: _ClassVar[int]
+    USEC_1SECMAX_P95_ALL_FIELD_NUMBER: _ClassVar[int]
+    USEC_1SECMAX_P99_ACTIVE_FIELD_NUMBER: _ClassVar[int]
+    USEC_1SECMAX_P99_ALL_FIELD_NUMBER: _ClassVar[int]
     USEC_AVG_ACTIVE_FIELD_NUMBER: _ClassVar[int]
     USEC_AVG_ALL_FIELD_NUMBER: _ClassVar[int]
     USEC_MAX_FIELD_NUMBER: _ClassVar[int]
@@ -442,7 +513,16 @@ class CMsgSource2VProfLiteReportItem(_message.Message):
     USEC_P99_ACTIVE_FIELD_NUMBER: _ClassVar[int]
     USEC_P99_ALL_FIELD_NUMBER: _ClassVar[int]
     active_samples: int
+    active_samples_1secmax: int
     name: str
+    usec_1secmax_avg_active: int
+    usec_1secmax_avg_all: int
+    usec_1secmax_p50_active: int
+    usec_1secmax_p50_all: int
+    usec_1secmax_p95_active: int
+    usec_1secmax_p95_all: int
+    usec_1secmax_p99_active: int
+    usec_1secmax_p99_all: int
     usec_avg_active: int
     usec_avg_all: int
     usec_max: int
@@ -450,7 +530,7 @@ class CMsgSource2VProfLiteReportItem(_message.Message):
     usec_p50_all: int
     usec_p99_active: int
     usec_p99_all: int
-    def __init__(self, name: _Optional[str] = ..., active_samples: _Optional[int] = ..., usec_max: _Optional[int] = ..., usec_avg_active: _Optional[int] = ..., usec_p50_active: _Optional[int] = ..., usec_p99_active: _Optional[int] = ..., usec_avg_all: _Optional[int] = ..., usec_p50_all: _Optional[int] = ..., usec_p99_all: _Optional[int] = ...) -> None: ...
+    def __init__(self, name: _Optional[str] = ..., active_samples: _Optional[int] = ..., active_samples_1secmax: _Optional[int] = ..., usec_max: _Optional[int] = ..., usec_avg_active: _Optional[int] = ..., usec_p50_active: _Optional[int] = ..., usec_p99_active: _Optional[int] = ..., usec_avg_all: _Optional[int] = ..., usec_p50_all: _Optional[int] = ..., usec_p99_all: _Optional[int] = ..., usec_1secmax_avg_active: _Optional[int] = ..., usec_1secmax_p50_active: _Optional[int] = ..., usec_1secmax_p95_active: _Optional[int] = ..., usec_1secmax_p99_active: _Optional[int] = ..., usec_1secmax_avg_all: _Optional[int] = ..., usec_1secmax_p50_all: _Optional[int] = ..., usec_1secmax_p95_all: _Optional[int] = ..., usec_1secmax_p99_all: _Optional[int] = ...) -> None: ...
 
 class CMsgVoiceAudio(_message.Message):
     __slots__ = ["format", "num_packets", "packet_offsets", "sample_rate", "section_number", "sequence_bytes", "uncompressed_sample_offset", "voice_data", "voice_level"]

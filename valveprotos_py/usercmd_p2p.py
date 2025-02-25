@@ -20,6 +20,8 @@ class CSubtickMoveStep(BaseModel):
     when: float = Field(default=0.0)
     analog_forward_delta: float = Field(default=0.0)
     analog_left_delta: float = Field(default=0.0)
+    analog_pitch_delta: float = Field(default=0.0)
+    analog_yaw_delta: float = Field(default=0.0)
 
 class CBaseUserCmdPB(BaseModel):
     legacy_command_number: int = Field(default=0)

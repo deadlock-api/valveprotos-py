@@ -38,6 +38,7 @@ k_EServerSignoutData_AccountStatChanges: EGCServerSignoutData
 k_EServerSignoutData_BookRewards: EGCServerSignoutData
 k_EServerSignoutData_DetailedStats: EGCServerSignoutData
 k_EServerSignoutData_Disconnections: EGCServerSignoutData
+k_EServerSignoutData_MatchDevStats: EGCServerSignoutData
 k_EServerSignoutData_PenalizedPlayers: EGCServerSignoutData
 k_EServerSignoutData_PerfData: EGCServerSignoutData
 k_EServerSignoutData_PlayerChat: EGCServerSignoutData
@@ -104,7 +105,7 @@ class CMsgGCToServerSetServerConVarResponse(_message.Message):
     def __init__(self, success: bool = ...) -> None: ...
 
 class CMsgMatchData(_message.Message):
-    __slots__ = ["end_reason", "game_mode", "low_pri_pool", "match_duration_s", "match_end_time", "match_mode", "new_player_pool", "objectives_mask_legacy", "objectives_mask_team0", "objectives_mask_team1", "players", "safe_to_abandon", "server_version", "stomp_score", "team_abandon", "winning_team"]
+    __slots__ = ["end_reason", "game_mode", "low_pri_pool", "match_duration_s", "match_end_time", "match_mode", "new_player_pool", "not_scored", "objectives_mask_legacy", "objectives_mask_team0", "objectives_mask_team1", "players", "safe_to_abandon", "server_version", "stomp_score", "team_abandon", "winning_team"]
     class EEndReason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     class PlayerInfo(_message.Message):
@@ -222,6 +223,7 @@ class CMsgMatchData(_message.Message):
     MATCH_END_TIME_FIELD_NUMBER: _ClassVar[int]
     MATCH_MODE_FIELD_NUMBER: _ClassVar[int]
     NEW_PLAYER_POOL_FIELD_NUMBER: _ClassVar[int]
+    NOT_SCORED_FIELD_NUMBER: _ClassVar[int]
     OBJECTIVES_MASK_LEGACY_FIELD_NUMBER: _ClassVar[int]
     OBJECTIVES_MASK_TEAM0_FIELD_NUMBER: _ClassVar[int]
     OBJECTIVES_MASK_TEAM1_FIELD_NUMBER: _ClassVar[int]
@@ -243,6 +245,7 @@ class CMsgMatchData(_message.Message):
     match_end_time: int
     match_mode: _citadel_gcmessages_common_pb2.ECitadelMatchMode
     new_player_pool: bool
+    not_scored: bool
     objectives_mask_legacy: int
     objectives_mask_team0: int
     objectives_mask_team1: int
@@ -252,10 +255,10 @@ class CMsgMatchData(_message.Message):
     stomp_score: float
     team_abandon: bool
     winning_team: _citadel_gcmessages_common_pb2.ECitadelLobbyTeam
-    def __init__(self, match_duration_s: _Optional[int] = ..., end_reason: _Optional[_Union[CMsgMatchData.EEndReason, str]] = ..., winning_team: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelLobbyTeam, str]] = ..., players: _Optional[_Iterable[_Union[CMsgMatchData.PlayerInfo, _Mapping]]] = ..., objectives_mask_legacy: _Optional[int] = ..., server_version: _Optional[int] = ..., game_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelGameMode, str]] = ..., match_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMatchMode, str]] = ..., objectives_mask_team0: _Optional[int] = ..., objectives_mask_team1: _Optional[int] = ..., match_end_time: _Optional[int] = ..., stomp_score: _Optional[float] = ..., safe_to_abandon: bool = ..., team_abandon: bool = ..., new_player_pool: bool = ..., low_pri_pool: bool = ...) -> None: ...
+    def __init__(self, match_duration_s: _Optional[int] = ..., end_reason: _Optional[_Union[CMsgMatchData.EEndReason, str]] = ..., winning_team: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelLobbyTeam, str]] = ..., players: _Optional[_Iterable[_Union[CMsgMatchData.PlayerInfo, _Mapping]]] = ..., objectives_mask_legacy: _Optional[int] = ..., server_version: _Optional[int] = ..., game_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelGameMode, str]] = ..., match_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMatchMode, str]] = ..., objectives_mask_team0: _Optional[int] = ..., objectives_mask_team1: _Optional[int] = ..., match_end_time: _Optional[int] = ..., stomp_score: _Optional[float] = ..., safe_to_abandon: bool = ..., team_abandon: bool = ..., new_player_pool: bool = ..., low_pri_pool: bool = ..., not_scored: bool = ...) -> None: ...
 
 class CMsgServerCrashSentinelFile(_message.Message):
-    __slots__ = ["game_info", "instance_id", "pid", "saved_time", "server_cluster", "server_port", "server_private_ip_addr", "server_public_ip_addr", "server_steam_id", "server_version", "version"]
+    __slots__ = ["game_info", "instance_id", "pid", "saved_time", "server_cluster_id", "server_port", "server_private_ip_addr", "server_public_ip_addr", "server_region_id", "server_steam_id", "server_version", "version"]
     class GameInfo(_message.Message):
         __slots__ = ["game_mode", "lobby_id", "match_id", "match_mode", "players", "server_state", "was_server_shutdown"]
         GAME_MODE_FIELD_NUMBER: _ClassVar[int]
@@ -284,10 +287,11 @@ class CMsgServerCrashSentinelFile(_message.Message):
     INSTANCE_ID_FIELD_NUMBER: _ClassVar[int]
     PID_FIELD_NUMBER: _ClassVar[int]
     SAVED_TIME_FIELD_NUMBER: _ClassVar[int]
-    SERVER_CLUSTER_FIELD_NUMBER: _ClassVar[int]
+    SERVER_CLUSTER_ID_FIELD_NUMBER: _ClassVar[int]
     SERVER_PORT_FIELD_NUMBER: _ClassVar[int]
     SERVER_PRIVATE_IP_ADDR_FIELD_NUMBER: _ClassVar[int]
     SERVER_PUBLIC_IP_ADDR_FIELD_NUMBER: _ClassVar[int]
+    SERVER_REGION_ID_FIELD_NUMBER: _ClassVar[int]
     SERVER_STEAM_ID_FIELD_NUMBER: _ClassVar[int]
     SERVER_VERSION_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
@@ -295,14 +299,15 @@ class CMsgServerCrashSentinelFile(_message.Message):
     instance_id: int
     pid: int
     saved_time: int
-    server_cluster: int
+    server_cluster_id: int
     server_port: int
     server_private_ip_addr: int
     server_public_ip_addr: int
+    server_region_id: int
     server_steam_id: int
     server_version: int
     version: int
-    def __init__(self, version: _Optional[int] = ..., server_steam_id: _Optional[int] = ..., server_public_ip_addr: _Optional[int] = ..., server_port: _Optional[int] = ..., server_cluster: _Optional[int] = ..., pid: _Optional[int] = ..., saved_time: _Optional[int] = ..., server_version: _Optional[int] = ..., game_info: _Optional[_Union[CMsgServerCrashSentinelFile.GameInfo, _Mapping]] = ..., server_private_ip_addr: _Optional[int] = ..., instance_id: _Optional[int] = ...) -> None: ...
+    def __init__(self, version: _Optional[int] = ..., server_steam_id: _Optional[int] = ..., server_public_ip_addr: _Optional[int] = ..., server_port: _Optional[int] = ..., server_cluster_id: _Optional[int] = ..., pid: _Optional[int] = ..., saved_time: _Optional[int] = ..., server_version: _Optional[int] = ..., game_info: _Optional[_Union[CMsgServerCrashSentinelFile.GameInfo, _Mapping]] = ..., server_private_ip_addr: _Optional[int] = ..., instance_id: _Optional[int] = ..., server_region_id: _Optional[int] = ...) -> None: ...
 
 class CMsgServerSignoutData_AccountStatChanges(_message.Message):
     __slots__ = ["account_stats"]
@@ -514,6 +519,17 @@ class CMsgServerSignoutData_Disconnections(_message.Message):
     disconnections: _containers.RepeatedCompositeFieldContainer[CMsgServerSignoutData_Disconnections.CMsgMatchDisconnection]
     def __init__(self, disconnections: _Optional[_Iterable[_Union[CMsgServerSignoutData_Disconnections.CMsgMatchDisconnection, _Mapping]]] = ...) -> None: ...
 
+class CMsgServerSignoutData_MatchDevStats(_message.Message):
+    __slots__ = ["players"]
+    class PlayerSlot(_message.Message):
+        __slots__ = ["player_slot"]
+        PLAYER_SLOT_FIELD_NUMBER: _ClassVar[int]
+        player_slot: int
+        def __init__(self, player_slot: _Optional[int] = ...) -> None: ...
+    PLAYERS_FIELD_NUMBER: _ClassVar[int]
+    players: _containers.RepeatedCompositeFieldContainer[CMsgServerSignoutData_MatchDevStats.PlayerSlot]
+    def __init__(self, players: _Optional[_Iterable[_Union[CMsgServerSignoutData_MatchDevStats.PlayerSlot, _Mapping]]] = ...) -> None: ...
+
 class CMsgServerSignoutData_PenalizedPlayers(_message.Message):
     __slots__ = ["penalized_players"]
     class EPenaltyReason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
@@ -665,7 +681,7 @@ class CMsgServerSignoutData_ServerPerfStats(_message.Message):
     def __init__(self, peak_memory_bytes: _Optional[int] = ..., end_memory_bytes: _Optional[int] = ..., frame_time_max_micro_s: _Optional[int] = ..., frame_time_95_micro_s: _Optional[int] = ..., frame_time_avg_micro_s: _Optional[int] = ..., frame_idle_time_95_micro_s: _Optional[int] = ..., frame_idle_time_avg_micro_s: _Optional[int] = ..., frame_time_80_micro_s: _Optional[int] = ..., frame_time_99_micro_s: _Optional[int] = ..., perf_samples: _Optional[_Union[CMsgServerSignoutData_ServerPerfStats.MatchPerfSamples, _Mapping]] = ...) -> None: ...
 
 class CMsgServerToGCAbandonMatch(_message.Message):
-    __slots__ = ["additional_data", "cluster_id", "game_mode", "instance_id", "lobby_id", "match_id", "match_mode", "pid", "players", "port", "private_ip_address", "public_ip_address", "reason_code", "server_steam_id", "server_version", "was_server_shutdown"]
+    __slots__ = ["additional_data", "cluster_id", "game_mode", "instance_id", "lobby_id", "match_id", "match_mode", "pid", "players", "port", "private_ip_address", "public_ip_address", "reason_code", "region_id", "server_steam_id", "server_version", "was_server_shutdown"]
     class EReason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     class Player(_message.Message):
@@ -690,6 +706,7 @@ class CMsgServerToGCAbandonMatch(_message.Message):
     PRIVATE_IP_ADDRESS_FIELD_NUMBER: _ClassVar[int]
     PUBLIC_IP_ADDRESS_FIELD_NUMBER: _ClassVar[int]
     REASON_CODE_FIELD_NUMBER: _ClassVar[int]
+    REGION_ID_FIELD_NUMBER: _ClassVar[int]
     SERVER_STEAM_ID_FIELD_NUMBER: _ClassVar[int]
     SERVER_VERSION_FIELD_NUMBER: _ClassVar[int]
     WAS_SERVER_SHUTDOWN_FIELD_NUMBER: _ClassVar[int]
@@ -708,19 +725,21 @@ class CMsgServerToGCAbandonMatch(_message.Message):
     private_ip_address: int
     public_ip_address: int
     reason_code: CMsgServerToGCAbandonMatch.EReason
+    region_id: int
     server_steam_id: int
     server_version: int
     was_server_shutdown: bool
-    def __init__(self, server_steam_id: _Optional[int] = ..., lobby_id: _Optional[int] = ..., cluster_id: _Optional[int] = ..., reason_code: _Optional[_Union[CMsgServerToGCAbandonMatch.EReason, str]] = ..., additional_data: _Optional[int] = ..., match_id: _Optional[int] = ..., players: _Optional[_Iterable[_Union[CMsgServerToGCAbandonMatch.Player, _Mapping]]] = ..., public_ip_address: _Optional[int] = ..., port: _Optional[int] = ..., server_version: _Optional[int] = ..., pid: _Optional[int] = ..., instance_id: _Optional[int] = ..., private_ip_address: _Optional[int] = ..., match_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMatchMode, str]] = ..., game_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelGameMode, str]] = ..., was_server_shutdown: bool = ...) -> None: ...
+    def __init__(self, server_steam_id: _Optional[int] = ..., lobby_id: _Optional[int] = ..., cluster_id: _Optional[int] = ..., reason_code: _Optional[_Union[CMsgServerToGCAbandonMatch.EReason, str]] = ..., additional_data: _Optional[int] = ..., match_id: _Optional[int] = ..., players: _Optional[_Iterable[_Union[CMsgServerToGCAbandonMatch.Player, _Mapping]]] = ..., public_ip_address: _Optional[int] = ..., port: _Optional[int] = ..., server_version: _Optional[int] = ..., pid: _Optional[int] = ..., instance_id: _Optional[int] = ..., private_ip_address: _Optional[int] = ..., match_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelMatchMode, str]] = ..., game_mode: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelGameMode, str]] = ..., was_server_shutdown: bool = ..., region_id: _Optional[int] = ...) -> None: ...
 
 class CMsgServerToGCAbandonMatchResponse(_message.Message):
     __slots__ = []
     def __init__(self) -> None: ...
 
 class CMsgServerToGCEnterMatchmaking(_message.Message):
-    __slots__ = ["cluster_id", "region_id", "sdr_address", "search_key", "server_port", "server_private_ip", "server_public_ip", "server_version"]
+    __slots__ = ["cluster_id", "region_id", "replay_group_id", "sdr_address", "search_key", "server_port", "server_private_ip", "server_public_ip", "server_version"]
     CLUSTER_ID_FIELD_NUMBER: _ClassVar[int]
     REGION_ID_FIELD_NUMBER: _ClassVar[int]
+    REPLAY_GROUP_ID_FIELD_NUMBER: _ClassVar[int]
     SDR_ADDRESS_FIELD_NUMBER: _ClassVar[int]
     SEARCH_KEY_FIELD_NUMBER: _ClassVar[int]
     SERVER_PORT_FIELD_NUMBER: _ClassVar[int]
@@ -729,13 +748,14 @@ class CMsgServerToGCEnterMatchmaking(_message.Message):
     SERVER_VERSION_FIELD_NUMBER: _ClassVar[int]
     cluster_id: int
     region_id: int
+    replay_group_id: int
     sdr_address: bytes
     search_key: str
     server_port: int
     server_private_ip: int
     server_public_ip: int
     server_version: int
-    def __init__(self, server_version: _Optional[int] = ..., search_key: _Optional[str] = ..., region_id: _Optional[int] = ..., cluster_id: _Optional[int] = ..., server_public_ip: _Optional[int] = ..., server_private_ip: _Optional[int] = ..., server_port: _Optional[int] = ..., sdr_address: _Optional[bytes] = ...) -> None: ...
+    def __init__(self, server_version: _Optional[int] = ..., search_key: _Optional[str] = ..., region_id: _Optional[int] = ..., cluster_id: _Optional[int] = ..., server_public_ip: _Optional[int] = ..., server_private_ip: _Optional[int] = ..., server_port: _Optional[int] = ..., sdr_address: _Optional[bytes] = ..., replay_group_id: _Optional[int] = ...) -> None: ...
 
 class CMsgServerToGCIdlePing(_message.Message):
     __slots__ = ["server_version"]

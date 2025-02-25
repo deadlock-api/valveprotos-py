@@ -49,7 +49,6 @@ class EBaseUserMessages(IntEnum):
     UM_AnimGraphUpdate = 149
     UM_HapticsManagerPulse = 150
     UM_HapticsManagerEffect = 151
-    UM_CommandQueueState = 152
     UM_UpdateCssClasses = 153
     UM_ServerFrameTime = 154
     UM_LagCompensationError = 155
@@ -121,6 +120,9 @@ class PARTICLE_MESSAGE(IntEnum):
     GAME_PARTICLE_MANAGER_EVENT_DESTROY_PHYSICS_SIM = 33
     GAME_PARTICLE_MANAGER_EVENT_SET_VDATA = 34
     GAME_PARTICLE_MANAGER_EVENT_SET_MATERIAL_OVERRIDE = 35
+    GAME_PARTICLE_MANAGER_EVENT_ADD_FAN = 36
+    GAME_PARTICLE_MANAGER_EVENT_UPDATE_FAN = 37
+    GAME_PARTICLE_MANAGER_EVENT_SET_CLUSTER_GROWTH = 38
 
 
 class EHapticPulseType(IntEnum):
@@ -490,6 +492,33 @@ class CUserMsg_ParticleManager(BaseModel):
         material_name: str = Field(default="")
         include_children: bool = Field(default=False)
 
+    class AddFan(BaseModel):
+        active: bool = Field(default=False)
+        bounds_mins: CMsgVector = Field()
+        bounds_maxs: CMsgVector = Field()
+        fan_origin: CMsgVector = Field()
+        fan_origin_offset: CMsgVector = Field()
+        fan_direction: CMsgVector = Field()
+        force: float = Field(default=0.0)
+        fan_force_curve: str = Field(default="")
+        falloff: bool = Field(default=False)
+        pull_towards_point: bool = Field(default=False)
+        curve_min_dist: float = Field(default=0.0)
+        curve_max_dist: float = Field(default=0.0)
+
+    class UpdateFan(BaseModel):
+        active: bool = Field(default=False)
+        fan_origin: CMsgVector = Field()
+        fan_origin_offset: CMsgVector = Field()
+        fan_direction: CMsgVector = Field()
+        fan_ramp_ratio: float = Field(default=0.0)
+        bounds_mins: CMsgVector = Field()
+        bounds_maxs: CMsgVector = Field()
+
+    class SetParticleClusterGrowth(BaseModel):
+        duration: float = Field(default=0.0)
+        origin: CMsgVector = Field()
+
     type: PARTICLE_MESSAGE = Field(default=0)
     index: int = Field(default=0)
     release_particle_index: "CUserMsg_ParticleManager.ReleaseParticleIndex" = Field()
@@ -527,6 +556,9 @@ class CUserMsg_ParticleManager(BaseModel):
     destroy_physics_sim: "CUserMsg_ParticleManager.DestroyPhysicsSim" = Field()
     set_vdata: "CUserMsg_ParticleManager.SetVData" = Field()
     set_material_override: "CUserMsg_ParticleManager.SetMaterialOverride" = Field()
+    add_fan: "CUserMsg_ParticleManager.AddFan" = Field()
+    update_fan: "CUserMsg_ParticleManager.UpdateFan" = Field()
+    set_particle_cluster_growth: "CUserMsg_ParticleManager.SetParticleClusterGrowth" = Field()
 
 class CUserMsg_HudError(BaseModel):
     order_id: int = Field(default=0)

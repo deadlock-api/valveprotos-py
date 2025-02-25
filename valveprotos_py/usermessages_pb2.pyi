@@ -13,6 +13,7 @@ EM_PlayJingle: EBaseEntityMessages
 EM_PropagateForce: EBaseEntityMessages
 EM_RemoveAllDecals: EBaseEntityMessages
 EM_ScreenOverlay: EBaseEntityMessages
+GAME_PARTICLE_MANAGER_EVENT_ADD_FAN: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_ADD_MODELLIST_OVERRIDE_ELEMENT: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_CAN_FREEZE: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_CHANGE_CONTROL_POINT_ATTACHMENT: PARTICLE_MESSAGE
@@ -28,6 +29,7 @@ GAME_PARTICLE_MANAGER_EVENT_FREEZE_TRANSITION_OVERRIDE: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_FROZEN: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_LATENCY: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_RELEASE: PARTICLE_MESSAGE
+GAME_PARTICLE_MANAGER_EVENT_SET_CLUSTER_GROWTH: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_SET_CONTROL_POINT_MODEL: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_SET_CONTROL_POINT_SNAPSHOT: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_SET_FOW_PROPERTIES: PARTICLE_MESSAGE
@@ -45,6 +47,7 @@ GAME_PARTICLE_MANAGER_EVENT_UPDATE: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_UPDATE_ENT: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_UPDATE_ENTITY_POSITION: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_UPDATE_FALLBACK: PARTICLE_MESSAGE
+GAME_PARTICLE_MANAGER_EVENT_UPDATE_FAN: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_UPDATE_FORWARD: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_UPDATE_OFFSET: PARTICLE_MESSAGE
 GAME_PARTICLE_MANAGER_EVENT_UPDATE_ORIENTATION: PARTICLE_MESSAGE
@@ -63,7 +66,6 @@ UM_CloseCaption: EBaseUserMessages
 UM_CloseCaptionDirect: EBaseUserMessages
 UM_CloseCaptionPlaceholder: EBaseUserMessages
 UM_ColoredText: EBaseUserMessages
-UM_CommandQueueState: EBaseUserMessages
 UM_CreditsMsg: EBaseUserMessages
 UM_CurrentTimescale: EBaseUserMessages
 UM_CustomGameEvent: EBaseUserMessages
@@ -859,7 +861,34 @@ class CUserMsg_HudError(_message.Message):
     def __init__(self, order_id: _Optional[int] = ...) -> None: ...
 
 class CUserMsg_ParticleManager(_message.Message):
-    __slots__ = ["add_modellist_override_element", "change_control_point_attachment", "clear_modellist_override", "create_particle", "create_physics_sim", "destroy_particle", "destroy_particle_involving", "destroy_particle_named", "destroy_physics_sim", "freeze_particle_involving", "index", "particle_can_freeze", "particle_freeze_transition_override", "particle_skip_to_time", "release_particle_index", "set_control_point_model", "set_control_point_snapshot", "set_material_override", "set_named_value_context", "set_particle_fow_properties", "set_particle_should_check_fow", "set_particle_text", "set_scene_object_generic_flag", "set_scene_object_tint_and_desat", "set_texture_attribute", "set_vdata", "type", "update_entity_position", "update_particle", "update_particle_ent", "update_particle_fallback", "update_particle_fwd", "update_particle_offset", "update_particle_orient", "update_particle_set_frozen", "update_particle_should_draw", "update_particle_transform"]
+    __slots__ = ["add_fan", "add_modellist_override_element", "change_control_point_attachment", "clear_modellist_override", "create_particle", "create_physics_sim", "destroy_particle", "destroy_particle_involving", "destroy_particle_named", "destroy_physics_sim", "freeze_particle_involving", "index", "particle_can_freeze", "particle_freeze_transition_override", "particle_skip_to_time", "release_particle_index", "set_control_point_model", "set_control_point_snapshot", "set_material_override", "set_named_value_context", "set_particle_cluster_growth", "set_particle_fow_properties", "set_particle_should_check_fow", "set_particle_text", "set_scene_object_generic_flag", "set_scene_object_tint_and_desat", "set_texture_attribute", "set_vdata", "type", "update_entity_position", "update_fan", "update_particle", "update_particle_ent", "update_particle_fallback", "update_particle_fwd", "update_particle_offset", "update_particle_orient", "update_particle_set_frozen", "update_particle_should_draw", "update_particle_transform"]
+    class AddFan(_message.Message):
+        __slots__ = ["active", "bounds_maxs", "bounds_mins", "curve_max_dist", "curve_min_dist", "falloff", "fan_direction", "fan_force_curve", "fan_origin", "fan_origin_offset", "force", "pull_towards_point"]
+        ACTIVE_FIELD_NUMBER: _ClassVar[int]
+        BOUNDS_MAXS_FIELD_NUMBER: _ClassVar[int]
+        BOUNDS_MINS_FIELD_NUMBER: _ClassVar[int]
+        CURVE_MAX_DIST_FIELD_NUMBER: _ClassVar[int]
+        CURVE_MIN_DIST_FIELD_NUMBER: _ClassVar[int]
+        FALLOFF_FIELD_NUMBER: _ClassVar[int]
+        FAN_DIRECTION_FIELD_NUMBER: _ClassVar[int]
+        FAN_FORCE_CURVE_FIELD_NUMBER: _ClassVar[int]
+        FAN_ORIGIN_FIELD_NUMBER: _ClassVar[int]
+        FAN_ORIGIN_OFFSET_FIELD_NUMBER: _ClassVar[int]
+        FORCE_FIELD_NUMBER: _ClassVar[int]
+        PULL_TOWARDS_POINT_FIELD_NUMBER: _ClassVar[int]
+        active: bool
+        bounds_maxs: _networkbasetypes_pb2.CMsgVector
+        bounds_mins: _networkbasetypes_pb2.CMsgVector
+        curve_max_dist: float
+        curve_min_dist: float
+        falloff: bool
+        fan_direction: _networkbasetypes_pb2.CMsgVector
+        fan_force_curve: str
+        fan_origin: _networkbasetypes_pb2.CMsgVector
+        fan_origin_offset: _networkbasetypes_pb2.CMsgVector
+        force: float
+        pull_towards_point: bool
+        def __init__(self, active: bool = ..., bounds_mins: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., bounds_maxs: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., fan_origin: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., fan_origin_offset: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., fan_direction: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., force: _Optional[float] = ..., fan_force_curve: _Optional[str] = ..., falloff: bool = ..., pull_towards_point: bool = ..., curve_min_dist: _Optional[float] = ..., curve_max_dist: _Optional[float] = ...) -> None: ...
     class AddModellistOverrideElement(_message.Message):
         __slots__ = ["groupid", "model_name", "spawn_probability"]
         GROUPID_FIELD_NUMBER: _ClassVar[int]
@@ -989,6 +1018,13 @@ class CUserMsg_ParticleManager(_message.Message):
         include_children: bool
         material_name: str
         def __init__(self, material_name: _Optional[str] = ..., include_children: bool = ...) -> None: ...
+    class SetParticleClusterGrowth(_message.Message):
+        __slots__ = ["duration", "origin"]
+        DURATION_FIELD_NUMBER: _ClassVar[int]
+        ORIGIN_FIELD_NUMBER: _ClassVar[int]
+        duration: float
+        origin: _networkbasetypes_pb2.CMsgVector
+        def __init__(self, duration: _Optional[float] = ..., origin: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ...) -> None: ...
     class SetParticleFoWProperties(_message.Message):
         __slots__ = ["fow_control_point", "fow_control_point2", "fow_radius"]
         FOW_CONTROL_POINT2_FIELD_NUMBER: _ClassVar[int]
@@ -1080,6 +1116,23 @@ class CUserMsg_ParticleManager(_message.Message):
         entity_handle: int
         position: _networkbasetypes_pb2.CMsgVector
         def __init__(self, entity_handle: _Optional[int] = ..., position: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ...) -> None: ...
+    class UpdateFan(_message.Message):
+        __slots__ = ["active", "bounds_maxs", "bounds_mins", "fan_direction", "fan_origin", "fan_origin_offset", "fan_ramp_ratio"]
+        ACTIVE_FIELD_NUMBER: _ClassVar[int]
+        BOUNDS_MAXS_FIELD_NUMBER: _ClassVar[int]
+        BOUNDS_MINS_FIELD_NUMBER: _ClassVar[int]
+        FAN_DIRECTION_FIELD_NUMBER: _ClassVar[int]
+        FAN_ORIGIN_FIELD_NUMBER: _ClassVar[int]
+        FAN_ORIGIN_OFFSET_FIELD_NUMBER: _ClassVar[int]
+        FAN_RAMP_RATIO_FIELD_NUMBER: _ClassVar[int]
+        active: bool
+        bounds_maxs: _networkbasetypes_pb2.CMsgVector
+        bounds_mins: _networkbasetypes_pb2.CMsgVector
+        fan_direction: _networkbasetypes_pb2.CMsgVector
+        fan_origin: _networkbasetypes_pb2.CMsgVector
+        fan_origin_offset: _networkbasetypes_pb2.CMsgVector
+        fan_ramp_ratio: float
+        def __init__(self, active: bool = ..., fan_origin: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., fan_origin_offset: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., fan_direction: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., fan_ramp_ratio: _Optional[float] = ..., bounds_mins: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., bounds_maxs: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ...) -> None: ...
     class UpdateParticleEnt(_message.Message):
         __slots__ = ["attach_type", "attachment", "control_point", "entity_handle", "fallback_position", "include_wearables", "offset_angles", "offset_position"]
         ATTACHMENT_FIELD_NUMBER: _ClassVar[int]
@@ -1165,6 +1218,7 @@ class CUserMsg_ParticleManager(_message.Message):
         control_point: int
         position: _networkbasetypes_pb2.CMsgVector
         def __init__(self, control_point: _Optional[int] = ..., position: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ...) -> None: ...
+    ADD_FAN_FIELD_NUMBER: _ClassVar[int]
     ADD_MODELLIST_OVERRIDE_ELEMENT_FIELD_NUMBER: _ClassVar[int]
     CHANGE_CONTROL_POINT_ATTACHMENT_FIELD_NUMBER: _ClassVar[int]
     CLEAR_MODELLIST_OVERRIDE_FIELD_NUMBER: _ClassVar[int]
@@ -1185,6 +1239,7 @@ class CUserMsg_ParticleManager(_message.Message):
     SET_CONTROL_POINT_SNAPSHOT_FIELD_NUMBER: _ClassVar[int]
     SET_MATERIAL_OVERRIDE_FIELD_NUMBER: _ClassVar[int]
     SET_NAMED_VALUE_CONTEXT_FIELD_NUMBER: _ClassVar[int]
+    SET_PARTICLE_CLUSTER_GROWTH_FIELD_NUMBER: _ClassVar[int]
     SET_PARTICLE_FOW_PROPERTIES_FIELD_NUMBER: _ClassVar[int]
     SET_PARTICLE_SHOULD_CHECK_FOW_FIELD_NUMBER: _ClassVar[int]
     SET_PARTICLE_TEXT_FIELD_NUMBER: _ClassVar[int]
@@ -1194,6 +1249,7 @@ class CUserMsg_ParticleManager(_message.Message):
     SET_VDATA_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     UPDATE_ENTITY_POSITION_FIELD_NUMBER: _ClassVar[int]
+    UPDATE_FAN_FIELD_NUMBER: _ClassVar[int]
     UPDATE_PARTICLE_ENT_FIELD_NUMBER: _ClassVar[int]
     UPDATE_PARTICLE_FALLBACK_FIELD_NUMBER: _ClassVar[int]
     UPDATE_PARTICLE_FIELD_NUMBER: _ClassVar[int]
@@ -1203,6 +1259,7 @@ class CUserMsg_ParticleManager(_message.Message):
     UPDATE_PARTICLE_SET_FROZEN_FIELD_NUMBER: _ClassVar[int]
     UPDATE_PARTICLE_SHOULD_DRAW_FIELD_NUMBER: _ClassVar[int]
     UPDATE_PARTICLE_TRANSFORM_FIELD_NUMBER: _ClassVar[int]
+    add_fan: CUserMsg_ParticleManager.AddFan
     add_modellist_override_element: CUserMsg_ParticleManager.AddModellistOverrideElement
     change_control_point_attachment: CUserMsg_ParticleManager.ChangeControlPointAttachment
     clear_modellist_override: CUserMsg_ParticleManager.ClearModellistOverride
@@ -1222,6 +1279,7 @@ class CUserMsg_ParticleManager(_message.Message):
     set_control_point_snapshot: CUserMsg_ParticleManager.SetControlPointSnapshot
     set_material_override: CUserMsg_ParticleManager.SetMaterialOverride
     set_named_value_context: CUserMsg_ParticleManager.SetParticleNamedValueContext
+    set_particle_cluster_growth: CUserMsg_ParticleManager.SetParticleClusterGrowth
     set_particle_fow_properties: CUserMsg_ParticleManager.SetParticleFoWProperties
     set_particle_should_check_fow: CUserMsg_ParticleManager.SetParticleShouldCheckFoW
     set_particle_text: CUserMsg_ParticleManager.SetParticleText
@@ -1231,6 +1289,7 @@ class CUserMsg_ParticleManager(_message.Message):
     set_vdata: CUserMsg_ParticleManager.SetVData
     type: PARTICLE_MESSAGE
     update_entity_position: CUserMsg_ParticleManager.UpdateEntityPosition
+    update_fan: CUserMsg_ParticleManager.UpdateFan
     update_particle: CUserMsg_ParticleManager.UpdateParticle_OBSOLETE
     update_particle_ent: CUserMsg_ParticleManager.UpdateParticleEnt
     update_particle_fallback: CUserMsg_ParticleManager.UpdateParticleFallback
@@ -1240,7 +1299,7 @@ class CUserMsg_ParticleManager(_message.Message):
     update_particle_set_frozen: CUserMsg_ParticleManager.UpdateParticleSetFrozen
     update_particle_should_draw: CUserMsg_ParticleManager.UpdateParticleShouldDraw
     update_particle_transform: CUserMsg_ParticleManager.UpdateParticleTransform
-    def __init__(self, type: _Optional[_Union[PARTICLE_MESSAGE, str]] = ..., index: _Optional[int] = ..., release_particle_index: _Optional[_Union[CUserMsg_ParticleManager.ReleaseParticleIndex, _Mapping]] = ..., create_particle: _Optional[_Union[CUserMsg_ParticleManager.CreateParticle, _Mapping]] = ..., destroy_particle: _Optional[_Union[CUserMsg_ParticleManager.DestroyParticle, _Mapping]] = ..., destroy_particle_involving: _Optional[_Union[CUserMsg_ParticleManager.DestroyParticleInvolving, _Mapping]] = ..., update_particle: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticle_OBSOLETE, _Mapping]] = ..., update_particle_fwd: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleFwd_OBSOLETE, _Mapping]] = ..., update_particle_orient: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleOrient_OBSOLETE, _Mapping]] = ..., update_particle_fallback: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleFallback, _Mapping]] = ..., update_particle_offset: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleOffset, _Mapping]] = ..., update_particle_ent: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleEnt, _Mapping]] = ..., update_particle_should_draw: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleShouldDraw, _Mapping]] = ..., update_particle_set_frozen: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleSetFrozen, _Mapping]] = ..., change_control_point_attachment: _Optional[_Union[CUserMsg_ParticleManager.ChangeControlPointAttachment, _Mapping]] = ..., update_entity_position: _Optional[_Union[CUserMsg_ParticleManager.UpdateEntityPosition, _Mapping]] = ..., set_particle_fow_properties: _Optional[_Union[CUserMsg_ParticleManager.SetParticleFoWProperties, _Mapping]] = ..., set_particle_text: _Optional[_Union[CUserMsg_ParticleManager.SetParticleText, _Mapping]] = ..., set_particle_should_check_fow: _Optional[_Union[CUserMsg_ParticleManager.SetParticleShouldCheckFoW, _Mapping]] = ..., set_control_point_model: _Optional[_Union[CUserMsg_ParticleManager.SetControlPointModel, _Mapping]] = ..., set_control_point_snapshot: _Optional[_Union[CUserMsg_ParticleManager.SetControlPointSnapshot, _Mapping]] = ..., set_texture_attribute: _Optional[_Union[CUserMsg_ParticleManager.SetTextureAttribute, _Mapping]] = ..., set_scene_object_generic_flag: _Optional[_Union[CUserMsg_ParticleManager.SetSceneObjectGenericFlag, _Mapping]] = ..., set_scene_object_tint_and_desat: _Optional[_Union[CUserMsg_ParticleManager.SetSceneObjectTintAndDesat, _Mapping]] = ..., destroy_particle_named: _Optional[_Union[CUserMsg_ParticleManager.DestroyParticleNamed, _Mapping]] = ..., particle_skip_to_time: _Optional[_Union[CUserMsg_ParticleManager.ParticleSkipToTime, _Mapping]] = ..., particle_can_freeze: _Optional[_Union[CUserMsg_ParticleManager.ParticleCanFreeze, _Mapping]] = ..., set_named_value_context: _Optional[_Union[CUserMsg_ParticleManager.SetParticleNamedValueContext, _Mapping]] = ..., update_particle_transform: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleTransform, _Mapping]] = ..., particle_freeze_transition_override: _Optional[_Union[CUserMsg_ParticleManager.ParticleFreezeTransitionOverride, _Mapping]] = ..., freeze_particle_involving: _Optional[_Union[CUserMsg_ParticleManager.FreezeParticleInvolving, _Mapping]] = ..., add_modellist_override_element: _Optional[_Union[CUserMsg_ParticleManager.AddModellistOverrideElement, _Mapping]] = ..., clear_modellist_override: _Optional[_Union[CUserMsg_ParticleManager.ClearModellistOverride, _Mapping]] = ..., create_physics_sim: _Optional[_Union[CUserMsg_ParticleManager.CreatePhysicsSim, _Mapping]] = ..., destroy_physics_sim: _Optional[_Union[CUserMsg_ParticleManager.DestroyPhysicsSim, _Mapping]] = ..., set_vdata: _Optional[_Union[CUserMsg_ParticleManager.SetVData, _Mapping]] = ..., set_material_override: _Optional[_Union[CUserMsg_ParticleManager.SetMaterialOverride, _Mapping]] = ...) -> None: ...
+    def __init__(self, type: _Optional[_Union[PARTICLE_MESSAGE, str]] = ..., index: _Optional[int] = ..., release_particle_index: _Optional[_Union[CUserMsg_ParticleManager.ReleaseParticleIndex, _Mapping]] = ..., create_particle: _Optional[_Union[CUserMsg_ParticleManager.CreateParticle, _Mapping]] = ..., destroy_particle: _Optional[_Union[CUserMsg_ParticleManager.DestroyParticle, _Mapping]] = ..., destroy_particle_involving: _Optional[_Union[CUserMsg_ParticleManager.DestroyParticleInvolving, _Mapping]] = ..., update_particle: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticle_OBSOLETE, _Mapping]] = ..., update_particle_fwd: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleFwd_OBSOLETE, _Mapping]] = ..., update_particle_orient: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleOrient_OBSOLETE, _Mapping]] = ..., update_particle_fallback: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleFallback, _Mapping]] = ..., update_particle_offset: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleOffset, _Mapping]] = ..., update_particle_ent: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleEnt, _Mapping]] = ..., update_particle_should_draw: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleShouldDraw, _Mapping]] = ..., update_particle_set_frozen: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleSetFrozen, _Mapping]] = ..., change_control_point_attachment: _Optional[_Union[CUserMsg_ParticleManager.ChangeControlPointAttachment, _Mapping]] = ..., update_entity_position: _Optional[_Union[CUserMsg_ParticleManager.UpdateEntityPosition, _Mapping]] = ..., set_particle_fow_properties: _Optional[_Union[CUserMsg_ParticleManager.SetParticleFoWProperties, _Mapping]] = ..., set_particle_text: _Optional[_Union[CUserMsg_ParticleManager.SetParticleText, _Mapping]] = ..., set_particle_should_check_fow: _Optional[_Union[CUserMsg_ParticleManager.SetParticleShouldCheckFoW, _Mapping]] = ..., set_control_point_model: _Optional[_Union[CUserMsg_ParticleManager.SetControlPointModel, _Mapping]] = ..., set_control_point_snapshot: _Optional[_Union[CUserMsg_ParticleManager.SetControlPointSnapshot, _Mapping]] = ..., set_texture_attribute: _Optional[_Union[CUserMsg_ParticleManager.SetTextureAttribute, _Mapping]] = ..., set_scene_object_generic_flag: _Optional[_Union[CUserMsg_ParticleManager.SetSceneObjectGenericFlag, _Mapping]] = ..., set_scene_object_tint_and_desat: _Optional[_Union[CUserMsg_ParticleManager.SetSceneObjectTintAndDesat, _Mapping]] = ..., destroy_particle_named: _Optional[_Union[CUserMsg_ParticleManager.DestroyParticleNamed, _Mapping]] = ..., particle_skip_to_time: _Optional[_Union[CUserMsg_ParticleManager.ParticleSkipToTime, _Mapping]] = ..., particle_can_freeze: _Optional[_Union[CUserMsg_ParticleManager.ParticleCanFreeze, _Mapping]] = ..., set_named_value_context: _Optional[_Union[CUserMsg_ParticleManager.SetParticleNamedValueContext, _Mapping]] = ..., update_particle_transform: _Optional[_Union[CUserMsg_ParticleManager.UpdateParticleTransform, _Mapping]] = ..., particle_freeze_transition_override: _Optional[_Union[CUserMsg_ParticleManager.ParticleFreezeTransitionOverride, _Mapping]] = ..., freeze_particle_involving: _Optional[_Union[CUserMsg_ParticleManager.FreezeParticleInvolving, _Mapping]] = ..., add_modellist_override_element: _Optional[_Union[CUserMsg_ParticleManager.AddModellistOverrideElement, _Mapping]] = ..., clear_modellist_override: _Optional[_Union[CUserMsg_ParticleManager.ClearModellistOverride, _Mapping]] = ..., create_physics_sim: _Optional[_Union[CUserMsg_ParticleManager.CreatePhysicsSim, _Mapping]] = ..., destroy_physics_sim: _Optional[_Union[CUserMsg_ParticleManager.DestroyPhysicsSim, _Mapping]] = ..., set_vdata: _Optional[_Union[CUserMsg_ParticleManager.SetVData, _Mapping]] = ..., set_material_override: _Optional[_Union[CUserMsg_ParticleManager.SetMaterialOverride, _Mapping]] = ..., add_fan: _Optional[_Union[CUserMsg_ParticleManager.AddFan, _Mapping]] = ..., update_fan: _Optional[_Union[CUserMsg_ParticleManager.UpdateFan, _Mapping]] = ..., set_particle_cluster_growth: _Optional[_Union[CUserMsg_ParticleManager.SetParticleClusterGrowth, _Mapping]] = ...) -> None: ...
 
 class EBaseUserMessages(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []

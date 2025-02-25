@@ -1,6 +1,7 @@
 import networkbasetypes_pb2 as _networkbasetypes_pb2
 import citadel_gcmessages_common_pb2 as _citadel_gcmessages_common_pb2
 import gameevents_pb2 as _gameevents_pb2
+import valveextensions_pb2 as _valveextensions_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
@@ -48,6 +49,7 @@ k_EPingMarkerInfo_OnlyPlaySound: ChatMsgPingMarkerInfo
 k_EPingMarkerInfo_OnlyShowMarker: ChatMsgPingMarkerInfo
 k_EPingMarkerInfo_ShowMarkerAndSound: ChatMsgPingMarkerInfo
 k_EPingMarkerInfo_ShowMarkerOnSender: ChatMsgPingMarkerInfo
+k_EUserMsg_AG2ParamTrigger: CitadelUserMessageIds
 k_EUserMsg_AbilitiesChanged: CitadelUserMessageIds
 k_EUserMsg_AbilityFailed: CitadelUserMessageIds
 k_EUserMsg_AbilityInterrupted: CitadelUserMessageIds
@@ -78,6 +80,7 @@ k_EUserMsg_MapPing: CitadelUserMessageIds
 k_EUserMsg_MeleeHit: CitadelUserMessageIds
 k_EUserMsg_MidBossSpawned: CitadelUserMessageIds
 k_EUserMsg_ModifierApplied: CitadelUserMessageIds
+k_EUserMsg_MusicQueue: CitadelUserMessageIds
 k_EUserMsg_ObjectiveMask: CitadelUserMessageIds
 k_EUserMsg_ObstructedShotFired: CitadelUserMessageIds
 k_EUserMsg_ParticipantSetLibraryStackFields: CitadelUserMessageIds
@@ -152,37 +155,40 @@ class CCitadelUserMessage_BulletHit(_message.Message):
     def __init__(self, shotid: _Optional[int] = ..., pellet: _Optional[int] = ..., hit_entindex: _Optional[int] = ..., weapon_entindex: _Optional[int] = ..., is_predicted: bool = ...) -> None: ...
 
 class CCitadelUserMessage_CurrencyChanged(_message.Message):
-    __slots__ = ["ability_id", "currency_source", "currency_type", "delta", "entindex_hero_pawn", "entindex_victim", "new_value", "notification", "playsound", "victim_pos"]
+    __slots__ = ["ability_id", "currency_source", "currency_type", "delta", "entindex_victim", "new_value", "notification", "playsound", "userid", "victim_pos"]
     ABILITY_ID_FIELD_NUMBER: _ClassVar[int]
     CURRENCY_SOURCE_FIELD_NUMBER: _ClassVar[int]
     CURRENCY_TYPE_FIELD_NUMBER: _ClassVar[int]
     DELTA_FIELD_NUMBER: _ClassVar[int]
-    ENTINDEX_HERO_PAWN_FIELD_NUMBER: _ClassVar[int]
     ENTINDEX_VICTIM_FIELD_NUMBER: _ClassVar[int]
     NEW_VALUE_FIELD_NUMBER: _ClassVar[int]
     NOTIFICATION_FIELD_NUMBER: _ClassVar[int]
     PLAYSOUND_FIELD_NUMBER: _ClassVar[int]
+    USERID_FIELD_NUMBER: _ClassVar[int]
     VICTIM_POS_FIELD_NUMBER: _ClassVar[int]
     ability_id: int
     currency_source: int
     currency_type: int
     delta: int
-    entindex_hero_pawn: int
     entindex_victim: int
     new_value: int
     notification: bool
     playsound: int
+    userid: int
     victim_pos: _networkbasetypes_pb2.CMsgVector
-    def __init__(self, entindex_hero_pawn: _Optional[int] = ..., currency_type: _Optional[int] = ..., currency_source: _Optional[int] = ..., delta: _Optional[int] = ..., notification: bool = ..., entindex_victim: _Optional[int] = ..., victim_pos: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., playsound: _Optional[int] = ..., ability_id: _Optional[int] = ..., new_value: _Optional[int] = ...) -> None: ...
+    def __init__(self, userid: _Optional[int] = ..., currency_type: _Optional[int] = ..., currency_source: _Optional[int] = ..., delta: _Optional[int] = ..., notification: bool = ..., entindex_victim: _Optional[int] = ..., victim_pos: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., playsound: _Optional[int] = ..., ability_id: _Optional[int] = ..., new_value: _Optional[int] = ...) -> None: ...
 
 class CCitadelUserMessage_Damage(_message.Message):
-    __slots__ = ["ability_id", "attacker_class", "citadel_type", "damage", "damage_absorbed", "damage_direction", "entindex_ability", "entindex_attacker", "entindex_attacking_object", "entindex_inflictor", "entindex_victim", "flags", "health_lost", "hitgroup_id", "hits", "origin", "pre_damage", "type", "victim_class", "victim_health_max", "victim_health_new", "victim_shield_max", "victim_shield_new"]
+    __slots__ = ["ability_id", "attacker_class", "citadel_type", "crit_damage", "damage", "damage_absorbed", "damage_absorbed_deprecated", "damage_direction", "effectiveness", "entindex_ability", "entindex_attacker", "entindex_attacking_object", "entindex_inflictor", "entindex_victim", "flags", "health_lost", "hitgroup_id", "hits", "is_secondary_stat", "origin", "pre_damage", "pre_damage_deprecated", "type", "victim_class", "victim_health_max", "victim_health_new", "victim_shield_max", "victim_shield_new"]
     ABILITY_ID_FIELD_NUMBER: _ClassVar[int]
     ATTACKER_CLASS_FIELD_NUMBER: _ClassVar[int]
     CITADEL_TYPE_FIELD_NUMBER: _ClassVar[int]
+    CRIT_DAMAGE_FIELD_NUMBER: _ClassVar[int]
+    DAMAGE_ABSORBED_DEPRECATED_FIELD_NUMBER: _ClassVar[int]
     DAMAGE_ABSORBED_FIELD_NUMBER: _ClassVar[int]
     DAMAGE_DIRECTION_FIELD_NUMBER: _ClassVar[int]
     DAMAGE_FIELD_NUMBER: _ClassVar[int]
+    EFFECTIVENESS_FIELD_NUMBER: _ClassVar[int]
     ENTINDEX_ABILITY_FIELD_NUMBER: _ClassVar[int]
     ENTINDEX_ATTACKER_FIELD_NUMBER: _ClassVar[int]
     ENTINDEX_ATTACKING_OBJECT_FIELD_NUMBER: _ClassVar[int]
@@ -192,7 +198,9 @@ class CCitadelUserMessage_Damage(_message.Message):
     HEALTH_LOST_FIELD_NUMBER: _ClassVar[int]
     HITGROUP_ID_FIELD_NUMBER: _ClassVar[int]
     HITS_FIELD_NUMBER: _ClassVar[int]
+    IS_SECONDARY_STAT_FIELD_NUMBER: _ClassVar[int]
     ORIGIN_FIELD_NUMBER: _ClassVar[int]
+    PRE_DAMAGE_DEPRECATED_FIELD_NUMBER: _ClassVar[int]
     PRE_DAMAGE_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     VICTIM_CLASS_FIELD_NUMBER: _ClassVar[int]
@@ -203,9 +211,12 @@ class CCitadelUserMessage_Damage(_message.Message):
     ability_id: int
     attacker_class: int
     citadel_type: int
+    crit_damage: float
     damage: int
-    damage_absorbed: int
+    damage_absorbed: float
+    damage_absorbed_deprecated: int
     damage_direction: _networkbasetypes_pb2.CMsgVector
+    effectiveness: float
     entindex_ability: int
     entindex_attacker: int
     entindex_attacking_object: int
@@ -215,15 +226,17 @@ class CCitadelUserMessage_Damage(_message.Message):
     health_lost: int
     hitgroup_id: int
     hits: int
+    is_secondary_stat: bool
     origin: _networkbasetypes_pb2.CMsgVector
-    pre_damage: int
+    pre_damage: float
+    pre_damage_deprecated: int
     type: int
     victim_class: int
     victim_health_max: int
     victim_health_new: int
     victim_shield_max: int
     victim_shield_new: int
-    def __init__(self, damage: _Optional[int] = ..., pre_damage: _Optional[int] = ..., type: _Optional[int] = ..., citadel_type: _Optional[int] = ..., origin: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., entindex_victim: _Optional[int] = ..., entindex_inflictor: _Optional[int] = ..., entindex_attacker: _Optional[int] = ..., entindex_ability: _Optional[int] = ..., damage_absorbed: _Optional[int] = ..., victim_health_max: _Optional[int] = ..., victim_health_new: _Optional[int] = ..., flags: _Optional[int] = ..., ability_id: _Optional[int] = ..., attacker_class: _Optional[int] = ..., victim_class: _Optional[int] = ..., victim_shield_max: _Optional[int] = ..., victim_shield_new: _Optional[int] = ..., hits: _Optional[int] = ..., health_lost: _Optional[int] = ..., hitgroup_id: _Optional[int] = ..., entindex_attacking_object: _Optional[int] = ..., damage_direction: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ...) -> None: ...
+    def __init__(self, damage: _Optional[int] = ..., pre_damage_deprecated: _Optional[int] = ..., pre_damage: _Optional[float] = ..., type: _Optional[int] = ..., citadel_type: _Optional[int] = ..., origin: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., entindex_victim: _Optional[int] = ..., entindex_inflictor: _Optional[int] = ..., entindex_attacker: _Optional[int] = ..., entindex_ability: _Optional[int] = ..., damage_absorbed_deprecated: _Optional[int] = ..., damage_absorbed: _Optional[float] = ..., victim_health_max: _Optional[int] = ..., victim_health_new: _Optional[int] = ..., flags: _Optional[int] = ..., ability_id: _Optional[int] = ..., attacker_class: _Optional[int] = ..., victim_class: _Optional[int] = ..., victim_shield_max: _Optional[int] = ..., victim_shield_new: _Optional[int] = ..., hits: _Optional[int] = ..., health_lost: _Optional[int] = ..., hitgroup_id: _Optional[int] = ..., entindex_attacking_object: _Optional[int] = ..., damage_direction: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., is_secondary_stat: bool = ..., effectiveness: _Optional[float] = ..., crit_damage: _Optional[float] = ...) -> None: ...
 
 class CCitadelUserMessage_GameOver(_message.Message):
     __slots__ = ["just_a_test", "winning_team"]
@@ -258,6 +271,14 @@ class CCitadelUserMessage_ObjectiveMask(_message.Message):
     objective_mask_team0: int
     objective_mask_team1: int
     def __init__(self, objective_mask_team0: _Optional[int] = ..., objective_mask_team1: _Optional[int] = ...) -> None: ...
+
+class CCitadelUserMsg_AG2ParamTrigger(_message.Message):
+    __slots__ = ["param_id", "param_value"]
+    PARAM_ID_FIELD_NUMBER: _ClassVar[int]
+    PARAM_VALUE_FIELD_NUMBER: _ClassVar[int]
+    param_id: str
+    param_value: str
+    def __init__(self, param_id: _Optional[str] = ..., param_value: _Optional[str] = ...) -> None: ...
 
 class CCitadelUserMsg_AbilitiesChanged(_message.Message):
     __slots__ = ["ability_id", "change", "purchaser_player_slot"]
@@ -608,6 +629,14 @@ class CCitadelUserMsg_MidBossSpawned(_message.Message):
     __slots__ = []
     def __init__(self) -> None: ...
 
+class CCitadelUserMsg_MusicQueue(_message.Message):
+    __slots__ = ["music_state", "override"]
+    MUSIC_STATE_FIELD_NUMBER: _ClassVar[int]
+    OVERRIDE_FIELD_NUMBER: _ClassVar[int]
+    music_state: int
+    override: bool
+    def __init__(self, music_state: _Optional[int] = ..., override: bool = ...) -> None: ...
+
 class CCitadelUserMsg_ObstructedShotFired(_message.Message):
     __slots__ = []
     def __init__(self) -> None: ...
@@ -738,26 +767,32 @@ class CCitadelUserMsg_QuickResponse(_message.Message):
 class CCitadelUserMsg_RecentDamageSummary(_message.Message):
     __slots__ = ["damage_records", "end_time", "lost_gold", "modifier_records", "player_slot", "start_time", "total_damage"]
     class DamageRecord(_message.Message):
-        __slots__ = ["ability_id", "attacker_class", "damage", "damage_absorbed", "damage_type", "hero_id", "hits", "is_killing_blow", "victim_hero_id"]
+        __slots__ = ["ability_id", "attacker_class", "crit_damage", "damage", "damage_absorbed", "damage_type", "hero_id", "hits", "is_killing_blow", "is_secondary_stat", "pre_damage", "victim_hero_id"]
         ABILITY_ID_FIELD_NUMBER: _ClassVar[int]
         ATTACKER_CLASS_FIELD_NUMBER: _ClassVar[int]
+        CRIT_DAMAGE_FIELD_NUMBER: _ClassVar[int]
         DAMAGE_ABSORBED_FIELD_NUMBER: _ClassVar[int]
         DAMAGE_FIELD_NUMBER: _ClassVar[int]
         DAMAGE_TYPE_FIELD_NUMBER: _ClassVar[int]
         HERO_ID_FIELD_NUMBER: _ClassVar[int]
         HITS_FIELD_NUMBER: _ClassVar[int]
         IS_KILLING_BLOW_FIELD_NUMBER: _ClassVar[int]
+        IS_SECONDARY_STAT_FIELD_NUMBER: _ClassVar[int]
+        PRE_DAMAGE_FIELD_NUMBER: _ClassVar[int]
         VICTIM_HERO_ID_FIELD_NUMBER: _ClassVar[int]
         ability_id: int
         attacker_class: int
+        crit_damage: float
         damage: int
-        damage_absorbed: int
+        damage_absorbed: float
         damage_type: int
         hero_id: int
         hits: int
         is_killing_blow: bool
+        is_secondary_stat: bool
+        pre_damage: float
         victim_hero_id: int
-        def __init__(self, damage: _Optional[int] = ..., hits: _Optional[int] = ..., damage_type: _Optional[int] = ..., hero_id: _Optional[int] = ..., ability_id: _Optional[int] = ..., attacker_class: _Optional[int] = ..., damage_absorbed: _Optional[int] = ..., is_killing_blow: bool = ..., victim_hero_id: _Optional[int] = ...) -> None: ...
+        def __init__(self, damage: _Optional[int] = ..., hits: _Optional[int] = ..., damage_type: _Optional[int] = ..., hero_id: _Optional[int] = ..., ability_id: _Optional[int] = ..., attacker_class: _Optional[int] = ..., damage_absorbed: _Optional[float] = ..., is_killing_blow: bool = ..., victim_hero_id: _Optional[int] = ..., is_secondary_stat: bool = ..., pre_damage: _Optional[float] = ..., crit_damage: _Optional[float] = ...) -> None: ...
     class ModifierRecord(_message.Message):
         __slots__ = ["ability_id", "debuff", "end_time", "entindex_caster", "modifier_type_id", "start_time"]
         ABILITY_ID_FIELD_NUMBER: _ClassVar[int]

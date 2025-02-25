@@ -55,18 +55,22 @@ class CInButtonStatePB(_message.Message):
     def __init__(self, buttonstate1: _Optional[int] = ..., buttonstate2: _Optional[int] = ..., buttonstate3: _Optional[int] = ...) -> None: ...
 
 class CSubtickMoveStep(_message.Message):
-    __slots__ = ["analog_forward_delta", "analog_left_delta", "button", "pressed", "when"]
+    __slots__ = ["analog_forward_delta", "analog_left_delta", "analog_pitch_delta", "analog_yaw_delta", "button", "pressed", "when"]
     ANALOG_FORWARD_DELTA_FIELD_NUMBER: _ClassVar[int]
     ANALOG_LEFT_DELTA_FIELD_NUMBER: _ClassVar[int]
+    ANALOG_PITCH_DELTA_FIELD_NUMBER: _ClassVar[int]
+    ANALOG_YAW_DELTA_FIELD_NUMBER: _ClassVar[int]
     BUTTON_FIELD_NUMBER: _ClassVar[int]
     PRESSED_FIELD_NUMBER: _ClassVar[int]
     WHEN_FIELD_NUMBER: _ClassVar[int]
     analog_forward_delta: float
     analog_left_delta: float
+    analog_pitch_delta: float
+    analog_yaw_delta: float
     button: int
     pressed: bool
     when: float
-    def __init__(self, button: _Optional[int] = ..., pressed: bool = ..., when: _Optional[float] = ..., analog_forward_delta: _Optional[float] = ..., analog_left_delta: _Optional[float] = ...) -> None: ...
+    def __init__(self, button: _Optional[int] = ..., pressed: bool = ..., when: _Optional[float] = ..., analog_forward_delta: _Optional[float] = ..., analog_left_delta: _Optional[float] = ..., analog_pitch_delta: _Optional[float] = ..., analog_yaw_delta: _Optional[float] = ...) -> None: ...
 
 class CUserCmdBasePB(_message.Message):
     __slots__ = ["base"]

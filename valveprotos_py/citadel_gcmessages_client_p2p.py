@@ -13,6 +13,7 @@ from .citadel_gcmessages_common_p2p import ECitadelLobbyTeam
 from .citadel_gcmessages_common_p2p import ECitadelMMPreference
 from .citadel_gcmessages_common_p2p import ECitadelMatchMode
 from .citadel_gcmessages_common_p2p import ECitadelRegionMode
+from .citadel_gcmessages_common_p2p import PrivateLobbySettings
 from .gcsdk_gcmessages_p2p import CExtraMsgBlock
 from .steammessages_p2p import EGCPlatform
 from enum import IntEnum
@@ -360,6 +361,7 @@ class CMsgDevMatchInfo(BaseModel):
     match_id: int = Field(default=0)
     players: typing.List["CMsgDevMatchInfo.MatchPlayer"] = Field(default_factory=list)
     lobby_id: float = Field(default=0.0)
+    game_mode_version: int = Field(default=0)
     net_worth_team_0: int = Field(default=0)
     net_worth_team_1: int = Field(default=0)
     duration_s: int = Field(default=0)
@@ -398,6 +400,7 @@ class CMsgGCToClientDevPlaytestStatus(BaseModel):
 
     dev_queue_size: typing.List["CMsgGCToClientDevPlaytestStatus.DevQueueSize"] = Field(default_factory=list)
     dev_available_servers: int = Field(default=0)
+    coop_bot_max_wait_s: int = Field(default=0)
     is_mm_enabled: bool = Field(default=False)
     locked_heroes: bool = Field(default=False)
     party_shared_heroes: bool = Field(default=False)
@@ -448,6 +451,8 @@ class CMsgClientToGCPartyCreate(BaseModel):
     region_mode: ECitadelRegionMode = Field(default=0)
     server_search_key: str = Field(default="")
     mm_preference: ECitadelMMPreference = Field(default=0)
+    private_lobby_settings: PrivateLobbySettings = Field()
+    bot_difficulty: ECitadelBotDifficulty = Field(default=0)
 
 class CMsgClientToGCPartyCreateResponse(BaseModel):
     class EResponse(IntEnum):
@@ -746,6 +751,7 @@ class CMsgClientToGCGetMatchHistoryResponse(BaseModel):
         match_mode: ECitadelMatchMode = Field(default=0)
         game_mode: ECitadelGameMode = Field(default=0)
         not_scored: bool = Field(default=False)
+        game_mode_version: int = Field(default=0)
 
     class EResult(IntEnum):
         k_eResult_InternalError = 0
@@ -882,7 +888,7 @@ class CMsgClientToGCGetMatchMetaDataResponse(BaseModel):
     replay_salt: int = Field(default=0)
     metadata_salt: int = Field(default=0)
     replay_valid_through: int = Field(default=0)
-    cluster_id: int = Field(default=0)
+    replay_group_id: int = Field(default=0)
     replay_processing_through: int = Field(default=0)
 
 class CMsgGCToClientDevAnnouncements(BaseModel):
@@ -1161,6 +1167,7 @@ class CMsgClientToGCFindHeroBuildsResponse(BaseModel):
 
     response: "CMsgClientToGCFindHeroBuildsResponse.EResponse" = Field(default=0)
     results: typing.List["CMsgClientToGCFindHeroBuildsResponse.HeroBuildResult"] = Field(default_factory=list)
+    build_window_start_time_override: int = Field(default=0)
 
 class CMsgClientToGCUpdateHeroBuildPreference(BaseModel):
     hero_build_id: int = Field(default=0)
@@ -1339,6 +1346,7 @@ class CMsgGCToClientCommendNotification(BaseModel):
     commender_hero_id: int = Field(default=0)
     commend_type: ECommendType = Field(default=0)
     match_id: int = Field(default=0)
+    enemy_commend: bool = Field(default=False)
 
 class CMsgClientToGCRequestCheatReports(BaseModel):
     pass

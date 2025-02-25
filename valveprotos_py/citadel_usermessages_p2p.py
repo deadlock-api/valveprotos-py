@@ -71,6 +71,8 @@ class CitadelUserMessageIds(IntEnum):
     k_EUserMsg_MeleeHit = 355
     k_EUserMsg_FlexSlotUnlocked = 356
     k_EUserMsg_SeasonalAchievementUnlocked = 357
+    k_EUserMsg_MusicQueue = 358
+    k_EUserMsg_AG2ParamTrigger = 359
 
 
 class CitadelEntityMessageIds(IntEnum):
@@ -79,8 +81,8 @@ class CitadelEntityMessageIds(IntEnum):
 
 class ChatMsgPingMarkerInfo(IntEnum):
     k_EPingMarkerInfo_ShowMarkerAndSound = 0
-    k_EPingMarkerInfo_HideMarkerAndSound = 1
-    k_EPingMarkerInfo_ShowMarkerOnSender = 2
+    k_EPingMarkerInfo_ShowMarkerOnSender = 1
+    k_EPingMarkerInfo_HideMarkerAndSound = 2
     k_EPingMarkerInfo_OnlyShowMarker = 3
     k_EPingMarkerInfo_OnlyPlaySound = 4
 
@@ -141,7 +143,8 @@ class CUserMessageEmpty(BaseModel):
 
 class CCitadelUserMessage_Damage(BaseModel):
     damage: int = Field(default=0)
-    pre_damage: int = Field(default=0)
+    pre_damage_deprecated: int = Field(default=0)
+    pre_damage: float = Field(default=0.0)
     type: int = Field(default=0)
     citadel_type: int = Field(default=0)
     origin: CMsgVector = Field()
@@ -149,7 +152,8 @@ class CCitadelUserMessage_Damage(BaseModel):
     entindex_inflictor: int = Field(default=0)
     entindex_attacker: int = Field(default=0)
     entindex_ability: int = Field(default=0)
-    damage_absorbed: int = Field(default=0)
+    damage_absorbed_deprecated: int = Field(default=0)
+    damage_absorbed: float = Field(default=0.0)
     victim_health_max: int = Field(default=0)
     victim_health_new: int = Field(default=0)
     flags: int = Field(default=0)
@@ -163,6 +167,9 @@ class CCitadelUserMessage_Damage(BaseModel):
     hitgroup_id: int = Field(default=0)
     entindex_attacking_object: int = Field(default=0)
     damage_direction: CMsgVector = Field()
+    is_secondary_stat: bool = Field(default=False)
+    effectiveness: float = Field(default=0.0)
+    crit_damage: float = Field(default=0.0)
 
 class PingCommonData(BaseModel):
     ping_message_id: int = Field(default=0)
@@ -249,9 +256,12 @@ class CCitadelUserMsg_RecentDamageSummary(BaseModel):
         hero_id: int = Field(default=0)
         ability_id: int = Field(default=0)
         attacker_class: int = Field(default=0)
-        damage_absorbed: int = Field(default=0)
+        damage_absorbed: float = Field(default=0.0)
         is_killing_blow: bool = Field(default=False)
         victim_hero_id: int = Field(default=0)
+        is_secondary_stat: bool = Field(default=False)
+        pre_damage: float = Field(default=0.0)
+        crit_damage: float = Field(default=0.0)
 
     class ModifierRecord(BaseModel):
         ability_id: int = Field(default=0)
@@ -451,7 +461,7 @@ class CCitadelUserMessage_AbilityNotify(BaseModel):
     ability_id: int = Field(default=0)
 
 class CCitadelUserMessage_CurrencyChanged(BaseModel):
-    entindex_hero_pawn: int = Field(default=0)
+    userid: int = Field(default=0)
     currency_type: int = Field(default=0)
     currency_source: int = Field(default=0)
     delta: int = Field(default=0)
@@ -549,3 +559,11 @@ class CCitadelUserMsg_FlexSlotUnlocked(BaseModel):
 class CCitadelUserMsg_SeasonalAchievementUnlocked(BaseModel):
     account_id: int = Field(default=0)
     hero_id: int = Field(default=0)
+
+class CCitadelUserMsg_MusicQueue(BaseModel):
+    music_state: int = Field(default=0)
+    override: bool = Field(default=False)
+
+class CCitadelUserMsg_AG2ParamTrigger(BaseModel):
+    param_id: str = Field(default="")
+    param_value: str = Field(default="")

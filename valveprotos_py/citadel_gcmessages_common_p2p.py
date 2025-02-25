@@ -179,6 +179,7 @@ class CSOCitadelLobby(BaseModel):
     server_version: int = Field(default=0)
     safe_to_abandon: bool = Field(default=False)
     match_punishes_abandons: bool = Field(default=False)
+    game_mode_version: int = Field(default=0)
 
 class CLobbyData_PostMatchSurvey(BaseModel):
     class PlayerSurvey(BaseModel):
@@ -311,6 +312,25 @@ class CMsgMatchPlayerPathsData(BaseModel):
         y_pos: typing.List[int] = Field(default_factory=list)
         alive: typing.List[bool] = Field(default_factory=list)
         health: typing.List[int] = Field(default_factory=list)
+        combat_type: typing.List["CMsgMatchPlayerPathsData.ECombatType"] = Field(default_factory=list)
+        move_type: typing.List["CMsgMatchPlayerPathsData.EMoveType"] = Field(default_factory=list)
+
+    class ECombatType(IntEnum):
+        k_eCombatType_Out = 0
+        k_eCombatType_Player = 1
+        k_eCombatType_EnemyNPC = 2
+        k_eCombatType_Neutral = 3
+
+    class EMoveType(IntEnum):
+        k_eMoveType_Normal = 0
+        k_eMoveType_Ability = 1
+        k_eMoveType_AbilityDebuff = 2
+        k_eMoveType_GroundDash = 3
+        k_eMoveType_Slide = 4
+        k_eMoveType_RopeClimbing = 5
+        k_eMoveType_Ziplining = 6
+        k_eMoveType_InAir = 7
+        k_eMoveType_AirDash = 8
 
     version: int = Field(default=0)
     interval_s: float = Field(default=0.0)
@@ -514,6 +534,7 @@ class CMsgMatchMetaDataContents(BaseModel):
         new_player_pool: bool = Field(default=False)
         average_badge_team0: int = Field(default=0)
         average_badge_team1: int = Field(default=0)
+        game_mode_version: int = Field(default=0)
 
     class EMatchOutcome(IntEnum):
         k_eOutcome_TeamWin = 0

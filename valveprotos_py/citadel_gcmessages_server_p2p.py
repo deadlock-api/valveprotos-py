@@ -63,6 +63,7 @@ class EGCServerSignoutData(IntEnum):
     k_EServerSignoutData_BookRewards = 8
     k_EServerSignoutData_PenalizedPlayers = 9
     k_EServerSignoutData_ReportCheaters = 10
+    k_EServerSignoutData_MatchDevStats = 11
 
 class CMsgServerCrashSentinelFile(BaseModel):
     class Player(BaseModel):
@@ -82,13 +83,14 @@ class CMsgServerCrashSentinelFile(BaseModel):
     server_steam_id: float = Field(default=0.0)
     server_public_ip_addr: float = Field(default=0.0)
     server_port: int = Field(default=0)
-    server_cluster: int = Field(default=0)
+    server_cluster_id: int = Field(default=0)
     pid: int = Field(default=0)
     saved_time: int = Field(default=0)
     server_version: int = Field(default=0)
     game_info: "CMsgServerCrashSentinelFile.GameInfo" = Field()
     server_private_ip_addr: int = Field(default=0)
     instance_id: int = Field(default=0)
+    server_region_id: int = Field(default=0)
 
 class CServerLobbyData_PlayerMMR(BaseModel):
     class Player(BaseModel):
@@ -234,6 +236,12 @@ class CMsgServerSignoutData_Disconnections(BaseModel):
         match_reconnect_delay: int = Field(default=0)
 
     disconnections: typing.List["CMsgServerSignoutData_Disconnections.CMsgMatchDisconnection"] = Field(default_factory=list)
+
+class CMsgServerSignoutData_MatchDevStats(BaseModel):
+    class PlayerSlot(BaseModel):
+        player_slot: int = Field(default=0)
+
+    players: typing.List["CMsgServerSignoutData_MatchDevStats.PlayerSlot"] = Field(default_factory=list)
 
 class CMsgServerSignoutData_DetailedStats(BaseModel):
     class Position(BaseModel):
@@ -460,6 +468,7 @@ class CMsgMatchData(BaseModel):
     team_abandon: bool = Field(default=False)
     new_player_pool: bool = Field(default=False)
     low_pri_pool: bool = Field(default=False)
+    not_scored: bool = Field(default=False)
 
 class CMsgServerToGCMatchSignout(BaseModel):
     additional_data: typing.List[CExtraMsgBlock] = Field(default_factory=list)
@@ -503,6 +512,7 @@ class CMsgServerToGCEnterMatchmaking(BaseModel):
     server_private_ip: int = Field(default=0)
     server_port: int = Field(default=0)
     sdr_address: bytes = Field(default=b"")
+    replay_group_id: int = Field(default=0)
 
 class CMsgGCToServerCancelAllocateForMatch(BaseModel):
     match_id: int = Field(default=0)
@@ -538,6 +548,7 @@ class CMsgServerToGCAbandonMatch(BaseModel):
     match_mode: ECitadelMatchMode = Field(default=0)
     game_mode: ECitadelGameMode = Field(default=0)
     was_server_shutdown: bool = Field(default=False)
+    region_id: int = Field(default=0)
 
 class CMsgServerToGCAbandonMatchResponse(BaseModel):
     pass
