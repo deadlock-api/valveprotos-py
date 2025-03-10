@@ -109,7 +109,7 @@ class CMsgMatchData(_message.Message):
     class EEndReason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     class PlayerInfo(_message.Message):
-        __slots__ = ["abandon_match_time_s", "abandon_time_stamp", "ability_damage", "ability_points", "account_id", "assigned_lane", "assists", "bullet_damage", "deaths", "denies", "gpm_10min", "gpm_15min", "gpm_20min", "gpm_25min", "gpm_30min", "gpm_35min", "gpm_end", "hero_build_id", "hero_bullets_fired", "hero_bullets_hit", "hero_bullets_hit_crit", "hero_bullets_lucky_shots", "hero_id", "hero_incoming_bullets_crit", "hero_incoming_bullets_fired", "hero_incoming_bullets_hit", "hero_mmr", "hero_mmr_with_uncertainty", "items", "kills", "last_hits", "level", "net_worth", "party_index", "platform", "player_ability_damage", "player_bullet_damage", "player_healing", "player_melee_damage", "player_mmr", "player_slot", "player_uncertainty", "team", "time_dead_s", "trooper_kill_excluded"]
+        __slots__ = ["abandon_match_time_s", "abandon_time_stamp", "ability_damage", "ability_points", "account_id", "assigned_lane", "assists", "bullet_damage", "deaths", "denies", "gpm_10min", "gpm_15min", "gpm_20min", "gpm_25min", "gpm_30min", "gpm_35min", "gpm_end", "hero_build_id", "hero_bullets_fired", "hero_bullets_hit", "hero_bullets_hit_crit", "hero_bullets_lucky_shots", "hero_id", "hero_incoming_bullets_crit", "hero_incoming_bullets_fired", "hero_incoming_bullets_hit", "hero_mmr", "hero_mmr_with_uncertainty", "items", "kills", "last_hits", "level", "net_worth", "objective_damage", "party_index", "platform", "player_ability_damage", "player_bullet_damage", "player_healing", "player_melee_damage", "player_mmr", "player_slot", "player_uncertainty", "team", "time_dead_s", "trooper_kill_excluded"]
         ABANDON_MATCH_TIME_S_FIELD_NUMBER: _ClassVar[int]
         ABANDON_TIME_STAMP_FIELD_NUMBER: _ClassVar[int]
         ABILITY_DAMAGE_FIELD_NUMBER: _ClassVar[int]
@@ -143,6 +143,7 @@ class CMsgMatchData(_message.Message):
         LAST_HITS_FIELD_NUMBER: _ClassVar[int]
         LEVEL_FIELD_NUMBER: _ClassVar[int]
         NET_WORTH_FIELD_NUMBER: _ClassVar[int]
+        OBJECTIVE_DAMAGE_FIELD_NUMBER: _ClassVar[int]
         PARTY_INDEX_FIELD_NUMBER: _ClassVar[int]
         PLATFORM_FIELD_NUMBER: _ClassVar[int]
         PLAYER_ABILITY_DAMAGE_FIELD_NUMBER: _ClassVar[int]
@@ -188,6 +189,7 @@ class CMsgMatchData(_message.Message):
         last_hits: int
         level: int
         net_worth: int
+        objective_damage: int
         party_index: int
         platform: _steammessages_pb2.EGCPlatform
         player_ability_damage: int
@@ -200,7 +202,7 @@ class CMsgMatchData(_message.Message):
         team: _citadel_gcmessages_common_pb2.ECitadelLobbyTeam
         time_dead_s: int
         trooper_kill_excluded: int
-        def __init__(self, account_id: _Optional[int] = ..., team: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelLobbyTeam, str]] = ..., player_slot: _Optional[int] = ..., hero_mmr_with_uncertainty: _Optional[int] = ..., player_mmr: _Optional[int] = ..., player_uncertainty: _Optional[int] = ..., hero_id: _Optional[int] = ..., kills: _Optional[int] = ..., deaths: _Optional[int] = ..., net_worth: _Optional[int] = ..., assists: _Optional[int] = ..., hero_mmr: _Optional[int] = ..., items: _Optional[_Iterable[_Union[CMsgMatchData.PlayerItem, _Mapping]]] = ..., gpm_10min: _Optional[int] = ..., gpm_15min: _Optional[int] = ..., gpm_20min: _Optional[int] = ..., gpm_25min: _Optional[int] = ..., gpm_30min: _Optional[int] = ..., gpm_35min: _Optional[int] = ..., gpm_end: _Optional[int] = ..., last_hits: _Optional[int] = ..., denies: _Optional[int] = ..., ability_points: _Optional[int] = ..., level: _Optional[int] = ..., assigned_lane: _Optional[int] = ..., party_index: _Optional[int] = ..., platform: _Optional[_Union[_steammessages_pb2.EGCPlatform, str]] = ..., ability_damage: _Optional[int] = ..., bullet_damage: _Optional[int] = ..., hero_bullets_hit: _Optional[int] = ..., hero_bullets_hit_crit: _Optional[int] = ..., player_healing: _Optional[int] = ..., hero_bullets_fired: _Optional[int] = ..., hero_incoming_bullets_fired: _Optional[int] = ..., hero_incoming_bullets_hit: _Optional[int] = ..., hero_incoming_bullets_crit: _Optional[int] = ..., time_dead_s: _Optional[int] = ..., player_bullet_damage: _Optional[int] = ..., player_ability_damage: _Optional[int] = ..., player_melee_damage: _Optional[int] = ..., abandon_match_time_s: _Optional[int] = ..., abandon_time_stamp: _Optional[int] = ..., trooper_kill_excluded: _Optional[int] = ..., hero_bullets_lucky_shots: _Optional[int] = ..., hero_build_id: _Optional[int] = ...) -> None: ...
+        def __init__(self, account_id: _Optional[int] = ..., team: _Optional[_Union[_citadel_gcmessages_common_pb2.ECitadelLobbyTeam, str]] = ..., player_slot: _Optional[int] = ..., hero_mmr_with_uncertainty: _Optional[int] = ..., player_mmr: _Optional[int] = ..., player_uncertainty: _Optional[int] = ..., hero_id: _Optional[int] = ..., kills: _Optional[int] = ..., deaths: _Optional[int] = ..., net_worth: _Optional[int] = ..., assists: _Optional[int] = ..., hero_mmr: _Optional[int] = ..., items: _Optional[_Iterable[_Union[CMsgMatchData.PlayerItem, _Mapping]]] = ..., gpm_10min: _Optional[int] = ..., gpm_15min: _Optional[int] = ..., gpm_20min: _Optional[int] = ..., gpm_25min: _Optional[int] = ..., gpm_30min: _Optional[int] = ..., gpm_35min: _Optional[int] = ..., gpm_end: _Optional[int] = ..., last_hits: _Optional[int] = ..., denies: _Optional[int] = ..., ability_points: _Optional[int] = ..., level: _Optional[int] = ..., assigned_lane: _Optional[int] = ..., party_index: _Optional[int] = ..., platform: _Optional[_Union[_steammessages_pb2.EGCPlatform, str]] = ..., ability_damage: _Optional[int] = ..., bullet_damage: _Optional[int] = ..., hero_bullets_hit: _Optional[int] = ..., hero_bullets_hit_crit: _Optional[int] = ..., player_healing: _Optional[int] = ..., hero_bullets_fired: _Optional[int] = ..., hero_incoming_bullets_fired: _Optional[int] = ..., hero_incoming_bullets_hit: _Optional[int] = ..., hero_incoming_bullets_crit: _Optional[int] = ..., time_dead_s: _Optional[int] = ..., player_bullet_damage: _Optional[int] = ..., player_ability_damage: _Optional[int] = ..., player_melee_damage: _Optional[int] = ..., abandon_match_time_s: _Optional[int] = ..., abandon_time_stamp: _Optional[int] = ..., trooper_kill_excluded: _Optional[int] = ..., hero_bullets_lucky_shots: _Optional[int] = ..., hero_build_id: _Optional[int] = ..., objective_damage: _Optional[int] = ...) -> None: ...
     class PlayerItem(_message.Message):
         __slots__ = ["flags", "game_time_s", "imbued_ability_id", "item_id", "sold_time_s", "upgrade_id"]
         FLAGS_FIELD_NUMBER: _ClassVar[int]

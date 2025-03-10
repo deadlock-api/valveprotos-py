@@ -444,6 +444,7 @@ class CMsgMatchData(BaseModel):
         trooper_kill_excluded: int = Field(default=0)
         hero_bullets_lucky_shots: int = Field(default=0)
         hero_build_id: int = Field(default=0)
+        objective_damage: int = Field(default=0)
 
     class EEndReason(IntEnum):
         k_EEndReason_TeamWin = 0
