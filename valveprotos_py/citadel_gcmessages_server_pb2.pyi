@@ -1006,18 +1006,20 @@ class CServerLobbyData_PlayerInfo(_message.Message):
 class CServerLobbyData_PlayerMMR(_message.Message):
     __slots__ = ["players"]
     class Player(_message.Message):
-        __slots__ = ["account_id", "hero_mmr", "hero_mmr_with_uncertainty", "player_mmr", "player_uncertainty"]
+        __slots__ = ["account_id", "hero_mmr", "hero_mmr_with_uncertainty", "player_mmr", "player_slot", "player_uncertainty"]
         ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
         HERO_MMR_FIELD_NUMBER: _ClassVar[int]
         HERO_MMR_WITH_UNCERTAINTY_FIELD_NUMBER: _ClassVar[int]
         PLAYER_MMR_FIELD_NUMBER: _ClassVar[int]
+        PLAYER_SLOT_FIELD_NUMBER: _ClassVar[int]
         PLAYER_UNCERTAINTY_FIELD_NUMBER: _ClassVar[int]
         account_id: int
         hero_mmr: int
         hero_mmr_with_uncertainty: int
         player_mmr: int
+        player_slot: int
         player_uncertainty: int
-        def __init__(self, account_id: _Optional[int] = ..., player_mmr: _Optional[int] = ..., player_uncertainty: _Optional[int] = ..., hero_mmr: _Optional[int] = ..., hero_mmr_with_uncertainty: _Optional[int] = ...) -> None: ...
+        def __init__(self, account_id: _Optional[int] = ..., player_mmr: _Optional[int] = ..., player_uncertainty: _Optional[int] = ..., hero_mmr: _Optional[int] = ..., hero_mmr_with_uncertainty: _Optional[int] = ..., player_slot: _Optional[int] = ...) -> None: ...
     PLAYERS_FIELD_NUMBER: _ClassVar[int]
     players: _containers.RepeatedCompositeFieldContainer[CServerLobbyData_PlayerMMR.Player]
     def __init__(self, players: _Optional[_Iterable[_Union[CServerLobbyData_PlayerMMR.Player, _Mapping]]] = ...) -> None: ...

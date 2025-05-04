@@ -170,6 +170,7 @@ class CCitadelUserMessage_Damage(BaseModel):
     is_secondary_stat: bool = Field(default=False)
     effectiveness: float = Field(default=0.0)
     crit_damage: float = Field(default=0.0)
+    server_tick: int = Field(default=0)
 
 class PingCommonData(BaseModel):
     ping_message_id: int = Field(default=0)

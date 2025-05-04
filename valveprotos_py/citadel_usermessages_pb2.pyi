@@ -179,7 +179,7 @@ class CCitadelUserMessage_CurrencyChanged(_message.Message):
     def __init__(self, userid: _Optional[int] = ..., currency_type: _Optional[int] = ..., currency_source: _Optional[int] = ..., delta: _Optional[int] = ..., notification: bool = ..., entindex_victim: _Optional[int] = ..., victim_pos: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., playsound: _Optional[int] = ..., ability_id: _Optional[int] = ..., new_value: _Optional[int] = ...) -> None: ...
 
 class CCitadelUserMessage_Damage(_message.Message):
-    __slots__ = ["ability_id", "attacker_class", "citadel_type", "crit_damage", "damage", "damage_absorbed", "damage_absorbed_deprecated", "damage_direction", "effectiveness", "entindex_ability", "entindex_attacker", "entindex_attacking_object", "entindex_inflictor", "entindex_victim", "flags", "health_lost", "hitgroup_id", "hits", "is_secondary_stat", "origin", "pre_damage", "pre_damage_deprecated", "type", "victim_class", "victim_health_max", "victim_health_new", "victim_shield_max", "victim_shield_new"]
+    __slots__ = ["ability_id", "attacker_class", "citadel_type", "crit_damage", "damage", "damage_absorbed", "damage_absorbed_deprecated", "damage_direction", "effectiveness", "entindex_ability", "entindex_attacker", "entindex_attacking_object", "entindex_inflictor", "entindex_victim", "flags", "health_lost", "hitgroup_id", "hits", "is_secondary_stat", "origin", "pre_damage", "pre_damage_deprecated", "server_tick", "type", "victim_class", "victim_health_max", "victim_health_new", "victim_shield_max", "victim_shield_new"]
     ABILITY_ID_FIELD_NUMBER: _ClassVar[int]
     ATTACKER_CLASS_FIELD_NUMBER: _ClassVar[int]
     CITADEL_TYPE_FIELD_NUMBER: _ClassVar[int]
@@ -202,6 +202,7 @@ class CCitadelUserMessage_Damage(_message.Message):
     ORIGIN_FIELD_NUMBER: _ClassVar[int]
     PRE_DAMAGE_DEPRECATED_FIELD_NUMBER: _ClassVar[int]
     PRE_DAMAGE_FIELD_NUMBER: _ClassVar[int]
+    SERVER_TICK_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     VICTIM_CLASS_FIELD_NUMBER: _ClassVar[int]
     VICTIM_HEALTH_MAX_FIELD_NUMBER: _ClassVar[int]
@@ -230,13 +231,14 @@ class CCitadelUserMessage_Damage(_message.Message):
     origin: _networkbasetypes_pb2.CMsgVector
     pre_damage: float
     pre_damage_deprecated: int
+    server_tick: int
     type: int
     victim_class: int
     victim_health_max: int
     victim_health_new: int
     victim_shield_max: int
     victim_shield_new: int
-    def __init__(self, damage: _Optional[int] = ..., pre_damage_deprecated: _Optional[int] = ..., pre_damage: _Optional[float] = ..., type: _Optional[int] = ..., citadel_type: _Optional[int] = ..., origin: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., entindex_victim: _Optional[int] = ..., entindex_inflictor: _Optional[int] = ..., entindex_attacker: _Optional[int] = ..., entindex_ability: _Optional[int] = ..., damage_absorbed_deprecated: _Optional[int] = ..., damage_absorbed: _Optional[float] = ..., victim_health_max: _Optional[int] = ..., victim_health_new: _Optional[int] = ..., flags: _Optional[int] = ..., ability_id: _Optional[int] = ..., attacker_class: _Optional[int] = ..., victim_class: _Optional[int] = ..., victim_shield_max: _Optional[int] = ..., victim_shield_new: _Optional[int] = ..., hits: _Optional[int] = ..., health_lost: _Optional[int] = ..., hitgroup_id: _Optional[int] = ..., entindex_attacking_object: _Optional[int] = ..., damage_direction: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., is_secondary_stat: bool = ..., effectiveness: _Optional[float] = ..., crit_damage: _Optional[float] = ...) -> None: ...
+    def __init__(self, damage: _Optional[int] = ..., pre_damage_deprecated: _Optional[int] = ..., pre_damage: _Optional[float] = ..., type: _Optional[int] = ..., citadel_type: _Optional[int] = ..., origin: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., entindex_victim: _Optional[int] = ..., entindex_inflictor: _Optional[int] = ..., entindex_attacker: _Optional[int] = ..., entindex_ability: _Optional[int] = ..., damage_absorbed_deprecated: _Optional[int] = ..., damage_absorbed: _Optional[float] = ..., victim_health_max: _Optional[int] = ..., victim_health_new: _Optional[int] = ..., flags: _Optional[int] = ..., ability_id: _Optional[int] = ..., attacker_class: _Optional[int] = ..., victim_class: _Optional[int] = ..., victim_shield_max: _Optional[int] = ..., victim_shield_new: _Optional[int] = ..., hits: _Optional[int] = ..., health_lost: _Optional[int] = ..., hitgroup_id: _Optional[int] = ..., entindex_attacking_object: _Optional[int] = ..., damage_direction: _Optional[_Union[_networkbasetypes_pb2.CMsgVector, _Mapping]] = ..., is_secondary_stat: bool = ..., effectiveness: _Optional[float] = ..., crit_damage: _Optional[float] = ..., server_tick: _Optional[int] = ...) -> None: ...
 
 class CCitadelUserMessage_GameOver(_message.Message):
     __slots__ = ["just_a_test", "winning_team"]

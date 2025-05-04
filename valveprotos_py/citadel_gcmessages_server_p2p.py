@@ -99,6 +99,7 @@ class CServerLobbyData_PlayerMMR(BaseModel):
         player_uncertainty: int = Field(default=0)
         hero_mmr: int = Field(default=0)
         hero_mmr_with_uncertainty: int = Field(default=0)
+        player_slot: int = Field(default=0)
 
     players: typing.List["CServerLobbyData_PlayerMMR.Player"] = Field(default_factory=list)
 
